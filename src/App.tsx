@@ -1,7 +1,13 @@
 import MainPage from "./pages/MainPage";
+import Auth from "./components/Auth";
 
 function App() {
-	return <MainPage />;
+	return (
+		<>
+			<Auth />
+			<MainPage />
+		</>
+	);
 }
 
 export default App;
