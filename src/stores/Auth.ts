@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { AuthService, LoginRequest } from "../services/Auth";
+import { AuthService, LoginRequest } from "../api/Auth";
 import { jwtDecode } from 'jwt-decode';
 
 export class AuthStore {
@@ -19,20 +19,21 @@ export class AuthStore {
 	}
 
 	async login(loginRequest: LoginRequest) {
-		try {
-			const token = await this.authService.login(loginRequest);
+		const response = await this.authService.login(loginRequest);
+		const { status, token } = response as { status: number; token: string };
 
-			const decodedToken = jwtDecode(token) as { sub: string; exp: number };
-			const tokenExp = String(decodedToken?.exp);
-
-			console.log(decodedToken);
-			localStorage.setItem("access_token", token);
-			localStorage.setItem("token_exp", tokenExp);
-			this.setAuthenticated(true);
-			return token;
-		} catch (error) {
+		if (status === 401) {
 			this.setAuthenticated(false);
+			return;
 		}
+
+		const decodedToken = jwtDecode(token) as { sub: string; exp: number };
+		const tokenExp = String(decodedToken?.exp);
+
+		console.log(decodedToken);
+		localStorage.setItem("access_token", token);
+		localStorage.setItem("token_exp", tokenExp);
+		this.setAuthenticated(true);
 	}
 
 	getToken() {
