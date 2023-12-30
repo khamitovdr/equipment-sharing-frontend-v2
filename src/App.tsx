@@ -1,11 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-// import Auth from "./components/Auth";
+import Auth from "./components/Auth";
 
 function App() {
 	return (
 		<Routes>
-			<Route path="/" element={<MainPage />} />
+			<Route
+				path="/"
+				element={
+					<>
+						<Auth />
+						<MainPage />
+					</>
+				}
+			/>
 		</Routes>
 	);
 }
