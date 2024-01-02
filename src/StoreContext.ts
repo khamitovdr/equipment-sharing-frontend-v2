@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthStore } from "./stores/Auth";
-import { AuthService } from "./api/Auth";
+import { AuthStore } from "./stores/auth";
+import { AuthService } from "./api/auth";
 
 interface IStoreContext {
 	authStore: AuthStore;

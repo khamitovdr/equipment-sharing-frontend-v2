@@ -1,4 +1,4 @@
-import { usePathState } from "../hooks/usePathState";
+import { usePathState } from "../hooks/pathState";
 import { Switch, Container } from "@mui/material";
 
 const PathStateExample = () => {

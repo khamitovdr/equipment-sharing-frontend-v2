@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { StoreContext } from "../StoreContext";
+import { StoreContext } from "../storeContext";
 import { Box, Dialog, TextField, Button } from "@mui/material";
 
 const Auth: React.FC = () => {

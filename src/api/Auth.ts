@@ -1,4 +1,4 @@
-import { client } from "./Client";
+import { client } from "./client";
 import { AxiosError } from "axios";
 
 export interface LoginRequest {

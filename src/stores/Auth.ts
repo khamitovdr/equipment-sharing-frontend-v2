@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { AuthService, LoginRequest } from "../api/Auth";
+import { AuthService, LoginRequest } from "../api/auth";
 
 export class AuthStore {
 	private token: string | null = null;
