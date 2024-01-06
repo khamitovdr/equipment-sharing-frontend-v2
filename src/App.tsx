@@ -1,19 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-import Auth from "./components/Auth";
+import PrivateRoutes from "./router/PrivateRoutes";
 
 function App() {
 	return (
 		<Routes>
-			<Route
-				path="/"
-				element={
-					<>
-						<Auth />
-						<MainPage />
-					</>
-				}
-			/>
+			<Route path="/" element={<MainPage />} />
+			<Route element={<PrivateRoutes />}>
+				<Route path="/my-equipment/:id" element={<MainPage />} />
+			</Route>
 		</Routes>
 	);
 }

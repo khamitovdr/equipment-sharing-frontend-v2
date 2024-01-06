@@ -1,13 +1,14 @@
 import { client } from "./client";
 import { AxiosError } from "axios";
 
-export interface LoginRequest {
+export type LoginRequest = {
 	readonly username: string;
 	readonly password: string;
 }
 
 export class AuthService {
 	async login(loginRequest: LoginRequest) {
+		console.log("AuthService loginRequest", loginRequest);
 		const params = new URLSearchParams(
 			loginRequest as unknown as Record<string, string>,
 		);

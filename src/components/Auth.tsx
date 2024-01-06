@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import { Box, Button, Dialog, TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
+import { useContext } from "react";
 import { StoreContext } from "../storeContext";
-import { Box, Dialog, TextField, Button } from "@mui/material";
 
-const Auth: React.FC = () => {
+const Auth = () => {
 	const { authStore } = useContext(StoreContext);
 	const isAuth = authStore.isAuthenicated();
 
@@ -32,8 +33,13 @@ const Auth: React.FC = () => {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<Button onClick={() => {console.log("login");
-                     authStore.login({username, password})}} variant="contained" sx={{ mt: 2 }}>
+				<Button
+					onClick={() => {
+						authStore.login({ username, password });
+					}}
+					variant="contained"
+					sx={{ mt: 2 }}
+				>
 					Login
 				</Button>
 			</Box>

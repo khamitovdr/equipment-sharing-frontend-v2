@@ -12,7 +12,7 @@ const MainPageHeader = () => {
 			<Container maxWidth="lg">
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					<HeaderLogo />
-          <Box sx={{ flexGrow: 1 }} />
+					<Box sx={{ flexGrow: 1 }} />
 					<MainPageHeaderNav />
 					<MainPageHeaderProfile />
 				</Toolbar>
