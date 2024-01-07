@@ -14,6 +14,7 @@ const queryClient = new QueryClient();
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
+	rootElement.style.minWidth = "320px"; // Prevents the app from being too small on mobile devices
 	ReactDOM.createRoot(rootElement).render(
 		<React.StrictMode>
 			<BrowserRouter>
