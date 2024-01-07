@@ -2,7 +2,7 @@ import { Box, Button, Dialog, TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useContext } from "react";
-import { StoreContext } from "../storeContext";
+import { StoreContext } from "../../storeContext";
 
 const Auth = () => {
 	const { authStore } = useContext(StoreContext);

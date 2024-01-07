@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
-import Auth from "../components/Auth";
+import Auth from "../pages/Login/Auth";
 import { StoreContext } from "../storeContext";
 
 const PrivateRoutes = () => {

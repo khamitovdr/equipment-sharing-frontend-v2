@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchEquipmentList } from "../api/equipment";
-import EquipmentList from "./EquipmentList";
+import { fetchEquipmentList } from "../../api/equipment";
+import EquipmentList from "../../wigets/EquipmentList";
 import { useOutletContext, useParams } from "react-router-dom";
 
 const EquipmentForRent = () => {

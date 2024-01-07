@@ -1,5 +1,5 @@
-import MainPageHeader from "../wigets/MainPageHeader";
-import EquipmentForRent from "../wigets/EquipmentForRent";
+import MainPageHeader from "./MainPageHeader";
+import EquipmentForRent from "../Rental/EquipmentForRent";
 import Container from "@mui/material/Container";
 
 const MainPage = () => {

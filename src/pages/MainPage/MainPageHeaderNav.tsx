@@ -2,8 +2,8 @@ import { Box } from "@mui/material";
 import { IconButton, Menu } from "@mui/material/";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
-import HeaderNavItem from "../components/HeaderNavItem";
-import HeaderNavItemCollapsed from "../components/HeaderNavItemCollapsed";
+import HeaderNavItem from "./HeaderNavItem";
+import HeaderNavItemCollapsed from "./HeaderNavItemCollapsed";
 
 const NAV_ITEMS: string[] = ["Как это рабтает?", "О нас", "Контакты"];
 

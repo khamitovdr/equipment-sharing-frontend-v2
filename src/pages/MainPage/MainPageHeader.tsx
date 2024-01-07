@@ -2,7 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import HeaderLogo from "../components/HeaderLogo";
+import HeaderLogo from "./HeaderLogo";
 import MainPageHeaderNav from "./MainPageHeaderNav";
 import MainPageHeaderProfile from "./MainPageHeaderProfile";
 
