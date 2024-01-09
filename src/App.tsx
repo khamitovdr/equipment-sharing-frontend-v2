@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import NotFoundPage from "./pages/PageNotFound";
 import PrivateRoutes from "./router/PrivateRoutes";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 			<Route element={<PrivateRoutes />}>
 				<Route path="/my-equipment/:id" element={<MainPage />} />
 			</Route>
+			<Route path="*" element={<NotFoundPage />} />
 		</Routes>
 	);
 }
