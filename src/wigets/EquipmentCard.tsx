@@ -25,6 +25,8 @@ const EquipmentCard = ({ equipment }: EquipmentCardProps) => {
 		<Card
 			sx={{
 				height: "100%",
+				width: "100%",
+				maxWidth: "380px",
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "space-between",
@@ -40,7 +42,12 @@ const EquipmentCard = ({ equipment }: EquipmentCardProps) => {
 					style={{ objectFit: "contain" }}
 				/>
 				<CardContent>
-					<Chip label={category.name} variant="outlined" size="small" style={{ marginBottom: "10px" }} />
+					<Chip
+						label={category.name}
+						variant="outlined"
+						size="small"
+						style={{ marginBottom: "10px" }}
+					/>
 					<Tooltip title={name}>
 						<Typography
 							gutterBottom

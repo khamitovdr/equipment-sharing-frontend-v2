@@ -6,6 +6,7 @@ export type EquipmentCategory = {
 };
 
 export type EquipmentPreview = {
+	id: number;
 	name: string;
 	photo_and_video: Image[];
 	price: number;
