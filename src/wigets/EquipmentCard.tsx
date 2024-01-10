@@ -134,9 +134,11 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 	if (!isLoading) {
 		const { equipment } = props;
 		const { name, photo_and_video, price, time_interval, category } = equipment;
-		const avatar = photo_and_video.length
+		const hasPhoto = photo_and_video.length > 0;
+		const cardImageStyle = hasPhoto ? { objectFit: "contain" } : {};
+		const avatar = hasPhoto
 			? import.meta.env.VITE_API_URL + photo_and_video[0].derived_path.medium
-			: "https://via.placeholder.com/300";
+			: "/equipment-card-placeholder.svg";
 
 		return (
 			<CardLayout
@@ -146,7 +148,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 						height={cardImageHeight}
 						image={avatar}
 						alt={name}
-						style={{ objectFit: "contain" }}
+						style={cardImageStyle as React.CSSProperties}
 					/>
 				}
 				actions={<RentButton />}
