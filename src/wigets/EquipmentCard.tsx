@@ -12,6 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { EquipmentPreview } from "../models/equipment";
+import { forwardRef } from "react";
 
 const cardImageHeight = "260px";
 
@@ -40,28 +41,35 @@ const CategoryChip = ({ name }: { name?: string }) => {
 	);
 };
 
-const EquipmentName = ({
-	children,
-}: { children: string | React.ReactNode }) => {
-	return (
-		<Typography
-			gutterBottom
-			variant="h6"
-			style={{
-				fontSize: "1rem",
-				overflow: "hidden",
-				textOverflow: "ellipsis",
-				display: "-webkit-box",
-				WebkitLineClamp: 2,
-				WebkitBoxOrient: "vertical",
-				lineHeight: "1.4em", // Adjust line height as needed
-				maxHeight: "3em", // Line height multiplied by number of lines
-			}}
-		>
-			{children}
-		</Typography>
-	);
-};
+type EquipmentNameProps = {
+	name?: string;
+} & React.ComponentProps<typeof Typography>;
+
+const EquipmentName = forwardRef(
+	(props: EquipmentNameProps, ref: React.Ref<HTMLSpanElement>) => {
+		const { name, ...childProps } = props;
+		return (
+			<Typography
+				{...childProps}
+				ref={ref}
+				gutterBottom
+				variant="h6"
+				style={{
+					fontSize: "1rem",
+					overflow: "hidden",
+					textOverflow: "ellipsis",
+					display: "-webkit-box",
+					WebkitLineClamp: 2,
+					WebkitBoxOrient: "vertical",
+					lineHeight: "1.4em", // Adjust line height as needed
+					maxHeight: "3em", // Line height multiplied by number of lines
+				}}
+			>
+				{name ? name : <Skeleton />}
+			</Typography>
+		);
+	},
+);
 
 type EquipmentPriceProps =
 	| {
@@ -155,7 +163,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 			>
 				<CategoryChip name={category.name} />
 				<Tooltip title={name}>
-					<EquipmentName>{name}</EquipmentName>
+					<EquipmentName name={name} />
 				</Tooltip>
 				<EquipmentPrice
 					isSceleton={false}
@@ -175,9 +183,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 				<CategoryChip />
 			</Skeleton>
 
-			<EquipmentName>
-				<Skeleton />
-			</EquipmentName>
+			<EquipmentName />
 
 			<EquipmentPrice isSceleton={true} />
 		</CardLayout>
