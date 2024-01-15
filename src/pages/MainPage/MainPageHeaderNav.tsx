@@ -1,24 +1,14 @@
+import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/material";
 import { IconButton, Menu } from "@mui/material/";
-import MenuIcon from "@mui/icons-material/Menu";
-import React from "react";
+import { useDropdown } from "../../hooks/useDropdown";
 import HeaderNavItem from "./HeaderNavItem";
 import HeaderNavItemCollapsed from "./HeaderNavItemCollapsed";
 
 const NAV_ITEMS: string[] = ["Как это рабтает?", "О нас", "Контакты"];
 
 const MainPageHeaderNav = () => {
-	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-		null,
-	);
-
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget);
-	};
-
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
-	};
+	const { anchorElement, handleOpen, handleClose } = useDropdown();
 
 	return (
 		<>
@@ -39,14 +29,14 @@ const MainPageHeaderNav = () => {
 					aria-label="account of current user"
 					aria-controls="menu-appbar"
 					aria-haspopup="true"
-					onClick={handleOpenNavMenu}
+					onClick={handleOpen}
 					color="inherit"
 				>
 					<MenuIcon />
 				</IconButton>
 				<Menu
 					id="menu-appbar"
-					anchorEl={anchorElNav}
+					anchorEl={anchorElement}
 					anchorOrigin={{
 						vertical: "bottom",
 						horizontal: "left",
@@ -56,8 +46,8 @@ const MainPageHeaderNav = () => {
 						vertical: "top",
 						horizontal: "left",
 					}}
-					open={Boolean(anchorElNav)}
-					onClose={handleCloseNavMenu}
+					open={Boolean(anchorElement)}
+					onClose={handleClose}
 					sx={{
 						display: { xs: "block", md: "none" },
 					}}
@@ -66,7 +56,7 @@ const MainPageHeaderNav = () => {
 						<HeaderNavItemCollapsed
 							key={item}
 							text={item}
-							onClick={handleCloseNavMenu}
+							onClick={handleClose}
 						/>
 					))}
 				</Menu>
