@@ -1,16 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchEquipmentList } from "../../api/equipment";
+import { useAuthStore } from "../../stores/authStore";
 import EquipmentList from "../../wigets/EquipmentList";
-import { useOutletContext, useParams } from "react-router-dom";
 
 const EquipmentForRent = () => {
-	const { id } = useParams();
-
-	let isEnabled = true;
-	if (id) {
-		const { isAuth } = useOutletContext() as { isAuth: boolean };
-		isEnabled = isAuth;
-	}
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
 
 	const {
 		isPending,
@@ -18,9 +12,9 @@ const EquipmentForRent = () => {
 		data: equipmentList = [],
 		error,
 	} = useQuery({
-		queryKey: ["equipmentList", id],
+		queryKey: ["equipmentList"],
 		queryFn: fetchEquipmentList,
-		enabled: isEnabled,
+		enabled: isAuthenticated,
 	});
 
 	if (isError) {
