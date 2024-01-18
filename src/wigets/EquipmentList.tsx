@@ -2,6 +2,7 @@ import EquipmentCard from "../wigets/EquipmentCard";
 import { Box, Grid, GridProps } from "@mui/material";
 import { EquipmentPreview } from "../models/equipment";
 import EquipmentCategoryFilter from "./EquipmentCategoryFilter";
+import EmptyPlaceholder from "../components/ui/EmptyPlaceholder";
 
 const GridItem = ({
 	children,
@@ -28,7 +29,7 @@ const EquipmentList = ({
 	isPending,
 }: { equipmentList: EquipmentPreview[]; isPending: boolean }) => {
 	return (
-		<Box mt={4}>
+		<Box my={4}>
 			<EquipmentCategoryFilter />
 			<Grid container spacing={3} mt={0}>
 				{isPending &&
@@ -45,6 +46,9 @@ const EquipmentList = ({
 						<EquipmentCard isLoading={false} equipment={equipment} />
 					</GridItem>
 				))}
+				{!isPending &&
+					Array.isArray(equipmentList) &&
+					!equipmentList.length && <EmptyPlaceholder />}
 			</Grid>
 		</Box>
 	);

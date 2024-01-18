@@ -23,7 +23,7 @@ const EquipmentForRent = () => {
 		return <span>Error: {error.message}</span>;
 	}
 
-	return <EquipmentList equipmentList={equipmentList} isPending={isPending} />;
+	return <EquipmentList {...{ equipmentList, isPending }} />;
 };
 
 export default EquipmentForRent;
