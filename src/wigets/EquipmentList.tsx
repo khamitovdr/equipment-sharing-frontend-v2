@@ -1,6 +1,7 @@
 import EquipmentCard from "../wigets/EquipmentCard";
-import { Grid, GridProps } from "@mui/material";
+import { Box, Grid, GridProps } from "@mui/material";
 import { EquipmentPreview } from "../models/equipment";
+import EquipmentCategoryFilter from "./EquipmentCategoryFilter";
 
 const GridItem = ({
 	children,
@@ -27,22 +28,25 @@ const EquipmentList = ({
 	isPending,
 }: { equipmentList: EquipmentPreview[]; isPending: boolean }) => {
 	return (
-		<Grid container spacing={3} sx={{ padding: "30px 0" }}>
-			{isPending &&
-				[...Array(12)].map((_, i) => (
-					<GridItem
-						// biome-ignore lint/suspicious/noArrayIndexKey: placeholder cards don't need a key
-						key={i}
-					>
-						<EquipmentCard isLoading={true} />
+		<Box mt={4}>
+			<EquipmentCategoryFilter />
+			<Grid container spacing={3} mt={0}>
+				{isPending &&
+					[...Array(12)].map((_, i) => (
+						<GridItem
+							// biome-ignore lint/suspicious/noArrayIndexKey: placeholder cards don't need a key
+							key={i}
+						>
+							<EquipmentCard isLoading={true} />
+						</GridItem>
+					))}
+				{equipmentList?.map((equipment) => (
+					<GridItem key={equipment.id}>
+						<EquipmentCard isLoading={false} equipment={equipment} />
 					</GridItem>
 				))}
-			{equipmentList?.map((equipment) => (
-				<GridItem key={equipment.id}>
-					<EquipmentCard isLoading={false} equipment={equipment} />
-				</GridItem>
-			))}
-		</Grid>
+			</Grid>
+		</Box>
 	);
 };
 

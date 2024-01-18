@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchEquipmentList } from "../../api/equipment";
 import { useAuthStore } from "../../stores/authStore";
 import EquipmentList from "../../wigets/EquipmentList";
+import useEquipmentCategory from "../../hooks/useEquipmentCategory";
 
 const EquipmentForRent = () => {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
+	const { selectedCategory } = useEquipmentCategory();
 
 	const {
 		isPending,
@@ -12,8 +14,8 @@ const EquipmentForRent = () => {
 		data: equipmentList = [],
 		error,
 	} = useQuery({
-		queryKey: ["equipmentList"],
-		queryFn: fetchEquipmentList,
+		queryKey: ["equipmentList", { categoryId: selectedCategory }],
+		queryFn: () => fetchEquipmentList({ category_id: selectedCategory }),
 		enabled: isAuthenticated,
 	});
 
