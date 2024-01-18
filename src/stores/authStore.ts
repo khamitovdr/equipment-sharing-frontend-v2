@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type LoginRequest = {
 	username: string;
@@ -35,22 +36,35 @@ type AuthStore = {
 	logOut: () => void;
 };
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
-	token: null,
-	isAuthenticated: () => !!get().token,
-	login: async (loginRequest: LoginRequest): Promise<void> => {
-		const result = await fetchAuthToken(loginRequest);
-		if (!result) {
-			return;
-		}
-		const { token } = result;
-		set({ token });
-		localStorage.setItem("token", token);
-		axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-	},
-	logOut: () => {
-		set({ token: null });
-		localStorage.removeItem("token");
-		axios.defaults.headers.common.Authorization = undefined;
-	},
-}));
+export const useAuthStore = create<AuthStore>()(
+	persist(
+		(set, get) => ({
+			token: null,
+			isAuthenticated: () => !!get().token,
+			login: async (loginRequest: LoginRequest): Promise<void> => {
+				const result = await fetchAuthToken(loginRequest);
+				if (!result) {
+					return;
+				}
+				const { token } = result;
+				set({ token });
+				axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+			},
+			logOut: () => {
+				set({ token: null });
+				axios.defaults.headers.common.Authorization = undefined;
+			},
+		}),
+		{
+			name: "auth-storage",
+			onRehydrateStorage: () => {
+				return (state) => {
+					if (!state?.token) {
+						return;
+					}
+					axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
+				};
+			},
+		},
+	),
+);
