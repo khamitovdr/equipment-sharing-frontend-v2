@@ -1,11 +1,11 @@
 import { Box, Button, Dialog, TextField } from "@mui/material";
-import { observer } from "mobx-react-lite";
-import { useRef, useContext } from "react";
-import { StoreContext } from "../../storeContext";
+import { useRef } from "react";
+import { useAuthStore } from "../../stores/authStore";
 
 const Auth = () => {
-	const { authStore } = useContext(StoreContext);
-	const isAuth = authStore.isAuthenicated();
+
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
+	const login = useAuthStore((state) => state.login);
 
 	const usernameRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
@@ -15,11 +15,11 @@ const Auth = () => {
 		const username = usernameRef.current?.value;
 		const password = passwordRef.current?.value;
 		if (!username || !password) return;
-		authStore.login({ username, password });
+		login({ username, password });
 	};
 
 	return (
-		<Dialog open={!isAuth}>
+		<Dialog open={!isAuthenticated}>
 			<form onSubmit={onSubmit}>
 				<Box p={4} display="flex" flexDirection="column" alignContent="center">
 					<TextField
@@ -39,11 +39,7 @@ const Auth = () => {
 						type="password"
 						fullWidth
 					/>
-					<Button
-						type="submit"
-						variant="contained"
-						sx={{ mt: 2 }}
-					>
+					<Button type="submit" variant="contained" sx={{ mt: 2 }}>
 						Login
 					</Button>
 				</Box>
@@ -52,4 +48,4 @@ const Auth = () => {
 	);
 };
 
-export default observer(Auth);
+export default Auth;
