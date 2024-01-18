@@ -46,10 +46,10 @@ const EquipmentList = ({
 						<EquipmentCard isLoading={false} equipment={equipment} />
 					</GridItem>
 				))}
-				{!isPending &&
-					Array.isArray(equipmentList) &&
-					!equipmentList.length && <EmptyPlaceholder />}
 			</Grid>
+			{!isPending && Array.isArray(equipmentList) && !equipmentList.length && (
+				<EmptyPlaceholder />
+			)}
 		</Box>
 	);
 };

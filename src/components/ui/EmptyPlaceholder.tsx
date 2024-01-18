@@ -13,7 +13,7 @@ const EmptyPlaceholder = () => {
             py={20}
 		>
 			<img src={EmptyBoxIcon} alt="empty" width="70" />
-			<Typography variant="h6" color="textSecondary">
+			<Typography variant="h6" color="#00000066">
 				Тут пока пусто...
 			</Typography>
 		</Box>

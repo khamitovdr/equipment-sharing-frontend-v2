@@ -9,19 +9,28 @@ const EquipmentCategoryFilter = () => {
 		queryFn: () => fetchEquipmentCategories({}),
 	});
 
-	const { selectedCategory, selectCategory, clearCategory } = useEquipmentCategory();
+	const { selectedCategory, selectCategory, clearCategory } =
+		useEquipmentCategory();
 
 	return (
-		<Stack direction="row" spacing={2}>
-            <Chip
-                color={!selectedCategory ? "primary" : "default"}
-                label="Все категории"
-                onClick={() => {
-                    clearCategory();
-                }}
-            />
+		<Stack
+			direction="row"
+			spacing={1}
+			useFlexGap
+			flexWrap="wrap"
+			maxWidth={{ xs: "380px", sm: "100%" }}
+			margin="0 auto"
+		>
+			<Chip
+				color={!selectedCategory ? "primary" : "default"}
+				label="Все категории"
+				onClick={() => {
+					clearCategory();
+				}}
+			/>
 			{equipmentCategories.map((category) => (
 				<Chip
+					sx={{ marginLeft: 0 }}
 					key={category.id}
 					color={selectedCategory === category.id ? "primary" : "default"}
 					label={category.name}
