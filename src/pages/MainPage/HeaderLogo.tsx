@@ -1,15 +1,24 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AgricultureOutlinedIcon from "@mui/icons-material/AgricultureOutlined";
+import { Link } from "react-router-dom";
+import { Routes } from "../../router/routes";
 
 const HeaderLogo = () => {
 	return (
-		<>
+		<Box
+			sx={{
+				display: "flex",
+				alignItems: "center",
+				textDecoration: "none",
+				color: "inherit",
+			}}
+			component={Link}
+			to={Routes.Home}
+		>
 			<AgricultureOutlinedIcon sx={{ mr: 1 }} />
 			<Typography
 				variant="h6"
 				noWrap
-				component="a"
-				href="/"
 				sx={{
 					mr: 2,
 					display: { xs: "none", sm: "flex" },
@@ -22,7 +31,7 @@ const HeaderLogo = () => {
 			>
 				Equip-me
 			</Typography>
-		</>
+		</Box>
 	);
 };
 
