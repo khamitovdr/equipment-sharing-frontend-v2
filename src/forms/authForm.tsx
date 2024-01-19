@@ -51,7 +51,7 @@ const LoginForm = () => {
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
 		try {
-			login(data);
+			await login(data);
 		} catch (error) {
 			switch ((error as AxiosError).response?.status) {
 				case 401:
