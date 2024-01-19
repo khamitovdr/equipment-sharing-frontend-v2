@@ -101,7 +101,7 @@ const CardLayout = ({
 }: {
 	media: React.ReactNode;
 	children: React.ReactNode;
-	actions: React.ReactNode;
+	actions?: React.ReactNode;
 }) => {
 	return (
 		<Card
@@ -123,6 +123,46 @@ const CardLayout = ({
 				{actions}
 			</CardActions>
 		</Card>
+	);
+};
+
+type CardMediaComponentProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+	backgroundImage?: string;
+	height: string;
+};
+
+const CardMediaComponent = (props: CardMediaComponentProps) => {
+	console.log(props);
+	const { className, height, role, alt, style } = props;
+	const backgroundImage = style?.backgroundImage as string;
+	const match = backgroundImage.match(/url\("([^"]+)"\)/);
+	const src = match ? match[1] : undefined;
+	if (!src) {
+		return;
+	}
+	return (
+		<div
+			className={className}
+			role={role}
+			style={{
+				backgroundImage: "url(/img-small.jpg)",
+				backgroundSize: "cover",
+				height,
+				width: "100%",
+			}}
+		>
+			<img
+				src={src}
+				alt={alt}
+				loading="lazy"
+				style={{
+					width: "100%",
+					height: "100%",
+					objectFit: "contain",
+					objectPosition: "center",
+				}}
+			/>
+		</div>
 	);
 };
 
@@ -152,7 +192,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 			<CardLayout
 				media={
 					<CardMedia
-						component="img"
+						component={hasPhoto ? CardMediaComponent : "img"}
 						height={cardImageHeight}
 						image={avatar}
 						alt={name}
@@ -177,7 +217,6 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 	return (
 		<CardLayout
 			media={<Skeleton variant="rectangular" height={cardImageHeight} />}
-			actions={<RentButton disabled />}
 		>
 			<Skeleton width="70%">
 				<CategoryChip />
