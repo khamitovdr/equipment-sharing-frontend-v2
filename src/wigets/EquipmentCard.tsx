@@ -101,7 +101,7 @@ const CardLayout = ({
 }: {
 	media: React.ReactNode;
 	children: React.ReactNode;
-	actions: React.ReactNode;
+	actions?: React.ReactNode;
 }) => {
 	return (
 		<Card
@@ -177,7 +177,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 	return (
 		<CardLayout
 			media={<Skeleton variant="rectangular" height={cardImageHeight} />}
-			actions={<RentButton disabled />}
+			// actions={<RentButton disabled />}
 		>
 			<Skeleton width="70%">
 				<CategoryChip />
