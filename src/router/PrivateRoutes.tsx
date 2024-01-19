@@ -4,7 +4,7 @@ import Auth from "../pages/Login/Auth";
 const PrivateRoutes = () => {
 	return (
 		<>
-			<Auth />
+			<Auth isObligatory />
 			<Outlet />
 		</>
 	);

@@ -1,23 +1,35 @@
 import {
 	Avatar,
 	Box,
+	Button,
 	IconButton,
 	Menu,
 	MenuItem,
 	Tooltip,
 	Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDropdown } from "../../hooks/useDropdown";
+import Auth from "../../pages/Login/Auth";
+import { Routes } from "../../router/routes";
+import { useAuthStore } from "../../stores/authStore";
 
-const USER_MENU_ITEMS = ["Profile", "Account", "Dashboard", "Logout"];
+const logout = () => {
+	useAuthStore.getState().logOut();
+};
 
-const MainPageHeaderProfile = () => {
+const USER_MENU_ITEMS = [
+	{ name: "Личный кабинет", path: Routes.Equipment },
+	{ name: "Настройки", path: Routes.Settings },
+];
+
+const ProfileMenu = () => {
 	const { anchorElement, handleOpen, handleClose } = useDropdown();
 
 	return (
 		<Box sx={{ flexGrow: 0 }}>
-			<Tooltip title="Open settings">
+			<Tooltip title="Открыть меню">
 				<IconButton onClick={handleOpen} sx={{ p: 0 }}>
 					<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
 				</IconButton>
@@ -38,21 +50,56 @@ const MainPageHeaderProfile = () => {
 				open={Boolean(anchorElement)}
 				onClose={handleClose}
 			>
-				{USER_MENU_ITEMS.map((item, index) => (
-					// <NavLink to={`/my-equipment/${index}`} key={item}>
+				{USER_MENU_ITEMS.map((item) => (
 					<MenuItem
 						component={Link}
-						to={`/my-equipment/${index}`}
-						key={item}
+						to={item.path}
+						key={item.path}
 						onClick={handleClose}
 					>
-						<Typography textAlign="center">{item}</Typography>
+						<Typography textAlign="center">{item.name}</Typography>
 					</MenuItem>
-					// </NavLink>
 				))}
+				<MenuItem
+					key={-1}
+					onClick={() => {
+						handleClose();
+						logout();
+					}}
+				>
+					<Typography textAlign="center">Выйти</Typography>
+				</MenuItem>
 			</Menu>
 		</Box>
 	);
+};
+
+const LoginButton = () => {
+	const [isClicked, setIsClicked] = useState(false);
+
+	return (
+		<>
+			{isClicked && (
+				<Auth open={isClicked} onClose={() => setIsClicked(false)} />
+			)}
+			<Box sx={{ flexGrow: 0 }}>
+				<Button
+					disableElevation
+					variant="outlined"
+					color="inherit"
+					onClick={() => setIsClicked(true)}
+				>
+					Войти
+				</Button>
+			</Box>
+		</>
+	);
+};
+
+const MainPageHeaderProfile = () => {
+	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
+
+	return isAuthenticated ? <ProfileMenu /> : <LoginButton />;
 };
 
 export default MainPageHeaderProfile;

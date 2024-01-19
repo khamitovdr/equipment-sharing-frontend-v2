@@ -2,8 +2,13 @@ import { Box, Button, Dialog, TextField } from "@mui/material";
 import { useRef } from "react";
 import { useAuthStore } from "../../stores/authStore";
 
-const Auth = () => {
+type AuthProps =
+	| {
+			isObligatory: true;
+	  }
+	| (React.ComponentProps<typeof Dialog> & { isObligatory?: false });
 
+const Auth = (props: AuthProps) => {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
 	const login = useAuthStore((state) => state.login);
 
@@ -18,8 +23,10 @@ const Auth = () => {
 		login({ username, password });
 	};
 
+	const { isObligatory, ...rest } = props;
+
 	return (
-		<Dialog open={!isAuthenticated}>
+		<Dialog open={!isAuthenticated} {...rest}>
 			<form onSubmit={onSubmit}>
 				<Box p={4} display="flex" flexDirection="column" alignContent="center">
 					<TextField
