@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -10,23 +10,8 @@ export type LoginRequest = {
 const fetchAuthToken = async (loginRequest: LoginRequest) => {
 	const params = new URLSearchParams(loginRequest);
 
-	try {
-		const response = await axios.post("/login/", params);
-		return { token: response.data.access_token };
-	} catch (error) {
-		console.log(error);
-
-		switch ((error as AxiosError).response?.status) {
-			case 401:
-				console.log("401");
-				break;
-			case 403:
-				console.log("422");
-				break;
-			default:
-				throw error;
-		}
-	}
+	const response = await axios.post("/login/", params);
+	return { token: response.data.access_token };
 };
 
 type AuthStore = {
