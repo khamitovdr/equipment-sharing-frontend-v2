@@ -14,10 +14,21 @@ import {
 	TextField,
 } from "@mui/material";
 import { AxiosError } from "axios";
+import i18next from "i18next";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodI18nMap } from "zod-i18n-map";
+import translation from "zod-i18n-map/locales/ru/zod.json";
 import { useAuthStore } from "../stores/authStore";
+
+i18next.init({
+	lng: "ru",
+	resources: {
+		ru: { zod: translation },
+	},
+});
+z.setErrorMap(zodI18nMap);
 
 const schema = z.object({
 	username: z.string().email(),
