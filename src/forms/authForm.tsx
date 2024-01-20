@@ -1,23 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-	Alert,
-	Box,
-	Button,
-	CircularProgress,
-	Divider,
-	FormControl,
-	FormHelperText,
-	IconButton,
-	InputAdornment,
-	InputLabel,
-	OutlinedInput,
-	TextField,
-} from "@mui/material";
+import { Box, Button, CircularProgress, Divider } from "@mui/material";
 import { AxiosError } from "axios";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import FormErrorMessage from "../components/ui/FormErrorMessage";
+import PasswordInput from "../components/ui/PasswordInput";
+import TextInput from "../components/ui/TextInput";
 import { useAuthStore } from "../stores/authStore";
 
 const schema = z.object({
@@ -53,57 +41,24 @@ const LoginForm = () => {
 		}
 	};
 
-	const [showPassword, setShowPassword] = useState(false);
-	const handleClickShowPassword = () => setShowPassword((show) => !show);
-	const handleMouseDownPassword = (
-		event: React.MouseEvent<HTMLButtonElement>,
-	) => {
-		event.preventDefault();
-	};
-
 	return (
 		<form noValidate onSubmit={handleSubmit(onSubmit)}>
 			<Box p={4} display="flex" flexDirection="column" alignContent="center">
-				<TextField
-					{...register("username")}
-					required
-					autoFocus
-					margin="normal"
+				<TextInput
+					fieldName="username"
 					label="Email"
-					fullWidth
-					error={!!errors.username}
-					helperText={errors.username?.message}
+					required
+					register={register}
+					errors={errors}
 				/>
-				<FormControl required margin="normal" variant="outlined">
-					<InputLabel
-						htmlFor="outlined-adornment-password"
-						error={!!errors.password}
-					>
-						Пароль
-					</InputLabel>
-					<OutlinedInput
-						{...register("password")}
-						error={!!errors.password}
-						id="outlined-adornment-password"
-						type={showPassword ? "text" : "password"}
-						endAdornment={
-							<InputAdornment position="end">
-								<IconButton
-									aria-label="toggle password visibility"
-									onClick={handleClickShowPassword}
-									onMouseDown={handleMouseDownPassword}
-									edge="end"
-								>
-									{showPassword ? <VisibilityOff /> : <Visibility />}
-								</IconButton>
-							</InputAdornment>
-						}
-						label="Пароль"
-					/>
-					<FormHelperText error={!!errors.password}>
-						{errors.password?.message}
-					</FormHelperText>
-				</FormControl>
+
+				<PasswordInput
+					fieldName="password"
+					label="Пароль"
+					required
+					register={register}
+					errors={errors}
+				/>
 
 				<Button
 					type="submit"
@@ -118,11 +73,8 @@ const LoginForm = () => {
 						"Войти"
 					)}
 				</Button>
-				{errors.root && (
-					<Alert severity="error" sx={{ mt: 2 }}>
-						{errors.root.message}
-					</Alert>
-				)}
+
+				<FormErrorMessage errors={errors} />
 
 				<Divider variant="middle" sx={{ mt: 2 }}>
 					Ещё нет аккаунта?
