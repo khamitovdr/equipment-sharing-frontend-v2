@@ -14,7 +14,16 @@ const Auth = (props: AuthProps) => {
 	const { isObligatory, ...rest } = props;
 
 	return (
-		<Dialog open={!isAuthenticated} {...rest}>
+		<Dialog sx={{
+			"& .MuiDialog-paper": {
+				width: "100%",
+				maxWidth: "360px",
+				minWidth: "300px",
+				maxHeight: "100%",
+				overflow: "auto",
+			},
+
+		}} open={!isAuthenticated} {...rest}>
 			<LoginForm />
 		</Dialog>
 	);
