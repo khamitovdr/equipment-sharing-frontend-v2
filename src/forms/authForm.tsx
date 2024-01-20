@@ -62,10 +62,11 @@ const LoginForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form noValidate onSubmit={handleSubmit(onSubmit)}>
 			<Box p={4} display="flex" flexDirection="column" alignContent="center">
 				<TextField
 					{...register("username")}
+					required
 					autoFocus
 					margin="normal"
 					label="Email"
@@ -73,7 +74,7 @@ const LoginForm = () => {
 					error={!!errors.username}
 					helperText={errors.username?.message}
 				/>
-				<FormControl margin="normal" variant="outlined">
+				<FormControl required margin="normal" variant="outlined">
 					<InputLabel
 						htmlFor="outlined-adornment-password"
 						error={!!errors.password}
