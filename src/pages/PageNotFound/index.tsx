@@ -8,14 +8,10 @@ const NotFoundPage = () => {
 	const navigate = useNavigate();
 
 	const isPreviousPageFromSameDomain = () => {
-        console.log(`window.history.length: ${window.history.length}`)
 		// Check if there's a previous page
 		if (window.history.length > 1) {
-            
 			const referrer = document.referrer;
-            console.log(`referrer: ${referrer}`)
 			const currentDomain = window.location.origin;
-            console.log(`currentDomain: ${currentDomain}`)
 
 			// Check if the referrer is from the same domain
 			if (referrer.startsWith(currentDomain)) {
@@ -29,9 +25,7 @@ const NotFoundPage = () => {
 		<>
 			<MainPageHeader />
 			<Container
-				// component="main"
 				maxWidth="lg"
-				// width="100%"
 				style={{ marginTop: "100px", textAlign: "center" }}
 			>
 				<Box>
