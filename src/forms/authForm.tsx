@@ -5,6 +5,7 @@ import {
 	Box,
 	Button,
 	CircularProgress,
+	Divider,
 	FormControl,
 	FormHelperText,
 	IconButton,
@@ -102,6 +103,7 @@ const LoginForm = () => {
 						{errors.password?.message}
 					</FormHelperText>
 				</FormControl>
+
 				<Button
 					type="submit"
 					variant="contained"
@@ -116,10 +118,17 @@ const LoginForm = () => {
 					)}
 				</Button>
 				{errors.root && (
-					<Alert severity="error" sx={{ mt: 4 }}>
+					<Alert severity="error" sx={{ mt: 2 }}>
 						{errors.root.message}
 					</Alert>
 				)}
+
+				<Divider variant="middle" sx={{ mt: 2 }}>
+					Ещё нет аккаунта?
+				</Divider>
+				<Button variant="outlined" sx={{ mt: 2 }} size="large" fullWidth>
+					Зарегистрироваться
+				</Button>
 			</Box>
 		</form>
 	);
