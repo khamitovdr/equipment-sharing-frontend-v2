@@ -1,114 +1,70 @@
+import { BaseTextFieldProps, TextField } from "@mui/material";
+import { ChangeEvent } from "react";
 import {
-	BaseTextFieldProps,
-	InputAdornment,
-	MenuItem,
-	Select,
-	TextField,
-	Typography,
-} from "@mui/material";
-import React from "react";
-import {
-	CountryIso2,
-	FlagImage,
-	defaultCountries,
-	parseCountry,
-	usePhoneInput,
-} from "react-international-phone";
+	FieldErrors,
+	FieldValues,
+	Path,
+	UseFormRegister,
+} from "react-hook-form";
+import { usePhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
-interface MUIPhoneProps extends BaseTextFieldProps {
-	value: string;
-	onChange: (phone: string) => void;
-}
+type MUIPhoneProps<T extends FieldValues> = {
+	fieldName: Path<T>;
+	label: string;
+	required?: boolean;
+	register: UseFormRegister<T>;
+	errors: FieldErrors<T>;
+} & BaseTextFieldProps;
 
-const PhoneNumberInput: React.FC<MUIPhoneProps> = ({
-	value,
-	onChange,
-	...restProps
-}) => {
-	const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
-		usePhoneInput({
-			defaultCountry: "ru",
-			value,
-			countries: defaultCountries,
-			onChange: (data) => {
-				onChange(data.phone);
-			},
-		});
+const PhoneNumberInput = <T extends FieldValues>(props: MUIPhoneProps<T>) => {
+	const { fieldName, label, required, register, errors, ...rest } = props;
+	const { onChange, ...restRegister } = register(fieldName);
+
+	const {
+		// phone,
+		inputValue,
+		handlePhoneValueChange,
+		inputRef,
+	} = usePhoneInput({
+		disableDialCodePrefill: true,
+		disableCountryGuess: true,
+		defaultCountry: "ru",
+	});
+
+	const prefillPhone = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
+		const value = e.target.value;
+		if (value.length < 2) {
+			if (["+", "7", "8"].includes(value)) {
+				e.target.value = "+7";
+			} else {
+				e.target.value = `+7${value}`;
+			}
+		}
+	};
 
 	return (
 		<TextField
+			{...restRegister}
+			required={required}
+			label={label}
+			error={!!errors[fieldName]}
+			helperText={errors[fieldName]?.message as React.ReactNode}
 			variant="outlined"
-			label="Phone number"
-			color="primary"
-			placeholder="Phone number"
+			margin="normal"
+			fullWidth
+			placeholder="+7 (900) 000-00-00"
 			value={inputValue}
-			onChange={handlePhoneValueChange}
+			onChange={(e) => {
+				prefillPhone(e);
+				onChange(e);
+				handlePhoneValueChange(e);
+			}}
 			type="tel"
 			inputRef={inputRef}
-			InputProps={{
-				startAdornment: (
-					<InputAdornment
-						position="start"
-						style={{ marginRight: "2px", marginLeft: "-8px" }}
-					>
-						<Select
-							MenuProps={{
-								style: {
-									height: "300px",
-									width: "360px",
-									top: "10px",
-									left: "-34px",
-								},
-								transformOrigin: {
-									vertical: "top",
-									horizontal: "left",
-								},
-							}}
-							sx={{
-								width: "max-content",
-								// Remove default outline (display only on focus)
-								fieldset: {
-									display: "none",
-								},
-								'&.Mui-focused:has(div[aria-expanded="false"])': {
-									fieldset: {
-										display: "block",
-									},
-								},
-								// Update default spacing
-								".MuiSelect-select": {
-									padding: "8px",
-									paddingRight: "24px !important",
-								},
-								svg: {
-									right: 0,
-								},
-							}}
-							value={country.iso2}
-							onChange={(e) => setCountry(e.target.value as CountryIso2)}
-							renderValue={(value) => (
-								<FlagImage iso2={value} style={{ display: "flex" }} />
-							)}
-						>
-							{defaultCountries.map((c) => {
-								const country = parseCountry(c);
-								return (
-									<MenuItem key={country.iso2} value={country.iso2}>
-										<FlagImage
-											iso2={country.iso2}
-											style={{ marginRight: "8px" }}
-										/>
-										<Typography marginRight="8px">{country.name}</Typography>
-										<Typography color="gray">+{country.dialCode}</Typography>
-									</MenuItem>
-								);
-							})}
-						</Select>
-					</InputAdornment>
-				),
-			}}
-			{...restProps}
+			{...rest}
 		/>
 	);
 };
