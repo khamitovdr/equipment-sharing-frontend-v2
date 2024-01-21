@@ -37,8 +37,10 @@ const PhoneNumberInput = <T extends FieldValues>(props: MUIPhoneProps<T>) => {
 	) => {
 		const value = e.target.value;
 		if (value.length < 2) {
-			if (["+", "7", "8"].includes(value)) {
+			if (["7", "8"].includes(value)) {
 				e.target.value = "+7";
+			} else if (value === "+") {
+				e.target.value = "";
 			} else {
 				e.target.value = `+7${value}`;
 			}
