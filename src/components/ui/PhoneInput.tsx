@@ -1,64 +1,116 @@
-import React from "react";
-import { MuiTelInput } from "mui-tel-input";
 import {
-	FieldErrors,
-	FieldValues,
-	Path,
-	UseFormRegister,
-} from "react-hook-form";
+	BaseTextFieldProps,
+	InputAdornment,
+	MenuItem,
+	Select,
+	TextField,
+	Typography,
+} from "@mui/material";
+import React from "react";
+import {
+	CountryIso2,
+	FlagImage,
+	defaultCountries,
+	parseCountry,
+	usePhoneInput,
+} from "react-international-phone";
+import "react-international-phone/style.css";
 
-type PhoneInputProps<T extends FieldValues> = {
-	fieldName: Path<T>;
-	label: string;
-	required?: boolean;
-	register: UseFormRegister<T>;
-	errors: FieldErrors<T>;
-} & React.ComponentProps<typeof MuiTelInput>;
+interface MUIPhoneProps extends BaseTextFieldProps {
+	value: string;
+	onChange: (phone: string) => void;
+}
 
-const PhoneInput = <T extends FieldValues>(props: PhoneInputProps<T>) => {
-	const { fieldName, label, required, register, errors, ...rest } = props;
-	// const [phone, setPhone] = React.useState("");
-
-	// const handleChange = (newPhone: React.SetStateAction<string>) => {
-	// 	setPhone(newPhone);
-	// 	console.log(newPhone);
-	// };
-
-	const { ref, ...inputProps } = register(fieldName);
+const PhoneNumberInput: React.FC<MUIPhoneProps> = ({
+	value,
+	onChange,
+	...restProps
+}) => {
+	const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
+		usePhoneInput({
+			defaultCountry: "ru",
+			value,
+			countries: defaultCountries,
+			onChange: (data) => {
+				onChange(data.phone);
+			},
+		});
 
 	return (
-		<MuiTelInput
-			// {...register(fieldName)}
-			{...inputProps}
-			ref={ref}
-
-			required={required}
-			autoFocus
-			margin="normal"
-			label={label}
-			fullWidth
-			error={!!errors[fieldName]}
-			helperText={errors[fieldName]?.message as React.ReactNode}
-            
-			// value={phone}
-			onChange={(value, info) => {
-				inputProps.onChange({
-					target: {
-						value,
-						name: fieldName,
-					},
-					type: "change",
-				});
+		<TextField
+			variant="outlined"
+			label="Phone number"
+			color="primary"
+			placeholder="Phone number"
+			value={inputValue}
+			onChange={handlePhoneValueChange}
+			type="tel"
+			inputRef={inputRef}
+			InputProps={{
+				startAdornment: (
+					<InputAdornment
+						position="start"
+						style={{ marginRight: "2px", marginLeft: "-8px" }}
+					>
+						<Select
+							MenuProps={{
+								style: {
+									height: "300px",
+									width: "360px",
+									top: "10px",
+									left: "-34px",
+								},
+								transformOrigin: {
+									vertical: "top",
+									horizontal: "left",
+								},
+							}}
+							sx={{
+								width: "max-content",
+								// Remove default outline (display only on focus)
+								fieldset: {
+									display: "none",
+								},
+								'&.Mui-focused:has(div[aria-expanded="false"])': {
+									fieldset: {
+										display: "block",
+									},
+								},
+								// Update default spacing
+								".MuiSelect-select": {
+									padding: "8px",
+									paddingRight: "24px !important",
+								},
+								svg: {
+									right: 0,
+								},
+							}}
+							value={country.iso2}
+							onChange={(e) => setCountry(e.target.value as CountryIso2)}
+							renderValue={(value) => (
+								<FlagImage iso2={value} style={{ display: "flex" }} />
+							)}
+						>
+							{defaultCountries.map((c) => {
+								const country = parseCountry(c);
+								return (
+									<MenuItem key={country.iso2} value={country.iso2}>
+										<FlagImage
+											iso2={country.iso2}
+											style={{ marginRight: "8px" }}
+										/>
+										<Typography marginRight="8px">{country.name}</Typography>
+										<Typography color="gray">+{country.dialCode}</Typography>
+									</MenuItem>
+								);
+							})}
+						</Select>
+					</InputAdornment>
+				),
 			}}
-
-			forceCallingCode
-			disableDropdown
-			defaultCountry="RU"
-			inputProps={{ maxLength: 13 }}
-			getFlagElement={() => null}
-			{...rest}
+			{...restProps}
 		/>
 	);
 };
 
-export default PhoneInput;
+export default PhoneNumberInput;
