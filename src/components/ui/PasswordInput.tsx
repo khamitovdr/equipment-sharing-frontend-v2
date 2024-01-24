@@ -34,6 +34,8 @@ const PasswordInput = <T extends FieldValues>(props: PasswordInputProps<T>) => {
 		event.preventDefault();
 	};
 
+	const isErrors = !!errors[fieldName];
+
 	return (
 		<FormControl
 			required={required}
@@ -43,13 +45,13 @@ const PasswordInput = <T extends FieldValues>(props: PasswordInputProps<T>) => {
 		>
 			<InputLabel
 				htmlFor={`outlined-adornment-password-${fieldName}`}
-				error={!!errors[fieldName]}
+				error={isErrors}
 			>
 				{label}
 			</InputLabel>
 			<OutlinedInput
 				{...register(fieldName)}
-				error={!!errors[fieldName]}
+				error={isErrors}
 				id={`outlined-adornment-password-${fieldName}`}
 				type={showPassword ? "text" : "password"}
 				endAdornment={
@@ -66,9 +68,11 @@ const PasswordInput = <T extends FieldValues>(props: PasswordInputProps<T>) => {
 				}
 				label={label}
 			/>
-			<FormHelperText error={!!errors[fieldName]}>
-				{errors[fieldName]?.message as React.ReactNode}
-			</FormHelperText>
+			{isErrors && (
+				<FormHelperText error={isErrors}>
+					{errors[fieldName]?.message as React.ReactNode}
+				</FormHelperText>
+			)}
 		</FormControl>
 	);
 };
