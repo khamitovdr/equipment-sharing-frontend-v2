@@ -1,3 +1,4 @@
+import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress, Divider } from "@mui/material";
 import { AxiosError } from "axios";
@@ -19,6 +20,7 @@ const LoginForm = () => {
 	const login = useAuthStore((state) => state.login);
 
 	const {
+		control,
 		register,
 		handleSubmit,
 		setError,
@@ -42,48 +44,51 @@ const LoginForm = () => {
 	};
 
 	return (
-		<form noValidate onSubmit={handleSubmit(onSubmit)}>
-			<Box p={4} display="flex" flexDirection="column" alignContent="center">
-				<TextInput
-					fieldName="username"
-					label="Email"
-					required
-					register={register}
-					errors={errors}
-				/>
+		<>
+			<form noValidate onSubmit={handleSubmit(onSubmit)}>
+				<Box p={4} display="flex" flexDirection="column" alignContent="center">
+					<TextInput
+						fieldName="username"
+						label="Email"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<PasswordInput
-					fieldName="password"
-					label="Пароль"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<PasswordInput
+						fieldName="password"
+						label="Пароль"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<Button
-					type="submit"
-					variant="contained"
-					sx={{ mt: 2 }}
-					size="large"
-					fullWidth
-				>
-					{isSubmitting ? (
-						<CircularProgress color="inherit" size={26} />
-					) : (
-						"Войти"
-					)}
-				</Button>
+					<Button
+						type="submit"
+						variant="contained"
+						sx={{ mt: 2 }}
+						size="large"
+						fullWidth
+					>
+						{isSubmitting ? (
+							<CircularProgress color="inherit" size={26} />
+						) : (
+							"Войти"
+						)}
+					</Button>
 
-				<FormErrorMessage errors={errors} />
+					<FormErrorMessage errors={errors} />
 
-				<Divider variant="middle" sx={{ mt: 2 }}>
-					Ещё нет аккаунта?
-				</Divider>
-				<Button variant="outlined" sx={{ mt: 2 }} size="large" fullWidth>
-					Зарегистрироваться
-				</Button>
-			</Box>
-		</form>
+					<Divider variant="middle" sx={{ mt: 2 }}>
+						Ещё нет аккаунта?
+					</Divider>
+					<Button variant="outlined" sx={{ mt: 2 }} size="large" fullWidth>
+						Зарегистрироваться
+					</Button>
+				</Box>
+			</form>
+			<DevTool control={control} />
+		</>
 	);
 };
 
