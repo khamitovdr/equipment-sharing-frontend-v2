@@ -1,9 +1,13 @@
+import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
+import React from "react";
+import { DaDataPartySuggestion } from "react-dadata";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import FormErrorMessage from "../components/ui/FormErrorMessage";
+import InnAutocompleteInput from "../components/ui/InnAutocompleteInput";
 import PasswordInput from "../components/ui/PasswordInput";
 import PhoneNumberInput from "../components/ui/PhoneInput";
 import TextInput from "../components/ui/TextInput";
@@ -45,6 +49,7 @@ type FormFields = z.infer<typeof schema>;
 
 const SignUpForm = () => {
 	const {
+		control,
 		register,
 		handleSubmit,
 		setError,
@@ -70,81 +75,95 @@ const SignUpForm = () => {
 		}
 	};
 
+	const [selectedOption, setSelectedOption] = React.useState<
+		DaDataPartySuggestion | undefined
+	>();
+
 	return (
-		<form noValidate onSubmit={handleSubmit(onSubmit)}>
-			<Box p={4} display="flex" flexDirection="column" alignContent="center">
-				<TextInput
-					fieldName="name"
-					label="Имя"
-					required
-					register={register}
-					errors={errors}
-				/>
+		<>
+			<form noValidate onSubmit={handleSubmit(onSubmit)}>
+				<Box p={4} display="flex" flexDirection="column" alignContent="center">
+					<TextInput
+						fieldName="name"
+						label="Имя"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<TextInput
-					fieldName="middlename"
-					label="Отчество"
-					register={register}
-					errors={errors}
-				/>
+					<TextInput
+						fieldName="middlename"
+						label="Отчество"
+						register={register}
+						errors={errors}
+					/>
 
-				<TextInput
-					fieldName="surname"
-					label="Фамилия"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<TextInput
+						fieldName="surname"
+						label="Фамилия"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<TextInput
-					fieldName="email"
-					label="Email"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<TextInput
+						fieldName="email"
+						label="Email"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<PasswordInput
-					fieldName="password"
-					label="Пароль"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<PasswordInput
+						fieldName="password"
+						label="Пароль"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<PasswordInput
-					fieldName="passwordConfirmation"
-					label="Подтвердите пароль"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<PasswordInput
+						fieldName="passwordConfirmation"
+						label="Подтвердите пароль"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<PhoneNumberInput
-					fieldName="phone"
-					label="Номер телефона"
-					required
-					register={register}
-					errors={errors}
-				/>
+					<PhoneNumberInput
+						fieldName="phone"
+						label="Номер телефона"
+						required
+						register={register}
+						errors={errors}
+					/>
 
-				<Button
-					type="submit"
-					variant="contained"
-					sx={{ mt: 2 }}
-					size="large"
-					fullWidth
-				>
-					{isSubmitting ? (
-						<CircularProgress color="inherit" size={26} />
-					) : (
-						"Войти"
-					)}
-				</Button>
+					<InnAutocompleteInput
+						label="Организация"
+						required
+						selectedOption={selectedOption}
+						setSelectedOption={setSelectedOption}
+					/>
 
-				<FormErrorMessage errors={errors} />
-			</Box>
-		</form>
+					<Button
+						type="submit"
+						variant="contained"
+						sx={{ mt: 2 }}
+						size="large"
+						fullWidth
+					>
+						{isSubmitting ? (
+							<CircularProgress color="inherit" size={26} />
+						) : (
+							"Войти"
+						)}
+					</Button>
+
+					<FormErrorMessage errors={errors} />
+				</Box>
+			</form>
+			<DevTool control={control} />
+		</>
 	);
 };
 
