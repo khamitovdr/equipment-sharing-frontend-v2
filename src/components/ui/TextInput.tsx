@@ -21,7 +21,6 @@ const TextInput = <T extends FieldValues>(props: TextInputProps<T>) => {
 		<TextField
 			{...register(fieldName)}
             required={required}
-			autoFocus
 			margin="normal"
 			label={label}
 			fullWidth
