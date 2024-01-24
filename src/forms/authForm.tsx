@@ -1,6 +1,6 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CircularProgress, Divider } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -46,7 +46,13 @@ const LoginForm = () => {
 	return (
 		<>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<Box p={4} display="flex" flexDirection="column" alignContent="center">
+				<Box
+					p={4}
+					paddingBottom={0}
+					display="flex"
+					flexDirection="column"
+					alignContent="center"
+				>
 					<TextInput
 						fieldName="username"
 						label="Email"
@@ -78,13 +84,6 @@ const LoginForm = () => {
 					</Button>
 
 					<FormErrorMessage errors={errors} />
-
-					<Divider variant="middle" sx={{ mt: 2 }}>
-						Ещё нет аккаунта?
-					</Divider>
-					<Button variant="outlined" sx={{ mt: 2 }} size="large" fullWidth>
-						Зарегистрироваться
-					</Button>
 				</Box>
 			</form>
 			<DevTool control={control} />

@@ -1,6 +1,6 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, BoxProps, Button, CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import React from "react";
 import { DaDataPartySuggestion } from "react-dadata";
@@ -47,7 +47,7 @@ const schema = z
 
 type FormFields = z.infer<typeof schema>;
 
-const SignUpForm = () => {
+const SignUpForm = (props: BoxProps) => {
 	const {
 		control,
 		register,
@@ -80,9 +80,9 @@ const SignUpForm = () => {
 	>();
 
 	return (
-		<>
+		<Box {...props}>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<Box p={4} display="flex" flexDirection="column" alignContent="center">
+				<Box display="flex" flexDirection="column" alignContent="center">
 					<TextInput
 						fieldName="name"
 						label="Имя"
@@ -155,7 +155,7 @@ const SignUpForm = () => {
 						{isSubmitting ? (
 							<CircularProgress color="inherit" size={26} />
 						) : (
-							"Войти"
+							"Зарегистрироваться"
 						)}
 					</Button>
 
@@ -163,7 +163,7 @@ const SignUpForm = () => {
 				</Box>
 			</form>
 			<DevTool control={control} />
-		</>
+		</Box>
 	);
 };
 
