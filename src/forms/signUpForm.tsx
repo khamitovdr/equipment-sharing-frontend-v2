@@ -15,6 +15,7 @@ import TextInput from "../components/ui/TextInput";
 import { UserData } from "../models/SignUp";
 import { Routes } from "../router/routes";
 import isPhoneValid from "../utils/phoneValidation";
+import useFormLeavingAction from "../hooks/usePageLeaving";
 
 const schema = z
 	.object({
@@ -66,11 +67,13 @@ const SignUpForm = (props: SignUpFormProps) => {
 		register,
 		handleSubmit,
 		setError,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitting, isDirty },
 	} = useForm<FormFields>({
 		resolver: zodResolver(schema),
 		defaultValues: userData,
 	});
+
+	useFormLeavingAction({ isDirty });
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
 		updateUserData({
