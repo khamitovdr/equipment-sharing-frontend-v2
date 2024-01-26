@@ -2,7 +2,7 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import FormErrorMessage from "../components/ui/FormErrorMessage";
 import PasswordInput from "../components/ui/PasswordInput";
@@ -19,15 +19,15 @@ type FormFields = z.infer<typeof schema>;
 const LoginForm = () => {
 	const login = useAuthStore((state) => state.login);
 
+	const methods = useForm<FormFields>({
+		resolver: zodResolver(schema),
+	});
 	const {
 		control,
-		register,
 		handleSubmit,
 		setError,
 		formState: { errors, isSubmitting },
-	} = useForm<FormFields>({
-		resolver: zodResolver(schema),
-	});
+	} = methods;
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
 		try {
@@ -44,7 +44,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		<>
+		<FormProvider {...methods}>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Box
 					p={4}
@@ -53,21 +53,9 @@ const LoginForm = () => {
 					flexDirection="column"
 					alignContent="center"
 				>
-					<TextInput
-						fieldName="username"
-						label="Email"
-						required
-						register={register}
-						errors={errors}
-					/>
+					<TextInput fieldName="username" label="Email" required />
 
-					<PasswordInput
-						fieldName="password"
-						label="Пароль"
-						required
-						register={register}
-						errors={errors}
-					/>
+					<PasswordInput fieldName="password" label="Пароль" required />
 
 					<Button
 						type="submit"
@@ -87,7 +75,7 @@ const LoginForm = () => {
 				</Box>
 			</form>
 			<DevTool control={control} />
-		</>
+		</FormProvider>
 	);
 };
 
