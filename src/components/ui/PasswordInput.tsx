@@ -8,23 +8,21 @@ import {
 	OutlinedInput,
 } from "@mui/material";
 import React, { useState } from "react";
-import {
-	FieldErrors,
-	FieldValues,
-	Path,
-	UseFormRegister,
-} from "react-hook-form";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 
 type PasswordInputProps<T extends FieldValues> = {
 	fieldName: Path<T>;
 	label: string;
 	required?: boolean;
-	register: UseFormRegister<T>;
-	errors: FieldErrors<T>;
 } & React.ComponentProps<typeof FormControl>;
 
 const PasswordInput = <T extends FieldValues>(props: PasswordInputProps<T>) => {
-	const { fieldName, label, required, register, errors, ...rest } = props;
+	const { fieldName, label, required, ...rest } = props;
+
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext<T>();
 
 	const [showPassword, setShowPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);

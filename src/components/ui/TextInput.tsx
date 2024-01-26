@@ -1,26 +1,25 @@
 import { TextField } from "@mui/material";
 import React from "react";
-import {
-	FieldErrors,
-	FieldValues,
-	Path,
-	UseFormRegister,
-} from "react-hook-form";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 
 type TextInputProps<T extends FieldValues> = {
 	fieldName: Path<T>;
 	label: string;
-    required?: boolean;
-	register: UseFormRegister<T>;
-	errors: FieldErrors<T>;
+	required?: boolean;
 } & React.ComponentProps<typeof TextField>;
 
 const TextInput = <T extends FieldValues>(props: TextInputProps<T>) => {
-	const { fieldName, label, required, register, errors, ...rest } = props;
+	const { fieldName, label, required, ...rest } = props;
+
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext<T>();
+
 	return (
 		<TextField
 			{...register(fieldName)}
-            required={required}
+			required={required}
 			margin="normal"
 			label={label}
 			fullWidth
