@@ -53,7 +53,6 @@ export const useSignupStore = create<SignupStore>()(
 				const validatedUserData = ValidateUserData(userData);
 				const response = await axios.post("/users/", validatedUserData);
 				if (response.status === 201) {
-					console.log(response.data);
 					const login = useAuthStore.getState().login;
 					await login({
 						username: userData.email,
@@ -75,7 +74,6 @@ export const useSignupStore = create<SignupStore>()(
 			reset: () => {
 				useSignupStore.persist.clearStorage();
 				set(defaultState);
-				console.log("reset");
 			},
 		}),
 		{
