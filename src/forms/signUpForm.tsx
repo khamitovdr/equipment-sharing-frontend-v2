@@ -5,18 +5,21 @@ import { AxiosError } from "axios";
 import React from "react";
 import { DaDataPartySuggestion } from "react-dadata";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import FormErrorMessage from "../components/ui/FormErrorMessage";
 import InnAutocompleteInput from "../components/ui/InnAutocompleteInput";
 import PasswordInput from "../components/ui/PasswordInput";
 import PhoneNumberInput from "../components/ui/PhoneInput";
 import TextInput from "../components/ui/TextInput";
+import { UserData } from "../models/SignUp";
+import { Routes } from "../router/routes";
 import isPhoneValid from "../utils/phoneValidation";
 
 const schema = z
 	.object({
 		name: z.string().min(1, "Поле не может быть пустым"),
-		middlename: z.string(),
+		middle_name: z.string(),
 		surname: z.string().min(1, "Поле не может быть пустым"),
 		email: z.string().email("Введите корректный email"),
 
@@ -47,7 +50,17 @@ const schema = z
 
 type FormFields = z.infer<typeof schema>;
 
-const SignUpForm = (props: BoxProps) => {
+type SignUpFormProps = {
+	userData: UserData;
+	updateUserData: (newData: Partial<UserData>) => void;
+	submitUserData: () => Promise<void>;
+} & BoxProps;
+
+const SignUpForm = (props: SignUpFormProps) => {
+	const { userData, updateUserData, submitUserData, ...rest } = props;
+
+	const navigate = useNavigate();
+
 	const {
 		control,
 		register,
@@ -56,22 +69,27 @@ const SignUpForm = (props: BoxProps) => {
 		formState: { errors, isSubmitting },
 	} = useForm<FormFields>({
 		resolver: zodResolver(schema),
+		defaultValues: userData,
 	});
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
-		console.log(data);
-		console.log(errors);
+		updateUserData({
+			...data,
+			is_owner: true,
+			organization_inn: "9729311480",
+		});
+
 		try {
-			// await login(data);
-			console.log(data);
-		} catch (error) {
-			switch ((error as AxiosError).response?.status) {
-				case 401:
-					setError("root", { message: "Неверный логин или пароль" });
-					break;
-				default:
-					throw error;
-			}
+			await submitUserData();
+			navigate(Routes.Home);
+		} catch (err) {
+			const axiosError = err as AxiosError;
+			setError("root", {
+				type: "manual",
+				// message: axiosError.response?.data?.detail,
+				message: "Ошибка при регистрации",
+			});
+			console.log(axiosError.response?.data);
 		}
 	};
 
@@ -80,7 +98,7 @@ const SignUpForm = (props: BoxProps) => {
 	>();
 
 	return (
-		<Box {...props}>
+		<Box {...rest}>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Box display="flex" flexDirection="column" alignContent="center">
 					<TextInput
@@ -92,7 +110,7 @@ const SignUpForm = (props: BoxProps) => {
 					/>
 
 					<TextInput
-						fieldName="middlename"
+						fieldName="middle_name"
 						label="Отчество"
 						register={register}
 						errors={errors}
