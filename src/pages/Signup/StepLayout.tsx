@@ -11,6 +11,7 @@ import {
 import { ZodSchema } from "zod";
 import FormErrorMessage from "../../components/ui/FormErrorMessage";
 import { useSignupStore } from "../../stores/createUserStore";
+import useFormLeavingAction from "../../hooks/usePageLeaving";
 
 type StepLayoutProps<T extends FieldValues> = {
 	schema: ZodSchema<T>;
@@ -34,8 +35,10 @@ const StepLayout = <T extends FieldValues>({
 	});
 	const {
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { errors, isDirty, isSubmitting },
 	} = methods;
+
+	useFormLeavingAction({ isDirty });
 
 	const onSubmit: SubmitHandler<T> = async (data) => {
 		updateUserData(data);
