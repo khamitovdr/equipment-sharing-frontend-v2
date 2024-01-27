@@ -12,7 +12,14 @@ const axiosInstance = axios.create({
 
 export const fetchOrganizationSuggestions = async (
 	query: string,
+	removeBranches = true,
 ): Promise<readonly DaDataPartySuggestion[]> => {
 	const { data } = await axiosInstance.post("/suggest/party", { query });
+	if (removeBranches) {
+		return data.suggestions.filter(
+			(suggestion: DaDataPartySuggestion) =>
+				suggestion.data.branch_type === "MAIN",
+		);
+	}
 	return data.suggestions;
 };
