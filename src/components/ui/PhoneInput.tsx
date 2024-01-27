@@ -1,31 +1,17 @@
 import { BaseTextFieldProps, TextField } from "@mui/material";
 import { ChangeEvent } from "react";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, Path } from "react-hook-form";
 import { usePhoneInput } from "react-international-phone";
-import "react-international-phone/style.css";
 
 type MUIPhoneProps<T extends FieldValues> = {
 	fieldName: Path<T>;
 	label: string;
-	required?: boolean;
 } & BaseTextFieldProps;
 
 const PhoneNumberInput = <T extends FieldValues>(props: MUIPhoneProps<T>) => {
-	const { fieldName, label, required, ...rest } = props;
+	const { fieldName, label, ...rest } = props;
 
-	const {
-		register,
-		formState: { errors },
-	} = useFormContext<T>();
-
-	const { onChange, ...restRegister } = register(fieldName);
-
-	const {
-		// phone,
-		inputValue,
-		handlePhoneValueChange,
-		inputRef,
-	} = usePhoneInput({
+	const { inputValue, handlePhoneValueChange, inputRef } = usePhoneInput({
 		disableDialCodePrefill: true,
 		disableCountryGuess: true,
 		defaultCountry: "ru",
@@ -35,7 +21,9 @@ const PhoneNumberInput = <T extends FieldValues>(props: MUIPhoneProps<T>) => {
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
 		const value = e.target.value;
-		if (value.length < 2) {
+		if (value.length > 18) {
+			e.target.value = value.slice(0, 18);
+		} else if (value.length < 2) {
 			if (["7", "8"].includes(value)) {
 				e.target.value = "+7";
 			} else if (value === "+") {
@@ -47,25 +35,35 @@ const PhoneNumberInput = <T extends FieldValues>(props: MUIPhoneProps<T>) => {
 	};
 
 	return (
-		<TextField
-			{...restRegister}
-			required={required}
-			label={label}
-			error={!!errors[fieldName]}
-			helperText={errors[fieldName]?.message as React.ReactNode}
-			variant="outlined"
-			margin="normal"
-			fullWidth
-			placeholder="+7 (900) 000-00-00"
-			value={inputValue}
-			onChange={(e) => {
-				prefillPhone(e);
-				onChange(e);
-				handlePhoneValueChange(e);
-			}}
-			type="tel"
-			inputRef={inputRef}
-			{...rest}
+		<Controller
+			name={fieldName}
+			render={({
+				field: { ref, value, onChange, ...restField },
+				fieldState: { invalid, error },
+			}) => (
+				<TextField
+					{...restField}
+					label={label}
+					error={invalid}
+					helperText={error?.message as React.ReactNode}
+					variant="outlined"
+					margin="normal"
+					type="tel"
+					fullWidth
+					placeholder="+7 (900) 000-00-00"
+					value={inputValue || value}
+					onChange={(e) => {
+						prefillPhone(e);
+						handlePhoneValueChange(e);
+						onChange(e);
+					}}
+					inputRef={(el) => {
+						inputRef.current = el;
+						ref(el);
+					}}
+					{...rest}
+				/>
+			)}
 		/>
 	);
 };
