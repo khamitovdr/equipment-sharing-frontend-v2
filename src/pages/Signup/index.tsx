@@ -7,13 +7,14 @@ import PhoneNumberInput from "../../components/ui/PhoneInput";
 import TextInput from "../../components/ui/TextInput";
 import {
 	NameEmailSchema,
-	// OrganizationSchema,
+	OrganizationSchema,
 	PasswordConfirmationSchema,
 	PhoneSchema,
 } from "../../models/SignUp";
 import { Routes } from "../../router/routes";
 import { useSignupStore } from "../../stores/createUserStore";
 import StepLayout from "./StepLayout";
+import OrganizationStep from "./OrganizationStep";
 
 const SignUpStep = ({ step }: { step: number }) => {
 	switch (step) {
@@ -43,17 +44,14 @@ const SignUpStep = ({ step }: { step: number }) => {
 					<PhoneNumberInput fieldName="phone" label="Номер телефона" required />
 				</StepLayout>
 			);
-		// case 3:
-		// 	return (
-		// 		<StepLayout schema={OrganizationSchema}>
-		// 			<InnAutocompleteInput
-		// 				label="Организация"
-		// 				required
-		// 				selectedOption={selectedOption}
-		// 				setSelectedOption={setSelectedOption}
-		// 			/>
-		// 		</StepLayout>
-		// 	);
+		case 3:
+			return <OrganizationStep schema={OrganizationSchema} />;
+		case 4:
+			return (
+				<StepLayout schema={PhoneSchema}>
+					<div />
+				</StepLayout>
+			);
 		default:
 			return null;
 	}

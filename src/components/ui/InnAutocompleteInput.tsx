@@ -15,18 +15,21 @@ import { fetchOrganizationSuggestions } from "../../api/dadata";
 type TextInputProps = {
 	label: string;
 	required?: boolean;
-	selectedOption: DaDataPartySuggestion | undefined;
-	setSelectedOption: (value: DaDataPartySuggestion | undefined) => void;
+	isReady?: boolean;
+	selectedOption: DaDataPartySuggestion | null;
+	setSelectedOption: (value: DaDataPartySuggestion | null) => void;
 } & React.ComponentProps<typeof TextField>;
 
 const InnAutocompleteInput = ({
 	label,
 	required,
+	isReady = true,
 	selectedOption,
 	setSelectedOption,
 	...rest
 }: TextInputProps) => {
 	const [query, setQuery] = React.useState("");
+	console.log("query", query, !!query);
 
 	const {
 		isPending,
@@ -43,6 +46,10 @@ const InnAutocompleteInput = ({
 	const isActive = (option: DaDataPartySuggestion) =>
 		option.data.state.status === "ACTIVE";
 
+	if (!isReady) {
+		return <CircularProgress />;
+	}
+
 	return (
 		<Autocomplete
 			// open={true} // dont close options
@@ -56,9 +63,10 @@ const InnAutocompleteInput = ({
 			isOptionEqualToValue={(option, value) =>
 				option.data.hid === value.data.hid
 			}
+			value={selectedOption}
 			getOptionDisabled={(option) => !isActive(option)}
 			onChange={(_, value) => {
-				setSelectedOption(value || undefined);
+				setSelectedOption(value || null);
 			}}
 			inputValue={query}
 			onInputChange={(_, value) => {
