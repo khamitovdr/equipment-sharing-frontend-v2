@@ -23,3 +23,18 @@ export const fetchOrganizationSuggestions = async (
 	}
 	return data.suggestions;
 };
+
+export const fetchOrganizationSuggestionByInn = async (
+	inn: string,
+): Promise<DaDataPartySuggestion | undefined> => {
+	const { data } = await axiosInstance.post("/findById/party", {
+		query: inn,
+		count: 1,
+		status: ["ACTIVE"],
+		branch_type: "MAIN",
+	});
+	if (data.suggestions.length === 0) {
+		throw new Error("No suggestions found");
+	}
+	return data.suggestions[0];
+};
