@@ -1,4 +1,3 @@
-// import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import {
 	SubmitHandler,
 	useForm,
 } from "react-hook-form";
-import { ZodSchema } from "zod";
 import { fetchOrganizationSuggestionByInn } from "../../api/dadata";
 import { postOrganization } from "../../api/organizations";
 import FormErrorMessage from "../../components/ui/FormErrorMessage";
@@ -18,16 +16,7 @@ import InnAutocompleteInput from "../../components/ui/InnAutocompleteInput";
 import useFormLeavingAction from "../../hooks/usePageLeaving";
 import { useSignupStore } from "../../stores/createUserStore";
 
-type OrganizationStepProps<T extends FieldValues> = {
-	schema: ZodSchema<T>;
-	// onSubmit: SubmitHandler<T>;
-	// children: ReactNode;
-};
-
-const OrganizationStep = <T extends FieldValues>({
-	schema,
-	// onSubmit,
-}: OrganizationStepProps<T>) => {
+const OrganizationStep = <T extends FieldValues>() => {
 	const userData = useSignupStore((state) => state.userData);
 	const updateUserData = useSignupStore((state) => state.updateUserData);
 	const nextStep = useSignupStore((state) => state.nextStep);
@@ -37,7 +26,6 @@ const OrganizationStep = <T extends FieldValues>({
 	);
 
 	const methods = useForm<T>({
-		// resolver: zodResolver(schema),
 		defaultValues: userData as unknown as DefaultValues<T>,
 	});
 	const {
@@ -62,7 +50,10 @@ const OrganizationStep = <T extends FieldValues>({
 		}
 	}, [suggestion]);
 
+	const [submited, setSubmited] = useState(false);
+
 	const onSubmit: SubmitHandler<T> = async () => {
+		setSubmited(true);
 		try {
 			const response = await postOrganization({ suggestion: selectedOption });
 
@@ -76,14 +67,19 @@ const OrganizationStep = <T extends FieldValues>({
 		}
 	};
 
+	const isError = !selectedOption && submited;
+	const errorText = "Необходимо указать организацию";
+
 	return (
 		<FormProvider {...methods}>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Box display="flex" flexDirection="column" alignItems="stretch">
 					<InnAutocompleteInput
-						label="ИНН организации"
+						label="Организация"
 						name="organization_inn"
 						isReady={(!!organization_inn && isSuccess) || !organization_inn}
+						error={isError}
+						helpText={errorText}
 						selectedOption={selectedOption}
 						setSelectedOption={setSelectedOption}
 					/>

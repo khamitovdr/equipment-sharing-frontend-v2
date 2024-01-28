@@ -7,7 +7,7 @@ import PhoneNumberInput from "../../components/ui/PhoneInput";
 import TextInput from "../../components/ui/TextInput";
 import {
 	NameEmailSchema,
-	OrganizationSchema,
+	// OrganizationSchema,
 	PasswordConfirmationSchema,
 	PhoneSchema,
 } from "../../models/SignUp";
@@ -45,7 +45,7 @@ const SignUpStep = ({ step }: { step: number }) => {
 				</StepLayout>
 			);
 		case 3:
-			return <OrganizationStep schema={OrganizationSchema} />;
+			return <OrganizationStep />;
 		case 4:
 			return (
 				<StepLayout schema={PhoneSchema}>

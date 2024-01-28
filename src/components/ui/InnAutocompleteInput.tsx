@@ -16,6 +16,8 @@ type TextInputProps = {
 	label: string;
 	required?: boolean;
 	isReady?: boolean;
+	error?: boolean;
+	helpText?: string;
 	selectedOption: DaDataPartySuggestion | null;
 	setSelectedOption: (value: DaDataPartySuggestion | null) => void;
 } & React.ComponentProps<typeof TextField>;
@@ -24,12 +26,13 @@ const InnAutocompleteInput = ({
 	label,
 	required,
 	isReady = true,
+	error,
+	helpText,
 	selectedOption,
 	setSelectedOption,
 	...rest
 }: TextInputProps) => {
 	const [query, setQuery] = React.useState("");
-	console.log("query", query, !!query);
 
 	const {
 		isPending,
@@ -78,7 +81,10 @@ const InnAutocompleteInput = ({
 					required={required}
 					margin="normal"
 					label={label}
-					helperText={!query && "Начните вводить название или ИНН"}
+					error={error}
+					helperText={
+						error ? helpText : !query && "Начните вводить название или ИНН"
+					}
 					fullWidth
 					InputProps={{
 						...params.InputProps,
