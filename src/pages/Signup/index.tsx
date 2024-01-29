@@ -1,7 +1,7 @@
 import HomeIcon from "@mui/icons-material/Home";
 import { Button, Container, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
-// import InnAutocompleteInput from "../../components/ui/InnAutocompleteInput";
+import OrganizationByInnAutocomplete from "../../components/ui/InnAutocompleteInput2";
 import PasswordInput from "../../components/ui/PasswordInput";
 import PhoneNumberInput from "../../components/ui/PhoneInput";
 import TextInput from "../../components/ui/TextInput";
@@ -11,10 +11,11 @@ import {
 	PasswordConfirmationSchema,
 	PhoneSchema,
 } from "../../models/SignUp";
+import { UserOrganizationSchema } from "../../models/organizationsAutocomplete";
 import { Routes } from "../../router/routes";
 import { useSignupStore } from "../../stores/createUserStore";
 import StepLayout from "./StepLayout";
-import OrganizationStep from "./OrganizationStep";
+// import OrganizationStep from "./OrganizationStep";
 
 const SignUpStep = ({ step }: { step: number }) => {
 	switch (step) {
@@ -45,7 +46,15 @@ const SignUpStep = ({ step }: { step: number }) => {
 				</StepLayout>
 			);
 		case 3:
-			return <OrganizationStep />;
+			return (
+				<StepLayout schema={UserOrganizationSchema}>
+					<OrganizationByInnAutocomplete
+						fieldName="organization_inn"
+						label="Организация"
+						required
+					/>
+				</StepLayout>
+			);
 		case 4:
 			return (
 				<StepLayout schema={PhoneSchema}>
