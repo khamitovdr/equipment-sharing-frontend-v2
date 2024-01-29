@@ -1,3 +1,4 @@
+import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { ReactNode } from "react";
@@ -8,20 +9,18 @@ import {
 	SubmitHandler,
 	useForm,
 } from "react-hook-form";
-import { ZodSchema } from "zod";
+import { z } from "zod";
 import FormErrorMessage from "../../components/ui/FormErrorMessage";
-import { useSignupStore } from "../../stores/createUserStore";
 import useFormLeavingAction from "../../hooks/usePageLeaving";
+import { useSignupStore } from "../../stores/createUserStore";
 
-type StepLayoutProps<T extends FieldValues> = {
-	schema: ZodSchema<T>;
-	// onSubmit: SubmitHandler<T>;
+type StepLayoutProps<T extends z.ZodTypeAny> = {
+	schema: T;
 	children: ReactNode;
 };
 
-const StepLayout = <T extends FieldValues>({
+const StepLayout = <T extends z.ZodTypeAny>({
 	schema,
-	// onSubmit,
 	children,
 }: StepLayoutProps<T>) => {
 	const userData = useSignupStore((state) => state.userData);
@@ -29,7 +28,9 @@ const StepLayout = <T extends FieldValues>({
 	const nextStep = useSignupStore((state) => state.nextStep);
 	const prevStep = useSignupStore((state) => state.prevStep);
 
-	const methods = useForm<T>({
+	type FormFields = z.infer<typeof schema>;
+
+	const methods = useForm<FormFields>({
 		resolver: zodResolver(schema),
 		defaultValues: userData as unknown as DefaultValues<T>,
 	});
@@ -41,7 +42,7 @@ const StepLayout = <T extends FieldValues>({
 	useFormLeavingAction({ isDirty });
 
 	const onSubmit: SubmitHandler<T> = async (data) => {
-		updateUserData(data);
+		updateUserData(data as unknown as FieldValues);
 		nextStep();
 	};
 
@@ -78,6 +79,7 @@ const StepLayout = <T extends FieldValues>({
 					<FormErrorMessage errors={errors} />
 				</Box>
 			</form>
+			<DevTool control={methods.control} />
 		</FormProvider>
 	);
 };

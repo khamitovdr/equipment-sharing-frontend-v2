@@ -32,6 +32,7 @@ const defaultState = {
 		password: "",
 		phone: "",
 		organization_inn: "",
+		organization_data: null,
 	},
 	currentStep: 0,
 };

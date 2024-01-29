@@ -48,11 +48,7 @@ const SignUpStep = ({ step }: { step: number }) => {
 		case 3:
 			return (
 				<StepLayout schema={UserOrganizationSchema}>
-					<OrganizationByInnAutocomplete
-						fieldName="organization_inn"
-						label="Организация"
-						required
-					/>
+					<OrganizationByInnAutocomplete label="Организация" required />
 				</StepLayout>
 			);
 		case 4:
