@@ -9,6 +9,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { brightBlue } from "src/styles.ts";
 import { useSignupStore } from "../../stores/createUserStore";
 
 type RoleCardProps = {
@@ -19,7 +20,12 @@ type RoleCardProps = {
 
 const RoleCard = ({ roleName, description, action }: RoleCardProps) => {
 	return (
-		<Card elevation={3}>
+		<Card
+			elevation={3}
+			sx={{
+				backgroundColor: brightBlue,
+			}}
+		>
 			<CardActionArea onClick={action}>
 				<CardContent>
 					<Typography variant="h5" sx={{ mb: 1 }}>

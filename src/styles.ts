@@ -1,0 +1,1 @@
+export const brightBlue = '#f0f7ff';
