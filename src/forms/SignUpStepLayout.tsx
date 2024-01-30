@@ -42,7 +42,17 @@ const StepLayout = <T extends z.ZodTypeAny>({
 	type FormFields = z.infer<typeof schema>;
 
 	const methods = useForm<FormFields>({
-		resolver: zodResolver(schema),
+		resolver: async (data, context, options) => {
+			// console.log("data", data);
+			// console.log("context", context);
+			// console.log("options", options);
+			// console.log(
+			// 	"validation result",
+			// 	await zodResolver(schema)(data, context, options),
+			// );
+			return zodResolver(schema)(data, context, options);
+		},
+		// resolver: zodResolver(schema),
 		defaultValues: userData as unknown as DefaultValues<T>,
 	});
 	const {
