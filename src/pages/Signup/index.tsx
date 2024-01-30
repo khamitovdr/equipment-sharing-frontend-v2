@@ -1,69 +1,10 @@
 import HomeIcon from "@mui/icons-material/Home";
 import { Button, Container, Divider } from "@mui/material";
-import { Link } from "react-router-dom";
-import OrganizationByInnAutocomplete from "../../components/ui/InnAutocompleteInput2";
-import PasswordInput from "../../components/ui/PasswordInput";
-import PhoneNumberInput from "../../components/ui/PhoneInput";
-import TextInput from "../../components/ui/TextInput";
-import {
-	NameEmailSchema,
-	// OrganizationSchema,
-	PasswordConfirmationSchema,
-	PhoneSchema,
-} from "../../models/SignUp";
-import { UserOrganizationSchema } from "../../models/organizationsAutocomplete";
+import { Link, Navigate, Outlet, useParams } from "react-router-dom";
 import { Routes } from "../../router/routes";
-import { useSignupStore } from "../../stores/createUserStore";
-import StepLayout from "./StepLayout";
-// import OrganizationStep from "./OrganizationStep";
-
-const SignUpStep = ({ step }: { step: number }) => {
-	switch (step) {
-		case 0:
-			return (
-				<StepLayout schema={NameEmailSchema}>
-					<TextInput fieldName="name" label="Имя" required />
-					<TextInput fieldName="middle_name" label="Отчество" />
-					<TextInput fieldName="surname" label="Фамилия" required />
-					<TextInput fieldName="email" label="Email" required />
-				</StepLayout>
-			);
-		case 1:
-			return (
-				<StepLayout schema={PasswordConfirmationSchema}>
-					<PasswordInput fieldName="password" label="Пароль" required />
-					<PasswordInput
-						fieldName="passwordConfirmation"
-						label="Подтвердите пароль"
-						required
-					/>
-				</StepLayout>
-			);
-		case 2:
-			return (
-				<StepLayout schema={PhoneSchema}>
-					<PhoneNumberInput fieldName="phone" label="Номер телефона" required />
-				</StepLayout>
-			);
-		case 3:
-			return (
-				<StepLayout schema={UserOrganizationSchema}>
-					<OrganizationByInnAutocomplete label="Организация" required />
-				</StepLayout>
-			);
-		case 4:
-			return (
-				<StepLayout schema={PhoneSchema}>
-					<div />
-				</StepLayout>
-			);
-		default:
-			return null;
-	}
-};
 
 const SignUp = () => {
-	const currentStep = useSignupStore((state) => state.currentStep);
+	const { step } = useParams();
 
 	return (
 		<Container
@@ -76,7 +17,7 @@ const SignUp = () => {
 				alignItems: "stretch",
 			}}
 		>
-			<SignUpStep step={currentStep} />
+			{step ? <Outlet /> : <Navigate to="./name-email" />}
 
 			<Divider variant="middle" sx={{ mt: 3, mb: 4 }} />
 
