@@ -5,6 +5,7 @@ import { AxiosError } from "axios";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import FormErrorMessage from "../components/ui/FormErrorMessage";
+import FormHeader from "../components/ui/FormHeader";
 import PasswordInput from "../components/ui/PasswordInput";
 import TextInput from "../components/ui/TextInput";
 import { useAuthStore } from "../stores/authStore";
@@ -53,6 +54,8 @@ const LoginForm = () => {
 					flexDirection="column"
 					alignContent="center"
 				>
+					<FormHeader text="Вход" sx={{ mb: 1 }} />
+
 					<TextInput fieldName="username" label="Email" required />
 
 					<PasswordInput fieldName="password" label="Пароль" required />

@@ -8,8 +8,6 @@ export const NameEmailSchema = z.object({
 	email: z.string().email("Введите корректный email"),
 });
 
-export type NameEmail = z.infer<typeof NameEmailSchema>;
-
 export const PasswordSchema = z.object({
 	password: z
 		.string()
@@ -36,15 +34,11 @@ export const PasswordConfirmationSchema = PasswordSchema.merge(
 	path: ["passwordConfirmation"],
 });
 
-export type PasswordConfirmation = z.infer<typeof PasswordConfirmationSchema>;
-
 export const PhoneSchema = z.object({
 	phone: z.string().refine(isPhoneValid, {
 		message: "Введите корректный номер телефона",
 	}),
 });
-
-export type Phone = z.infer<typeof PhoneSchema>;
 
 export const OrganizationSchema = z.object({
 	organization_inn: z.string().refine(

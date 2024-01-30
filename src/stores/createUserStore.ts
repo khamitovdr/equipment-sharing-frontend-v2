@@ -16,9 +16,6 @@ type SignupStore = {
 	userData: UserData;
 	updateUserData: (newData: Partial<UserData>) => void;
 	submitUserData: () => Promise<void>;
-	currentStep: number;
-	nextStep: () => void;
-	prevStep: () => void;
 	reset: () => void;
 };
 
@@ -32,8 +29,8 @@ const defaultState = {
 		password: "",
 		phone: "",
 		organization_inn: "",
+		organization_data: null,
 	},
-	currentStep: 0,
 };
 
 export const useSignupStore = create<SignupStore>()(
@@ -60,16 +57,6 @@ export const useSignupStore = create<SignupStore>()(
 					});
 					reset();
 				}
-			},
-			nextStep: () => {
-				set((state) => ({
-					currentStep: state.currentStep + 1,
-				}));
-			},
-			prevStep: () => {
-				set((state) => ({
-					currentStep: state.currentStep - 1,
-				}));
 			},
 			reset: () => {
 				useSignupStore.persist.clearStorage();

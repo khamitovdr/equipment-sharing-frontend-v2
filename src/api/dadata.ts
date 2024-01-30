@@ -24,7 +24,7 @@ export const fetchOrganizationSuggestions = async (
 	return data.suggestions;
 };
 
-export const fetchOrganizationSuggestionByInn = async (
+export const fetchOrganizationByInn = async (
 	inn: string,
 ): Promise<DaDataPartySuggestion | undefined> => {
 	const { data } = await axiosInstance.post("/findById/party", {
