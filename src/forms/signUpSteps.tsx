@@ -1,5 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
-import OrganizationByInnAutocomplete from "../components/ui/InnAutocompleteInput2";
+import OrganizationByInnAutocomplete from "../components/ui/InnAutocompleteInput";
 import PasswordInput from "../components/ui/PasswordInput";
 import PhoneNumberInput from "../components/ui/PhoneInput";
 import TextInput from "../components/ui/TextInput";
