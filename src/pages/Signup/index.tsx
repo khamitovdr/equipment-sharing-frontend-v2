@@ -20,7 +20,7 @@ const SignUp = () => {
 		>
 			<FormHeader text="Регистрация" />
 
-			{step ? <Outlet /> : <Navigate to="./name-email" />}
+			{step ? <Outlet /> : <Navigate to="./name-email" replace />}
 
 			<Divider variant="middle" sx={{ mt: 3, mb: 4 }} />
 
