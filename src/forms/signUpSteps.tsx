@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
+import AcceptTermsStep from "src/pages/Signup/AcceptTerms";
 import OrganizationByInnAutocomplete from "../components/ui/InnAutocompleteInput";
 import PasswordInput from "../components/ui/PasswordInput";
 import PhoneNumberInput from "../components/ui/PhoneInput";
@@ -104,7 +105,13 @@ const SignUpSteps = () => {
 		case "organization":
 			return <OrganizationStep />;
 		case "success":
-			return <PhoneStep />;
+			return (
+				<AcceptTermsStep
+					nSteps={nSteps}
+					activeStep={5}
+					prevStep="organization"
+				/>
+			);
 		default:
 			return <Navigate to="/*" />;
 	}
