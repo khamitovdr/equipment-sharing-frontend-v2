@@ -10,6 +10,7 @@ import {
 	PhoneSchema,
 } from "../models/SignUp";
 import { UserOrganizationSchema } from "../models/organizationsAutocomplete";
+import SelectRole from "../pages/Signup/SelectRole";
 import StepLayout from "./SignUpStepLayout";
 
 const nSteps = 6;
@@ -20,6 +21,7 @@ const NameEmailStep = () => {
 			schema={NameEmailSchema}
 			nSteps={nSteps}
 			activeStep={1}
+			prevStep="select-role"
 			nextStep="password"
 		>
 			<TextInput fieldName="surname" label="Фамилия" required />
@@ -88,6 +90,8 @@ const SignUpSteps = () => {
 	const { step } = useParams();
 
 	switch (step) {
+		case "select-role":
+			return <SelectRole nextStep="name-email" />;
 		case "name-email":
 			return <NameEmailStep />;
 		case "password":
