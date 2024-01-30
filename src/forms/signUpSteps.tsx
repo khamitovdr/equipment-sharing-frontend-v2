@@ -12,9 +12,16 @@ import {
 import { UserOrganizationSchema } from "../models/organizationsAutocomplete";
 import StepLayout from "./SignUpStepLayout";
 
+const nSteps = 6;
+
 const NameEmailStep = () => {
 	return (
-		<StepLayout schema={NameEmailSchema} nextStep="password">
+		<StepLayout
+			schema={NameEmailSchema}
+			nSteps={nSteps}
+			activeStep={1}
+			nextStep="password"
+		>
 			<TextInput fieldName="surname" label="Фамилия" required />
 			<Box
 				display="flex"
@@ -34,6 +41,8 @@ const PasswordStep = () => {
 	return (
 		<StepLayout
 			schema={PasswordConfirmationSchema}
+			nSteps={nSteps}
+			activeStep={2}
 			prevStep="name-email"
 			nextStep="phone"
 		>
@@ -51,6 +60,8 @@ const PhoneStep = () => {
 	return (
 		<StepLayout
 			schema={PhoneSchema}
+			nSteps={nSteps}
+			activeStep={3}
 			prevStep="password"
 			nextStep="organization"
 		>
@@ -63,6 +74,8 @@ const OrganizationStep = () => {
 	return (
 		<StepLayout
 			schema={UserOrganizationSchema}
+			nSteps={nSteps}
+			activeStep={4}
 			prevStep="phone"
 			nextStep="success"
 		>

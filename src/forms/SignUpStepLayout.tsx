@@ -1,6 +1,7 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Box, Button, CircularProgress, MobileStepper } from "@mui/material";
 import { ReactNode } from "react";
 import {
 	DefaultValues,
@@ -15,17 +16,20 @@ import FormErrorMessage from "../components/ui/FormErrorMessage";
 import useFormLeavingAction from "../hooks/usePageLeaving";
 import { Routes } from "../router/routes";
 import { useSignupStore } from "../stores/createUserStore";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 type StepLayoutProps<T extends z.ZodTypeAny> = {
 	schema: T;
+	nSteps: number;
+	activeStep: number;
 	prevStep?: string;
-	nextStep: string;
+	nextStep?: string;
 	children: ReactNode;
 };
 
 const StepLayout = <T extends z.ZodTypeAny>({
 	schema,
+	nSteps,
+	activeStep,
 	prevStep,
 	nextStep,
 	children,
@@ -54,46 +58,65 @@ const StepLayout = <T extends z.ZodTypeAny>({
 	};
 
 	return (
-		<FormProvider {...methods}>
-			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<Box display="flex" flexDirection="column" alignItems="stretch">
-					{children}
+		<>
+			<MobileStepper
+				steps={nSteps}
+				activeStep={activeStep}
+				variant="progress"
+				position="static"
+				backButton={null}
+				nextButton={null}
+				sx={{
+					px: 0,
+					mb: 2,
+				}}
+				LinearProgressProps={{
+					sx: {
+						flexGrow: 1,
+					},
+				}}
+			/>
+			<FormProvider {...methods}>
+				<form noValidate onSubmit={handleSubmit(onSubmit)}>
+					<Box display="flex" flexDirection="column" alignItems="stretch">
+						{children}
 
-					<Box
-						display="flex"
-						flexDirection="row"
-						alignItems="stretch"
-						mt={2}
-						gap={2}
-						height={50}
-					>
-						{prevStep && (
-							<Button
-								variant="outlined"
-								size="large"
-								onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
-							>
-								<ChevronLeft />
-							</Button>
-						)}
-
-						<Button type="submit" variant="contained" size="large" fullWidth>
-							{isSubmitting ? (
-								<CircularProgress color="inherit" size={26} />
-							) : (
-								<>
-									{"Продолжить"}
-									<ChevronRight sx={{ ml: 1 }} />
-								</>
+						<Box
+							display="flex"
+							flexDirection="row"
+							alignItems="stretch"
+							mt={2}
+							gap={2}
+							height={50}
+						>
+							{prevStep && (
+								<Button
+									variant="outlined"
+									size="large"
+									onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
+								>
+									<ChevronLeft />
+								</Button>
 							)}
-						</Button>
-					</Box>
 
-					<FormErrorMessage errors={errors} />
-				</Box>
-			</form>
-			<DevTool control={methods.control} />
-		</FormProvider>
+							<Button type="submit" variant="contained" size="large" fullWidth>
+								{isSubmitting ? (
+									<CircularProgress color="inherit" size={26} />
+								) : (
+									<>
+										Продолжить
+										<ChevronRight sx={{ ml: 1 }} />
+									</>
+								)}
+							</Button>
+						</Box>
+
+						<FormErrorMessage errors={errors} />
+					</Box>
+				</form>
+				<DevTool control={methods.control} />
+			</FormProvider>
+		</>
 	);
 };
 

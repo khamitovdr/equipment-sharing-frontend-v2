@@ -1,6 +1,7 @@
 import HomeIcon from "@mui/icons-material/Home";
 import { Button, Container, Divider } from "@mui/material";
 import { Link, Navigate, Outlet, useParams } from "react-router-dom";
+import FormHeader from "../../components/ui/FormHeader";
 import { Routes } from "../../router/routes";
 
 const SignUp = () => {
@@ -17,6 +18,8 @@ const SignUp = () => {
 				alignItems: "stretch",
 			}}
 		>
+			<FormHeader text="Регистрация" />
+
 			{step ? <Outlet /> : <Navigate to="./name-email" />}
 
 			<Divider variant="middle" sx={{ mt: 3, mb: 4 }} />
