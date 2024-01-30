@@ -19,6 +19,7 @@ import { useSignupStore } from "../stores/createUserStore";
 
 type StepLayoutProps<T extends z.ZodTypeAny> = {
 	schema: T;
+	required?: boolean;
 	nSteps: number;
 	activeStep: number;
 	prevStep?: string;
@@ -28,6 +29,7 @@ type StepLayoutProps<T extends z.ZodTypeAny> = {
 
 const StepLayout = <T extends z.ZodTypeAny>({
 	schema,
+	required = true,
 	nSteps,
 	activeStep,
 	prevStep,
@@ -42,17 +44,7 @@ const StepLayout = <T extends z.ZodTypeAny>({
 	type FormFields = z.infer<typeof schema>;
 
 	const methods = useForm<FormFields>({
-		resolver: async (data, context, options) => {
-			// console.log("data", data);
-			// console.log("context", context);
-			// console.log("options", options);
-			// console.log(
-			// 	"validation result",
-			// 	await zodResolver(schema)(data, context, options),
-			// );
-			return zodResolver(schema)(data, context, options);
-		},
-		// resolver: zodResolver(schema),
+		resolver: zodResolver(required ? schema : z.any()),
 		defaultValues: userData as unknown as DefaultValues<T>,
 	});
 	const {

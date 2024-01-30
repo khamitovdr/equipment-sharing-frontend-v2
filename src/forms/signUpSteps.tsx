@@ -11,6 +11,7 @@ import {
 } from "../models/SignUp";
 import { UserOrganizationSchema } from "../models/organizationsAutocomplete";
 import SelectRole from "../pages/Signup/SelectRole";
+import { useSignupStore } from "../stores/createUserStore";
 import StepLayout from "./SignUpStepLayout";
 
 const nSteps = 6;
@@ -73,15 +74,17 @@ const PhoneStep = () => {
 };
 
 const OrganizationStep = () => {
+	const { is_owner } = useSignupStore((state) => state.userData);
 	return (
 		<StepLayout
 			schema={UserOrganizationSchema}
+			required={is_owner}
 			nSteps={nSteps}
 			activeStep={4}
 			prevStep="phone"
 			nextStep="success"
 		>
-			<OrganizationByInnAutocomplete label="Организация" required />
+			<OrganizationByInnAutocomplete label="Организация" required={is_owner} />
 		</StepLayout>
 	);
 };
