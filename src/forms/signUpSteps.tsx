@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
 import OrganizationByInnAutocomplete from "../components/ui/InnAutocompleteInput";
 import PasswordInput from "../components/ui/PasswordInput";
@@ -14,9 +15,16 @@ import StepLayout from "./SignUpStepLayout";
 const NameEmailStep = () => {
 	return (
 		<StepLayout schema={NameEmailSchema} nextStep="password">
-			<TextInput fieldName="name" label="Имя" required />
-			<TextInput fieldName="middle_name" label="Отчество" />
 			<TextInput fieldName="surname" label="Фамилия" required />
+			<Box
+				display="flex"
+				flexDirection={{ xs: "column", sm: "row" }}
+				alignItems="stretch"
+				gap={{ xs: 0, sm: 3 }}
+			>
+				<TextInput fieldName="name" label="Имя" required />
+				<TextInput fieldName="middle_name" label="Отчество" />
+			</Box>
 			<TextInput fieldName="email" label="Email" required />
 		</StepLayout>
 	);

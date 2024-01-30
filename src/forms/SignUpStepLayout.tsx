@@ -15,6 +15,7 @@ import FormErrorMessage from "../components/ui/FormErrorMessage";
 import useFormLeavingAction from "../hooks/usePageLeaving";
 import { Routes } from "../router/routes";
 import { useSignupStore } from "../stores/createUserStore";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 type StepLayoutProps<T extends z.ZodTypeAny> = {
 	schema: T;
@@ -58,29 +59,35 @@ const StepLayout = <T extends z.ZodTypeAny>({
 				<Box display="flex" flexDirection="column" alignItems="stretch">
 					{children}
 
-					<Button
-						type="submit"
-						variant="contained"
-						sx={{ mt: 2 }}
-						size="large"
-						fullWidth
+					<Box
+						display="flex"
+						flexDirection="row"
+						alignItems="stretch"
+						mt={2}
+						gap={2}
+						height={50}
 					>
-						{isSubmitting ? (
-							<CircularProgress color="inherit" size={26} />
-						) : (
-							"Продолжить >"
+						{prevStep && (
+							<Button
+								variant="outlined"
+								size="large"
+								onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
+							>
+								<ChevronLeft />
+							</Button>
 						)}
-					</Button>
 
-					<Button
-						variant="contained"
-						sx={{ mt: 2 }}
-						size="large"
-						fullWidth
-						onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
-					>
-						{"<"}
-					</Button>
+						<Button type="submit" variant="contained" size="large" fullWidth>
+							{isSubmitting ? (
+								<CircularProgress color="inherit" size={26} />
+							) : (
+								<>
+									{"Продолжить"}
+									<ChevronRight sx={{ ml: 1 }} />
+								</>
+							)}
+						</Button>
+					</Box>
 
 					<FormErrorMessage errors={errors} />
 				</Box>
