@@ -8,9 +8,11 @@ import {
 	FormGroup,
 	MobileStepper,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import DownloadButton from "src/components/ui/FileDownloadButton";
+import FormErrorMessage from "src/components/ui/FormErrorMessage";
 import { Routes } from "src/router/routes";
 import { useSignupStore } from "src/stores/createUserStore";
 
@@ -29,11 +31,13 @@ const AcceptTermsStep = ({
 
 	const submitUserData = useSignupStore((state) => state.submitUserData);
 
+	const mutation = useMutation({
+		mutationFn: submitUserData,
+	});
+
 	const [userAgreementAccepted, setUserAgreementAccepted] = useState(false);
 	const [personalDataAgreementAccepted, setPersonalDataAgreementAccepted] =
 		useState(false);
-
-	const isSubmitting = false;
 
 	return (
 		<>
@@ -132,17 +136,9 @@ const AcceptTermsStep = ({
 					size="large"
 					fullWidth
 					disabled={!userAgreementAccepted || !personalDataAgreementAccepted}
-					onClick={async () => {
-						try {
-							await submitUserData();
-						} catch (error) {
-							console.error(error);
-							return;
-						}
-						navigate(Routes.Home);
-					}}
+					onClick={async () => mutation.mutate()}
 				>
-					{isSubmitting ? (
+					{mutation.isPending ? (
 						<CircularProgress color="inherit" size={26} />
 					) : (
 						<>
@@ -152,6 +148,13 @@ const AcceptTermsStep = ({
 					)}
 				</Button>
 			</Box>
+
+			<FormErrorMessage
+				isError={mutation.isError}
+				errorMessage={mutation.error?.message}
+			/>
+
+			{mutation.isSuccess && <Navigate to={Routes.Home} />}
 		</>
 	);
 };
