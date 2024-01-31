@@ -74,7 +74,10 @@ const LoginForm = () => {
 						)}
 					</Button>
 
-					<FormErrorMessage errors={errors} />
+					<FormErrorMessage
+						isError={!!errors.root}
+						errorMessage={errors.root?.message}
+					/>
 				</Box>
 			</form>
 			<DevTool control={control} />

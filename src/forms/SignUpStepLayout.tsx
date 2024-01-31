@@ -113,7 +113,10 @@ const StepLayout = <T extends z.ZodTypeAny>({
 							</Button>
 						</Box>
 
-						<FormErrorMessage errors={errors} />
+						<FormErrorMessage
+							isError={!!errors.root}
+							errorMessage={errors.root?.message}
+						/>
 					</Box>
 				</form>
 				<DevTool control={methods.control} />
