@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import FormErrorMessage from "src/components/ui/FormErrorMessage";
+import FormHeader from "src/components/ui/FormHeader";
+import PasswordInput from "src/components/ui/PasswordInput";
+import TextInput from "src/components/ui/TextInput";
+import { useAuthStore } from "src/stores/authStore";
 import { z } from "zod";
-import FormErrorMessage from "../components/ui/FormErrorMessage";
-import FormHeader from "../components/ui/FormHeader";
-import PasswordInput from "../components/ui/PasswordInput";
-import TextInput from "../components/ui/TextInput";
-import { useAuthStore } from "../stores/authStore";
 
 const schema = z.object({
 	username: z.string().email("Введите корректный email"),

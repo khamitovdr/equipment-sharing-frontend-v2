@@ -2,8 +2,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Button, MenuItem, Typography } from "@mui/material";
 import { IconButton, Menu } from "@mui/material/";
 import { Link } from "react-router-dom";
-import { useDropdown } from "../../hooks/useDropdown";
-import { Routes } from "../../router/routes";
+import { useDropdown } from "src/hooks/useDropdown";
+import { Routes } from "src/router/routes";
 
 const NAV_ITEMS = [
 	{ name: "Как это работает?", path: Routes.HowItWorks },

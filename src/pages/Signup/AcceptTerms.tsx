@@ -14,7 +14,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import DownloadButton from "src/components/ui/FileDownloadButton";
 import FormErrorMessage from "src/components/ui/FormErrorMessage";
 import { Routes } from "src/router/routes";
-import { useSignupStore } from "src/stores/createUserStore";
+import { useSignUpStore } from "src/stores/createUserStore";
 
 type AcceptTermsStepProps = {
 	nSteps: number;
@@ -29,7 +29,7 @@ const AcceptTermsStep = ({
 }: AcceptTermsStepProps) => {
 	const navigate = useNavigate();
 
-	const submitUserData = useSignupStore((state) => state.submitUserData);
+	const submitUserData = useSignUpStore((state) => state.submitUserData);
 
 	const mutation = useMutation({
 		mutationFn: submitUserData,
@@ -125,7 +125,7 @@ const AcceptTermsStep = ({
 					<Button
 						variant="outlined"
 						size="large"
-						onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
+						onClick={() => navigate(`${Routes.SignUp}/${prevStep}`)}
 					>
 						<ChevronLeft />
 					</Button>

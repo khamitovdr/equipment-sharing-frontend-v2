@@ -11,8 +11,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { EquipmentPreview } from "../models/equipment";
 import { forwardRef } from "react";
+import { EquipmentPreview } from "src/models/equipment";
 
 const cardImageHeight = "260px";
 

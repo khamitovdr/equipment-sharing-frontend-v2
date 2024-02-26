@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EquipmentPreview, EquipmentCategory } from "../models/equipment";
+import { EquipmentCategory, EquipmentPreview } from "src/models/equipment";
 
 type FetchEquipmentCategoriesParams = {
 	organization_inn?: string;

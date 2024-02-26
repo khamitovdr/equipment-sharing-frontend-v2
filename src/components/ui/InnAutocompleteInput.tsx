@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { DaDataPartySuggestion } from "react-dadata";
 import { Controller } from "react-hook-form";
-import { fetchOrganizationSuggestions } from "../../api/dadata";
+import { fetchOrganizationSuggestions } from "src/api/dadata";
 
 type OrganizationByInnAutocompleteProps = {
 	label: string;

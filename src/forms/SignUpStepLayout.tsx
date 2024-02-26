@@ -11,11 +11,11 @@ import {
 	useForm,
 } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import FormErrorMessage from "src/components/ui/FormErrorMessage";
+import useFormLeavingAction from "src/hooks/usePageLeaving";
+import { Routes } from "src/router/routes";
+import { useSignUpStore } from "src/stores/createUserStore";
 import { z } from "zod";
-import FormErrorMessage from "../components/ui/FormErrorMessage";
-import useFormLeavingAction from "../hooks/usePageLeaving";
-import { Routes } from "../router/routes";
-import { useSignupStore } from "../stores/createUserStore";
 
 type StepLayoutProps<T extends z.ZodTypeAny> = {
 	schema: T;
@@ -38,8 +38,8 @@ const StepLayout = <T extends z.ZodTypeAny>({
 }: StepLayoutProps<T>) => {
 	const navigate = useNavigate();
 
-	const userData = useSignupStore((state) => state.userData);
-	const updateUserData = useSignupStore((state) => state.updateUserData);
+	const userData = useSignUpStore((state) => state.userData);
+	const updateUserData = useSignUpStore((state) => state.updateUserData);
 
 	type FormFields = z.infer<typeof schema>;
 
@@ -56,7 +56,7 @@ const StepLayout = <T extends z.ZodTypeAny>({
 
 	const onSubmit: SubmitHandler<T> = async (data) => {
 		updateUserData(data as unknown as FieldValues);
-		navigate(`${Routes.Signup}/${nextStep}`);
+		navigate(`${Routes.SignUp}/${nextStep}`);
 	};
 
 	return (
@@ -95,7 +95,7 @@ const StepLayout = <T extends z.ZodTypeAny>({
 								<Button
 									variant="outlined"
 									size="large"
-									onClick={() => navigate(`${Routes.Signup}/${prevStep}`)}
+									onClick={() => navigate(`${Routes.SignUp}/${prevStep}`)}
 								>
 									<ChevronLeft />
 								</Button>

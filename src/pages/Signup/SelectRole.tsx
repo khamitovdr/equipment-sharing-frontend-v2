@@ -9,8 +9,8 @@ import {
 	Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSignUpStore } from "src/stores/createUserStore";
 import { brightBlue } from "src/styles.ts";
-import { useSignupStore } from "../../stores/createUserStore";
 
 type RoleCardProps = {
 	roleName: string;
@@ -61,11 +61,11 @@ type SelectRoleProps = {
 const SelectRole = ({ nextStep }: SelectRoleProps) => {
 	const navigate = useNavigate();
 
-	const resetSignupStore = useSignupStore((state) => state.reset);
-	const updateUserData = useSignupStore((state) => state.updateUserData);
+	const resetSignUpStore = useSignUpStore((state) => state.reset);
+	const updateUserData = useSignUpStore((state) => state.updateUserData);
 
 	const handleRoleSelect = (is_owner: boolean) => {
-		resetSignupStore();
+		resetSignUpStore();
 		updateUserData({ is_owner });
 		navigate(`../${nextStep}`);
 	};

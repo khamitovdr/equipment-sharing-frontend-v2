@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchEquipmentList } from "../../api/equipment";
-import { useAuthStore } from "../../stores/authStore";
-import EquipmentList from "../../wigets/EquipmentList";
-import useEquipmentCategory from "../../hooks/useEquipmentCategory";
+import { fetchEquipmentList } from "src/api/equipment";
+import useEquipmentCategory from "src/hooks/useEquipmentCategory";
+import { useAuthStore } from "src/stores/authStore";
+import EquipmentList from "src/widgets/EquipmentList";
 
 const EquipmentForRent = () => {
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated());

@@ -1,18 +1,18 @@
 import { Box } from "@mui/material";
 import { Navigate, useParams } from "react-router-dom";
-import AcceptTermsStep from "src/pages/Signup/AcceptTerms";
-import OrganizationByInnAutocomplete from "../components/ui/InnAutocompleteInput";
-import PasswordInput from "../components/ui/PasswordInput";
-import PhoneNumberInput from "../components/ui/PhoneInput";
-import TextInput from "../components/ui/TextInput";
+import OrganizationByInnAutocomplete from "src/components/ui/InnAutocompleteInput";
+import PasswordInput from "src/components/ui/PasswordInput";
+import PhoneNumberInput from "src/components/ui/PhoneInput";
+import TextInput from "src/components/ui/TextInput";
 import {
 	NameEmailSchema,
 	PasswordConfirmationSchema,
 	PhoneSchema,
-} from "../models/SignUp";
-import { UserOrganizationSchema } from "../models/organizationsAutocomplete";
-import SelectRole from "../pages/Signup/SelectRole";
-import { useSignupStore } from "../stores/createUserStore";
+} from "src/models/SignUp";
+import { UserOrganizationSchema } from "src/models/organizationsAutocomplete";
+import AcceptTermsStep from "src/pages/SignUp/AcceptTerms";
+import SelectRole from "src/pages/SignUp/SelectRole";
+import { useSignUpStore } from "src/stores/createUserStore";
 import StepLayout from "./SignUpStepLayout";
 
 const nSteps = 6;
@@ -75,7 +75,7 @@ const PhoneStep = () => {
 };
 
 const OrganizationStep = () => {
-	const { is_owner } = useSignupStore((state) => state.userData);
+	const { is_owner } = useSignUpStore((state) => state.userData);
 	return (
 		<StepLayout
 			schema={UserOrganizationSchema}

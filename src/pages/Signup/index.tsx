@@ -1,8 +1,8 @@
 import HomeIcon from "@mui/icons-material/Home";
 import { Button, Container, Divider } from "@mui/material";
 import { Link, Navigate, Outlet, useParams } from "react-router-dom";
-import FormHeader from "../../components/ui/FormHeader";
-import { Routes } from "../../router/routes";
+import FormHeader from "src/components/ui/FormHeader";
+import { Routes } from "src/router/routes";
 
 const SignUp = () => {
 	const { step } = useParams();

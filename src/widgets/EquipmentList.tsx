@@ -1,8 +1,8 @@
-import EquipmentCard from "../wigets/EquipmentCard";
 import { Box, Grid, GridProps } from "@mui/material";
-import { EquipmentPreview } from "../models/equipment";
+import EmptyPlaceholder from "src/components/ui/EmptyPlaceholder";
+import { EquipmentPreview } from "src/models/equipment";
+import EquipmentCard from "./EquipmentCard";
 import EquipmentCategoryFilter from "./EquipmentCategoryFilter";
-import EmptyPlaceholder from "../components/ui/EmptyPlaceholder";
 
 const GridItem = ({
 	children,

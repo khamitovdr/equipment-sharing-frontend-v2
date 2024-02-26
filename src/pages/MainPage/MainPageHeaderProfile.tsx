@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDropdown } from "../../hooks/useDropdown";
-import Auth from "../../pages/Login/Auth";
-import { Routes } from "../../router/routes";
-import { useAuthStore } from "../../stores/authStore";
+import { useDropdown } from "src/hooks/useDropdown";
+import Auth from "src/pages/Login/Auth";
+import { Routes } from "src/router/routes";
+import { useAuthStore } from "src/stores/authStore";
 
 const logout = () => {
 	useAuthStore.getState().logOut();

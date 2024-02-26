@@ -1,1 +1,1 @@
-export const brightBlue = '#f0f7ff';
+export const brightBlue = "#f0f7ff";

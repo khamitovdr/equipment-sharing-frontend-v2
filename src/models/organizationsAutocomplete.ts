@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { DaDataPartySuggestion } from "react-dadata";
+import { postOrganization } from "src/api/organizations";
 import { z } from "zod";
-import { postOrganization } from "../api/organizations";
 
 export const UserOrganizationSchema = z
 	.object({

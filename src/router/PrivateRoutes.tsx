@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Auth from "../pages/Login/Auth";
+import Auth from "src/pages/Login/Auth";
 
 const PrivateRoutes = () => {
 	return (

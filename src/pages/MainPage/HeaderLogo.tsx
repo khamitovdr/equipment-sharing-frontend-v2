@@ -1,7 +1,7 @@
-import { Box, Typography } from "@mui/material";
 import AgricultureOutlinedIcon from "@mui/icons-material/AgricultureOutlined";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Routes } from "../../router/routes";
+import { Routes } from "src/router/routes";
 
 const HeaderLogo = () => {
 	return (

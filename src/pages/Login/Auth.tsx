@@ -1,8 +1,8 @@
 import { Box, Button, Dialog, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
-import LoginForm from "../../forms/authForm";
-import { Routes } from "../../router/routes";
-import { useAuthStore } from "../../stores/authStore";
+import LoginForm from "src/forms/authForm";
+import { Routes } from "src/router/routes";
+import { useAuthStore } from "src/stores/authStore";
 
 type AuthProps =
 	| {
@@ -43,7 +43,7 @@ const Auth = (props: AuthProps) => {
 				</Divider>
 				<Button
 					component={Link}
-					to={Routes.Signup}
+					to={Routes.SignUp}
 					variant="outlined"
 					sx={{ mt: 2 }}
 					size="large"

@@ -1,7 +1,7 @@
 import { Chip, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { fetchEquipmentCategories } from "../api/equipment";
-import useEquipmentCategory from "../hooks/useEquipmentCategory";
+import { fetchEquipmentCategories } from "src/api/equipment";
+import useEquipmentCategory from "src/hooks/useEquipmentCategory";
 
 const EquipmentCategoryFilter = () => {
 	const { data: equipmentCategories = [] } = useQuery({

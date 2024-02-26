@@ -1,8 +1,8 @@
-import { Box, Typography, Button, Container } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import HomeIcon from "@mui/icons-material/Home";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MainPageHeader from "../MainPage/MainPageHeader";
+import MainPageHeader from "src/pages/MainPage/MainPageHeader";
 
 const NotFoundPage = () => {
 	const navigate = useNavigate();

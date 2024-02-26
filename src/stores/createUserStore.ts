@@ -1,7 +1,7 @@
 import axios from "axios";
+import { UserData, UserDataSchema } from "src/models/SignUp";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { UserData, UserDataSchema } from "../models/SignUp";
 import { useAuthStore } from "./authStore";
 
 const ValidateUserData = (userData: UserData) => {
@@ -12,7 +12,7 @@ const ValidateUserData = (userData: UserData) => {
 	return result.data;
 };
 
-type SignupStore = {
+type SignUpStore = {
 	userData: UserData;
 	updateUserData: (newData: Partial<UserData>) => void;
 	submitUserData: () => Promise<void>;
@@ -33,7 +33,7 @@ const defaultState = {
 	},
 };
 
-export const useSignupStore = create<SignupStore>()(
+export const useSignUpStore = create<SignUpStore>()(
 	persist(
 		(set, get) => ({
 			...defaultState,
@@ -59,7 +59,7 @@ export const useSignupStore = create<SignupStore>()(
 				}
 			},
 			reset: () => {
-				useSignupStore.persist.clearStorage();
+				useSignUpStore.persist.clearStorage();
 				set(defaultState);
 			},
 		}),

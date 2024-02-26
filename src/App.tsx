@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import SignUpSteps from "./forms/signUpSteps";
-import MainPage from "./pages/MainPage";
-import NotFoundPage from "./pages/PageNotFound";
-import SignUp from "./pages/Signup";
-import PrivateRoutes from "./router/PrivateRoutes";
-import { Routes as AppRoutes } from "./router/routes";
+import SignUpSteps from "src/forms/signUpSteps";
+import MainPage from "src/pages/MainPage";
+import NotFoundPage from "src/pages/PageNotFound";
+import SignUp from "src/pages/SignUp";
+import PrivateRoutes from "src/router/PrivateRoutes";
+import { Routes as AppRoutes } from "src/router/routes";
 
 function App() {
 	return (
 		<Routes>
 			<Route path={AppRoutes.Home} element={<MainPage />} />
-			<Route path={AppRoutes.Signup} element={<SignUp />}>
+			<Route path={AppRoutes.SignUp} element={<SignUp />}>
 				<Route path=":step" element={<SignUpSteps />} />
 			</Route>
 			<Route element={<PrivateRoutes />}>

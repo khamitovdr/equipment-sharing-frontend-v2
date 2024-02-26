@@ -1,6 +1,6 @@
-import MainPageHeader from "./MainPageHeader";
-import EquipmentForRent from "../Rentals/EquipmentForRent";
 import Container from "@mui/material/Container";
+import EquipmentForRent from "src/pages/Rentals/EquipmentForRent";
+import MainPageHeader from "./MainPageHeader";
 
 const MainPage = () => {
 	return (

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Organization } from "../models/organizations";
 import { DaDataPartySuggestion } from "react-dadata";
+import { Organization } from "src/models/organizations";
 
 type PostOrganizationParams = {
 	suggestion: DaDataPartySuggestion | null;

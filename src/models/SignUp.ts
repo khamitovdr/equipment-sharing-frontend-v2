@@ -1,5 +1,5 @@
+import isPhoneValid from "src/utils/phoneValidation";
 import { z } from "zod";
-import isPhoneValid from "../utils/phoneValidation";
 
 export const NameEmailSchema = z.object({
 	name: z.string().min(1, "Поле не может быть пустым"),
