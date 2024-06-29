@@ -42,5 +42,6 @@
     "react-dadata": "^2.23.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
