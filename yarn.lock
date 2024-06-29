@@ -1137,6 +1137,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google-libphonenumber@npm:^7.4.30":
+  version: 7.4.30
+  resolution: "@types/google-libphonenumber@npm:7.4.30"
+  checksum: 10c0/f81803dc061b775d981a04e99dfe9ee124b9e73ced6f0298928c0ff73fea4b34bc50b9c58f3235ee5c3c08a940a27bad20fcb9f4c25ba31698f1a64b98768306
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:^7.0.12":
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
@@ -3247,6 +3254,7 @@ __metadata:
     "@mui/material": "npm:^5.15.1"
     "@tanstack/react-query": "npm:^5.15.0"
     "@tanstack/react-query-devtools": "npm:^5.15.0"
+    "@types/google-libphonenumber": "npm:^7.4.30"
     "@types/react": "npm:^18.2.43"
     "@types/react-dom": "npm:^18.2.17"
     "@typescript-eslint/eslint-plugin": "npm:^6.14.0"
@@ -3263,6 +3271,7 @@ __metadata:
     react-hook-form: "npm:^7.49.3"
     react-international-phone: "npm:^4.2.0"
     react-router-dom: "npm:^6.21.1"
+    swiper: "npm:^11.1.4"
     typescript: "npm:^5.2.2"
     vite: "npm:^5.0.8"
     zod: "npm:^3.22.4"
@@ -3605,6 +3614,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.4":
+  version: 11.1.4
+  resolution: "swiper@npm:11.1.4"
+  checksum: 10c0/a1e4b87f414f67f5da6a07b33d5ee20e54062d21f8bed88195d5d56decff6afddf683e130118b7fa12668de221f794ae63f6c073761b683a4b90bbd5eb585202
   languageName: node
   linkType: hard
 

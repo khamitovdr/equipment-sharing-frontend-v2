@@ -29,7 +29,7 @@ const EquipmentList = ({
 	isPending,
 }: { equipmentList: EquipmentPreview[]; isPending: boolean }) => {
 	return (
-		<Box my={4}>
+		<Box m={4}>
 			<EquipmentCategoryFilter />
 			<Grid container spacing={3} mt={0}>
 				{isPending &&
