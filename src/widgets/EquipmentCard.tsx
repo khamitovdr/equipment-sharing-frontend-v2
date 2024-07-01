@@ -13,17 +13,27 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { forwardRef } from "react";
 import { EquipmentPreview } from "src/models/equipment";
+import { Link } from "react-router-dom";
+import { Routes } from "src/router/routes";
 
 const cardImageHeight = "260px";
 
-const RentButton = (props: ButtonProps) => {
+type RentButtonProps = {
+	equipmentId: number;
+} & ButtonProps;
+
+const RentButton = (props: RentButtonProps) => {
+	const { equipmentId, ...rest } = props;
+
 	return (
 		<Button
 			size="small"
 			color="primary"
 			style={{ flexGrow: 1 }}
 			variant="contained"
-			{...props}
+			component={Link}
+			to={`${Routes.Rentals}/${equipmentId}`}
+			{...rest}
 		>
 			Арендовать
 		</Button>
@@ -73,19 +83,19 @@ const EquipmentName = forwardRef(
 
 type EquipmentPriceProps =
 	| {
-			isSceleton: false;
+			isSkeleton: false;
 			price: number;
 			time_interval: string;
 	  }
 	| {
-			isSceleton: true;
+			isSkeleton: true;
 	  };
 
 const EquipmentPrice = (props: EquipmentPriceProps) => {
-	const { isSceleton } = props;
+	const { isSkeleton } = props;
 	return (
 		<Typography variant="h5" color="primary" fontSize="1.3rem">
-			{isSceleton ? (
+			{isSkeleton ? (
 				<Skeleton width="40%" />
 			) : (
 				`${props.price}₽/${props.time_interval}`
@@ -94,15 +104,23 @@ const EquipmentPrice = (props: EquipmentPriceProps) => {
 	);
 };
 
-const CardLayout = ({
-	media,
-	children,
-	actions,
-}: {
+type CardLayoutProps = {
+	equipmentId?: number;
 	media: React.ReactNode;
 	children: React.ReactNode;
 	actions?: React.ReactNode;
-}) => {
+};
+
+const CardLayout = ({
+	equipmentId,
+	media,
+	children,
+	actions,
+}: CardLayoutProps) => {
+	const ActionAreaProps = equipmentId
+		? { component: Link, to: `${Routes.Equipment}/${equipmentId}` }
+		: {};
+
 	return (
 		<Card
 			sx={{
@@ -115,7 +133,7 @@ const CardLayout = ({
 			}}
 			elevation={3}
 		>
-			<CardActionArea>
+			<CardActionArea {...ActionAreaProps}>
 				{media}
 				<CardContent>{children}</CardContent>
 			</CardActionArea>
@@ -141,7 +159,8 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 	const { isLoading } = props;
 	if (!isLoading) {
 		const { equipment } = props;
-		const { name, photo_and_video, price, time_interval, category } = equipment;
+		const { id, name, photo_and_video, price, time_interval, category } =
+			equipment;
 		const hasPhoto = photo_and_video.length > 0;
 		const cardImageStyle = hasPhoto ? { objectFit: "contain" } : {};
 		const avatar = hasPhoto
@@ -150,6 +169,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 
 		return (
 			<CardLayout
+				equipmentId={id}
 				media={
 					<CardMedia
 						component="img"
@@ -159,14 +179,14 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 						style={cardImageStyle as React.CSSProperties}
 					/>
 				}
-				actions={<RentButton />}
+				actions={<RentButton equipmentId={id} />}
 			>
 				<CategoryChip name={category.name} />
 				<Tooltip title={name}>
 					<EquipmentName name={name} />
 				</Tooltip>
 				<EquipmentPrice
-					isSceleton={false}
+					isSkeleton={false}
 					price={price}
 					time_interval={time_interval}
 				/>
@@ -185,7 +205,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 
 			<EquipmentName />
 
-			<EquipmentPrice isSceleton={true} />
+			<EquipmentPrice isSkeleton={true} />
 		</CardLayout>
 	);
 };

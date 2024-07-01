@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import SignUpSteps from "src/forms/signUpSteps";
+import EquipmentPage from "src/pages/Equipment";
 import MainPage from "src/pages/MainPage";
 import NotFoundPage from "src/pages/PageNotFound";
 import SignUp from "src/pages/SignUp";
@@ -10,6 +11,9 @@ function App() {
 	return (
 		<Routes>
 			<Route path={AppRoutes.Home} element={<MainPage />} />
+			<Route path={AppRoutes.Equipment}>
+				<Route path=":id" element={<EquipmentPage />} />
+			</Route>
 			<Route path={AppRoutes.SignUp} element={<SignUp />}>
 				<Route path=":step" element={<SignUpSteps />} />
 			</Route>
