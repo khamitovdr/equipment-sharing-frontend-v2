@@ -17,3 +17,5 @@ export type File = {
 export type Image = File & {
 	derived_path: PhotoDerivatives;
 };
+
+export type Document = File;

@@ -1,11 +1,17 @@
 import { Box, Grid, Paper } from "@mui/material";
 import { useState } from "react";
+import { Image } from "src/models/files";
+import getStaticUrl from "src/utils/staticUrl";
 
 type MediaViewerProps = {
-	images: string[];
+	images: Image[];
 };
 
 const MediaViewer = ({ images }: MediaViewerProps) => {
+	if (images.length === 0) {
+		return null;
+	}
+
 	const [activeImage, setActiveImage] = useState(images[0]);
 
 	return (
@@ -15,7 +21,7 @@ const MediaViewer = ({ images }: MediaViewerProps) => {
 					<Paper elevation={3}>
 						<Box
 							component="img"
-							src={activeImage}
+							src={getStaticUrl(activeImage.derived_path.large)}
 							alt="Active"
 							sx={{ width: "100%", height: "auto" }}
 						/>
@@ -24,7 +30,7 @@ const MediaViewer = ({ images }: MediaViewerProps) => {
 				<Grid item xs={12}>
 					<Grid container spacing={2} justifyContent="center">
 						{images.map((image, index) => (
-							<Grid item key={index}>
+							<Grid item key={image.id}>
 								<Paper
 									elevation={1}
 									onClick={() => setActiveImage(image)}
@@ -37,7 +43,7 @@ const MediaViewer = ({ images }: MediaViewerProps) => {
 								>
 									<Box
 										component="img"
-										src={image}
+										src={getStaticUrl(image.derived_path.small)}
 										alt={`Thumbnail ${index + 1}`}
 										sx={{ width: "100px", height: "auto" }}
 									/>

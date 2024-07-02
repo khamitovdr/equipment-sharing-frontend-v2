@@ -12,9 +12,10 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { forwardRef } from "react";
-import { EquipmentPreview } from "src/models/equipment";
 import { Link } from "react-router-dom";
+import { EquipmentPreview } from "src/models/equipment";
 import { Routes } from "src/router/routes";
+import getStaticUrl from "src/utils/staticUrl";
 
 const cardImageHeight = "260px";
 
@@ -164,7 +165,7 @@ const EquipmentCard = (props: EquipmentCardProps) => {
 		const hasPhoto = photo_and_video.length > 0;
 		const cardImageStyle = hasPhoto ? { objectFit: "contain" } : {};
 		const avatar = hasPhoto
-			? import.meta.env.VITE_API_URL + photo_and_video[0].derived_path.medium
+			? getStaticUrl(photo_and_video[0].derived_path.medium)
 			: "/equipment-card-placeholder.svg";
 
 		return (

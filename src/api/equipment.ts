@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EquipmentCategory, EquipmentPreview } from "src/models/equipment";
+import { EquipmentCategory, EquipmentPreview, EquipmentDetail } from "src/models/equipment";
 
 type FetchEquipmentCategoriesParams = {
 	organization_inn?: string;
@@ -36,6 +36,6 @@ type FetchEquipmentParams = {
 };
 
 export const fetchEquipment = async ({ id }: FetchEquipmentParams) => {
-	const { data } = await axios.get<EquipmentPreview>(`/equipment/${id}`);
+	const { data } = await axios.get<EquipmentDetail>(`/equipment/${id}/`);
 	return data;
 };
