@@ -3,9 +3,10 @@ import SignUpSteps from "src/forms/signUpSteps";
 import EquipmentPage from "src/pages/Equipment";
 import MainPage from "src/pages/MainPage";
 import NotFoundPage from "src/pages/PageNotFound";
-import SignUp from "src/pages/SignUp";
+import SignUp from "src/pages/Signup";
 import PrivateRoutes from "src/router/PrivateRoutes";
 import { Routes as AppRoutes } from "src/router/routes";
+import RentEquipment from "src/pages/Rentals/RentEquipment.tsx";
 
 function App() {
 	return (
@@ -19,6 +20,9 @@ function App() {
 			</Route>
 			<Route element={<PrivateRoutes />}>
 				<Route path={AppRoutes.Notifications} element={<NotFoundPage />} />
+				<Route path={AppRoutes.Rentals}>
+					<Route path=":id" element={<RentEquipment />} />
+				</Route>
 			</Route>
 			<Route path="*" element={<NotFoundPage />} />
 		</Routes>

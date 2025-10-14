@@ -39,3 +39,15 @@ export const fetchEquipment = async ({ id }: FetchEquipmentParams) => {
 	const { data } = await axios.get<EquipmentDetail>(`/equipment/${id}/`);
 	return data;
 };
+
+// Orders (renter)
+type CreateOrderParams = {
+    equipment_id: number;
+    start_date: string; // ISO date YYYY-MM-DD
+    end_date: string;   // ISO date YYYY-MM-DD
+};
+
+export const createOrder = async (payload: CreateOrderParams) => {
+    const { data } = await axios.post("/renter/orders/", payload);
+    return data;
+};
