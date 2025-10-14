@@ -1,8 +1,9 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Paper, Typography, Divider } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import MainPageHeader from "src/pages/MainPage/MainPageHeader";
-import { getCurrentUser, updateCurrentUser } from "src/api/organizations";
+import { getCurrentUser, updateCurrentUser, updateUserRequisites, getMyOrganization, updateOrganizationContactsByMember } from "src/api/organizations";
+import { fetchOrganizationByInn } from "src/api/dadata";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -45,6 +46,11 @@ const SettingsPage = () => {
     const { data: user, isPending } = useQuery({
         queryKey: ["me"],
         queryFn: getCurrentUser,
+    });
+
+    const { data: organization } = useQuery({
+        queryKey: ["myOrganization"],
+        queryFn: getMyOrganization,
     });
 
     const methods = useForm<SettingsFields>({
@@ -93,16 +99,27 @@ const SettingsPage = () => {
         await mutation.mutateAsync(data);
     };
 
+    // Requisites state and submit
+    const requisitesMutation = useMutation({
+        mutationFn: async () => {
+            const dadata = await fetchOrganizationByInn(String(user?.organization_inn || user?.requisites?.bank_inn || ""));
+            return updateUserRequisites({
+                payment_account: user?.requisites?.payment_account || "",
+                dadata_response: dadata || {},
+            });
+        },
+    });
+
     return (
         <>
             <MainPageHeader />
             <Container sx={{ py: { xs: 2, md: 4 } }}>
-                <Paper sx={{ p: 3 }}>
-                    <Typography variant="h5" sx={{ mb: 2 }}>Личные данные</Typography>
-                    {isPending ? (
-                        <Typography>Загрузка...</Typography>
-                    ) : (
-                        <FormProvider {...methods}>
+                {isPending ? (
+                    <Typography>Загрузка...</Typography>
+                ) : (
+                    <FormProvider {...methods}>
+                        <Paper sx={{ p: 3, mb: 3 }}>
+                            <Typography variant="h5" sx={{ mb: 2 }}>Личные данные</Typography>
                             <form noValidate onSubmit={handleSubmit(onSubmit)}>
                                 <Box display="flex" flexDirection="column" gap={2}>
                                     <TextInput fieldName="email" label="Email" required fullWidth />
@@ -128,9 +145,86 @@ const SettingsPage = () => {
                                     )}
                                 </Box>
                             </form>
-                        </FormProvider>
-                    )}
-                </Paper>
+                        </Paper>
+
+                        <Paper sx={{ p: 3 }}>
+                            <Typography variant="h5" sx={{ mb: 2 }}>Реквизиты</Typography>
+                            {user?.requisites ? (
+                                <Box display="flex" flexDirection="column" gap={1}>
+                                    <Typography variant="body2">Расчётный счёт: {user.requisites.payment_account || "—"}</Typography>
+                                    <Typography variant="body2">БИК банка: {user.requisites.bank_bic || "—"}</Typography>
+                                    <Typography variant="body2">ИНН банка: {user.requisites.bank_inn || "—"}</Typography>
+                                    <Typography variant="body2">Банк: {user.requisites.bank_name || "—"}</Typography>
+                                    <Typography variant="body2">Корр. счёт: {user.requisites.bank_correspondent_account || "—"}</Typography>
+
+                                    <Divider sx={{ my: 2 }} />
+                                    <Typography variant="body2" color="text.secondary">
+                                        Чтобы обновить реквизиты, укажите актуальные данные в вашем банке. Мы сверим их по DaData и применим.
+                                    </Typography>
+                                    <Button
+                                        variant="outlined"
+                                        size="large"
+                                        disabled={requisitesMutation.isPending}
+                                        onClick={() => requisitesMutation.mutate()}
+                                        sx={{ mt: 1, alignSelf: "flex-start" }}
+                                    >
+                                        {requisitesMutation.isPending ? "Обновление..." : "Обновить реквизиты"}
+                                    </Button>
+                                    {requisitesMutation.isError && (
+                                        <Typography color="error">{(requisitesMutation.error as Error).message}</Typography>
+                                    )}
+                                    {requisitesMutation.isSuccess && (
+                                        <Typography color="success.main">Реквизиты обновлены</Typography>
+                                    )}
+                                </Box>
+                            ) : (
+                                <Typography>Реквизиты не указаны</Typography>
+                            )}
+                        </Paper>
+
+                        <Paper sx={{ p: 3, mt: 3 }}>
+                            <Typography variant="h5" sx={{ mb: 2 }}>Организация</Typography>
+                            {organization ? (
+                                <Box display="flex" flexDirection="column" gap={1}>
+                                    <Typography variant="body2">ИНН: {organization.inn}</Typography>
+                                    <Typography variant="body2">Краткое название: {organization.short_name || "—"}</Typography>
+                                    <Typography variant="body2">Полное название: {organization.full_name || "—"}</Typography>
+                                    <Typography variant="body2">Юр. адрес: {organization.legal_address || "—"}</Typography>
+                                    <Divider sx={{ my: 2 }} />
+                                    <Typography variant="subtitle1">Контакты</Typography>
+                                    <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
+                                        <TextInput fieldName="contact_phone" label="Телефон" defaultValue={organization.contact_phone || ""} fullWidth />
+                                        <TextInput fieldName="contact_email" label="Email" defaultValue={organization.contact_email || ""} fullWidth />
+                                    </Box>
+                                    <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
+                                        <TextInput fieldName="contact_employee_name" label="Имя контактного лица" defaultValue={organization.contact_employee_name || ""} fullWidth />
+                                        <TextInput fieldName="contact_employee_middle_name" label="Отчество" defaultValue={organization.contact_employee_middle_name || ""} fullWidth />
+                                        <TextInput fieldName="contact_employee_surname" label="Фамилия" defaultValue={organization.contact_employee_surname || ""} fullWidth />
+                                    </Box>
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        sx={{ mt: 1, alignSelf: "flex-start" }}
+                                        onClick={async () => {
+                                            const form = methods.getValues();
+                                            await updateOrganizationContactsByMember({
+                                                contact_phone: form.contact_phone || "",
+                                                contact_email: form.contact_email || "",
+                                                contact_employee_name: form.contact_employee_name || "",
+                                                contact_employee_middle_name: form.contact_employee_middle_name || "",
+                                                contact_employee_surname: form.contact_employee_surname || "",
+                                            });
+                                        }}
+                                    >
+                                        Сохранить контакты
+                                    </Button>
+                                </Box>
+                            ) : (
+                                <Typography>Организация не найдена</Typography>
+                            )}
+                        </Paper>
+                    </FormProvider>
+                )}
             </Container>
         </>
     );

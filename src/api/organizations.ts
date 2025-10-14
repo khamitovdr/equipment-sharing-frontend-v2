@@ -2,6 +2,7 @@ import axios from "axios";
 import { DaDataPartySuggestion } from "react-dadata";
 import { Organization } from "src/models/organizations";
 import { UserDetail } from "src/models/users";
+import { Requisites } from "src/models/users";
 
 type PostOrganizationParams = {
 	suggestion: DaDataPartySuggestion | null;
@@ -41,5 +42,37 @@ type UpdateCurrentUserPayload = Partial<{
 
 export const updateCurrentUser = async (payload: UpdateCurrentUserPayload) => {
     const { data } = await axios.put<UserDetail>("/users/me/", payload);
+    return data;
+};
+
+// Users requisites
+type UpdateUserRequisitesPayload = {
+    payment_account: string;
+    dadata_response: Record<string, unknown>;
+};
+
+export const updateUserRequisites = async (payload: UpdateUserRequisitesPayload) => {
+    const { data } = await axios.put<Requisites>("/users/requisites/", payload);
+    return data;
+};
+
+// Organization
+export const getMyOrganization = async () => {
+    const { data } = await axios.get<Organization>("/organizations/my-organization/");
+    return data;
+};
+
+type OrgContactsUpdatePayload = {
+    contact_phone: string;
+    contact_email: string;
+    contact_employee_name: string;
+    contact_employee_middle_name?: string;
+    contact_employee_surname?: string;
+};
+
+export const updateOrganizationContactsByMember = async (
+    payload: OrgContactsUpdatePayload,
+) => {
+    const { data } = await axios.put<Organization>("/organizations/contacts/", payload);
     return data;
 };
