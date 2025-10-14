@@ -14,6 +14,7 @@ import MediaViewer from "./MediaViewer";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEquipment } from "src/api/equipment";
 import { Routes } from "src/router/routes";
+import MainPageHeader from "src/pages/MainPage/MainPageHeader";
 import PersonIcon from "@mui/icons-material/Person";
 import HandymanIcon from "@mui/icons-material/Handyman";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -88,7 +89,9 @@ const EquipmentPage = () => {
 	);
 
 	return (
-		<Container sx={{ py: { xs: 2, md: 4 } }}>
+		<>
+			<MainPageHeader />
+			<Container sx={{ py: { xs: 2, md: 4 } }}>
 			<Grid container spacing={3}>
 				<Grid item xs={12}>
 					<Typography variant="h5" sx={{ fontWeight: 600 }}>
@@ -186,7 +189,8 @@ const EquipmentPage = () => {
 					</Paper>
 				</Grid>
 			</Grid>
-		</Container>
+			</Container>
+		</>
 	);
 };
 
