@@ -8,6 +8,9 @@ import PrivateRoutes from "src/router/PrivateRoutes";
 import { Routes as AppRoutes } from "src/router/routes";
 import RentEquipment from "src/pages/Rentals/RentEquipment.tsx";
 import SettingsPage from "src/pages/Settings";
+import AboutPage from "src/pages/Static/About.tsx";
+import ContactsPage from "src/pages/Static/Contacts.tsx";
+import HowItWorksPage from "src/pages/Static/HowItWorks.tsx";
 
 function App() {
 	return (
@@ -16,6 +19,9 @@ function App() {
 			<Route path={AppRoutes.Equipment}>
 				<Route path=":id" element={<EquipmentPage />} />
 			</Route>
+			<Route path={AppRoutes.About} element={<AboutPage />} />
+			<Route path={AppRoutes.Contacts} element={<ContactsPage />} />
+			<Route path={AppRoutes.HowItWorks} element={<HowItWorksPage />} />
 			<Route path={AppRoutes.SignUp} element={<SignUp />}>
 				<Route path=":step" element={<SignUpSteps />} />
 			</Route>
