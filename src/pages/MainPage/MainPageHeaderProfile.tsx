@@ -20,8 +20,7 @@ const logout = () => {
 };
 
 const USER_MENU_ITEMS = [
-	{ name: "Личный кабинет", path: Routes.Equipment },
-	{ name: "Настройки", path: Routes.Settings },
+    { name: "Личный кабинет", path: Routes.Settings },
 ];
 
 const ProfileMenu = () => {

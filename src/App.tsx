@@ -7,6 +7,7 @@ import SignUp from "src/pages/Signup";
 import PrivateRoutes from "src/router/PrivateRoutes";
 import { Routes as AppRoutes } from "src/router/routes";
 import RentEquipment from "src/pages/Rentals/RentEquipment.tsx";
+import SettingsPage from "src/pages/Settings";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 			</Route>
 			<Route element={<PrivateRoutes />}>
 				<Route path={AppRoutes.Notifications} element={<NotFoundPage />} />
+				<Route path={AppRoutes.Settings} element={<SettingsPage />} />
 				<Route path={AppRoutes.Rentals}>
 					<Route path=":id" element={<RentEquipment />} />
 				</Route>
