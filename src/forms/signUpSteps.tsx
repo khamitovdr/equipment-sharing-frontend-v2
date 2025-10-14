@@ -10,8 +10,8 @@ import {
 	PhoneSchema,
 } from "src/models/SignUp";
 import { UserOrganizationSchema } from "src/models/organizationsAutocomplete";
-import AcceptTermsStep from "src/pages/SignUp/AcceptTerms";
-import SelectRole from "src/pages/SignUp/SelectRole";
+import AcceptTermsStep from "src/pages/Signup/AcceptTerms";
+import SelectRole from "src/pages/Signup/SelectRole";
 import { useSignUpStore } from "src/stores/createUserStore";
 import StepLayout from "./SignUpStepLayout";
 

@@ -18,6 +18,12 @@ const SettingsSchema = NameEmailSchema.extend(PhoneSchema.shape)
         password: z.string().optional(),
         new_password: z.string().optional(),
         organization_inn: z.string().optional(),
+        // Organization contact fields
+        contact_phone: z.string().optional(),
+        contact_email: z.string().optional(),
+        contact_employee_name: z.string().optional(),
+        contact_employee_middle_name: z.string().optional(),
+        contact_employee_surname: z.string().optional(),
     })
     .superRefine((data, ctx) => {
         // If changing password, both fields are required
@@ -64,6 +70,11 @@ const SettingsPage = () => {
             organization_inn: "",
             password: "",
             new_password: "",
+            contact_phone: "",
+            contact_email: "",
+            contact_employee_name: "",
+            contact_employee_middle_name: "",
+            contact_employee_surname: "",
         },
     });
     const { handleSubmit, reset, formState } = methods;
@@ -79,9 +90,14 @@ const SettingsPage = () => {
                 organization_inn: "",
                 password: "",
                 new_password: "",
+                contact_phone: organization?.contact_phone || "",
+                contact_email: organization?.contact_email || "",
+                contact_employee_name: organization?.contact_employee_name || "",
+                contact_employee_middle_name: organization?.contact_employee_middle_name || "",
+                contact_employee_surname: organization?.contact_employee_surname || "",
             });
         }
-    }, [user, reset]);
+    }, [user, organization, reset]);
 
     const mutation = useMutation({
         mutationFn: (data: SettingsFields) => {
@@ -102,10 +118,15 @@ const SettingsPage = () => {
     // Requisites state and submit
     const requisitesMutation = useMutation({
         mutationFn: async () => {
-            const dadata = await fetchOrganizationByInn(String(user?.organization_inn || user?.requisites?.bank_inn || ""));
+            // Use bank_inn from requisites to fetch organization data
+            const bankInn = user?.requisites?.bank_inn || "";
+            if (!bankInn) {
+                throw new Error("Нет ИНН банка для обновления реквизитов");
+            }
+            const dadata = await fetchOrganizationByInn(bankInn);
             return updateUserRequisites({
                 payment_account: user?.requisites?.payment_account || "",
-                dadata_response: dadata || {},
+                dadata_response: (dadata || {}) as Record<string, unknown>,
             });
         },
     });
@@ -193,13 +214,13 @@ const SettingsPage = () => {
                                     <Divider sx={{ my: 2 }} />
                                     <Typography variant="subtitle1">Контакты</Typography>
                                     <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
-                                        <TextInput fieldName="contact_phone" label="Телефон" defaultValue={organization.contact_phone || ""} fullWidth />
-                                        <TextInput fieldName="contact_email" label="Email" defaultValue={organization.contact_email || ""} fullWidth />
+                                        <TextInput fieldName="contact_phone" label="Телефон" fullWidth />
+                                        <TextInput fieldName="contact_email" label="Email" fullWidth />
                                     </Box>
                                     <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
-                                        <TextInput fieldName="contact_employee_name" label="Имя контактного лица" defaultValue={organization.contact_employee_name || ""} fullWidth />
-                                        <TextInput fieldName="contact_employee_middle_name" label="Отчество" defaultValue={organization.contact_employee_middle_name || ""} fullWidth />
-                                        <TextInput fieldName="contact_employee_surname" label="Фамилия" defaultValue={organization.contact_employee_surname || ""} fullWidth />
+                                        <TextInput fieldName="contact_employee_name" label="Имя контактного лица" fullWidth />
+                                        <TextInput fieldName="contact_employee_middle_name" label="Отчество" fullWidth />
+                                        <TextInput fieldName="contact_employee_surname" label="Фамилия" fullWidth />
                                     </Box>
                                     <Button
                                         variant="contained"
