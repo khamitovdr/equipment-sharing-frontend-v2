@@ -1,11 +1,13 @@
 import { Container, Paper, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import MainPageHeader from "src/pages/MainPage/MainPageHeader";
+import Footer from "src/components/Footer";
 
 const AboutPage = () => {
     return (
-        <>
+        <Box display="flex" flexDirection="column" minHeight="100vh">
             <MainPageHeader />
-            <Container sx={{ py: { xs: 2, md: 4 } }}>
+            <Container sx={{ py: { xs: 2, md: 4 }, flex: 1 }}>
                 <Paper sx={{ p: 3 }}>
                     <Typography variant="h4" sx={{ mb: 2 }}>О нас</Typography>
                     <Typography variant="body1" sx={{ mb: 2 }}>
@@ -19,7 +21,8 @@ const AboutPage = () => {
                     </Typography>
                 </Paper>
             </Container>
-        </>
+            <Footer />
+        </Box>
     );
 };
 

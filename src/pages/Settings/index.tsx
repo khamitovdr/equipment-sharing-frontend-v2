@@ -2,6 +2,7 @@ import { Box, Button, Container, Paper, Typography, Divider } from "@mui/materia
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import MainPageHeader from "src/pages/MainPage/MainPageHeader";
+import Footer from "src/components/Footer";
 import { getCurrentUser, updateCurrentUser, updateUserRequisites, getMyOrganization, updateOrganizationContactsByMember } from "src/api/organizations";
 import { fetchOrganizationByInn } from "src/api/dadata";
 import { z } from "zod";
@@ -132,9 +133,9 @@ const SettingsPage = () => {
     });
 
     return (
-        <>
+        <Box display="flex" flexDirection="column" minHeight="100vh">
             <MainPageHeader />
-            <Container sx={{ py: { xs: 2, md: 4 } }}>
+            <Container sx={{ py: { xs: 2, md: 4 }, flex: 1 }}>
                 {isPending ? (
                     <Typography>Загрузка...</Typography>
                 ) : (
@@ -247,7 +248,8 @@ const SettingsPage = () => {
                     </FormProvider>
                 )}
             </Container>
-        </>
+            <Footer />
+        </Box>
     );
 };
 

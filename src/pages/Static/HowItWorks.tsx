@@ -1,5 +1,6 @@
 import { Container, Paper, Typography, List, ListItem, ListItemText } from "@mui/material";
 import MainPageHeader from "src/pages/MainPage/MainPageHeader";
+import Footer from "src/components/Footer";
 
 const HowItWorksPage = () => {
     return (
@@ -36,6 +37,7 @@ const HowItWorksPage = () => {
                     </Typography>
                 </Paper>
             </Container>
+            <Footer />
         </>
     );
 };

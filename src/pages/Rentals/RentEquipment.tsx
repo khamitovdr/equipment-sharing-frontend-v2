@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createOrder, fetchEquipment } from "src/api/equipment";
 import MainPageHeader from "src/pages/MainPage/MainPageHeader";
+import MuiBox from "@mui/material/Box";
+import Footer from "src/components/Footer";
 
 const RentEquipment = () => {
     const { id: equipmentIdStr } = useParams();
@@ -68,9 +70,9 @@ const RentEquipment = () => {
     const disabled = !startDate || !endDate || mutation.isPending;
 
     return (
-        <>
+        <MuiBox display="flex" flexDirection="column" minHeight="100vh">
             <MainPageHeader />
-            <Container sx={{ py: { xs: 2, md: 4 } }}>
+            <Container sx={{ py: { xs: 2, md: 4 }, flex: 1 }}>
                 <Paper sx={{ p: 3 }}>
                     <Typography variant="h5" sx={{ mb: 2 }}>Оформление аренды</Typography>
                     {equipment && (
@@ -126,7 +128,8 @@ const RentEquipment = () => {
                     )}
                 </Paper>
             </Container>
-        </>
+            <Footer />
+        </MuiBox>
     );
 };
 
