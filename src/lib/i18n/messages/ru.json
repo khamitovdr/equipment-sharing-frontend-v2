@@ -51,6 +51,7 @@
   "catalog.noResults": "Ничего не найдено по вашему запросу",
   "catalog.noResultsSearch": "Ничего не найдено по запросу \"{query}\"",
   "catalog.tryDifferent": "Попробуйте другой запрос",
+  "catalog.sort": "Сортировка",
   "catalog.sort.newest": "Сначала новые",
   "catalog.sort.priceAsc": "Цена: по возрастанию",
   "catalog.sort.priceDesc": "Цена: по убыванию",

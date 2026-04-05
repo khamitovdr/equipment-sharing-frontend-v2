@@ -51,6 +51,7 @@
   "catalog.noResults": "No listings match your filters",
   "catalog.noResultsSearch": "Nothing found for \"{query}\"",
   "catalog.tryDifferent": "Try a different search",
+  "catalog.sort": "Sort",
   "catalog.sort.newest": "Newest first",
   "catalog.sort.priceAsc": "Price: low to high",
   "catalog.sort.priceDesc": "Price: high to low",
