@@ -1,9 +1,14 @@
 import { useAuthStore } from "@/lib/stores/auth-store";
 
-export const API_BASE_URL =
-  typeof window === "undefined"
-    ? process.env.API_URL || "https://api.equip-me.ru/api/v1"
-    : process.env.NEXT_PUBLIC_API_URL || "https://api.equip-me.ru/api/v1";
+// Client-side requests go through Next.js proxy (/api/v1 -> api.equip-me.ru/api/v1)
+// Server-side requests go directly to the API
+// Must be a function — module-level typeof window checks get inlined by the bundler
+function getApiBaseUrl(): string {
+  if (typeof window === "undefined") {
+    return process.env.API_URL || "https://api.equip-me.ru/api/v1";
+  }
+  return "/api/v1";
+}
 
 export class ApiRequestError extends Error {
   status: number;
@@ -37,7 +42,7 @@ export async function apiClient<T>(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  let url = `${API_BASE_URL}${path}`;
+  let url = `${getApiBaseUrl()}${path}`;
 
   if (params) {
     const searchParams = new URLSearchParams();
