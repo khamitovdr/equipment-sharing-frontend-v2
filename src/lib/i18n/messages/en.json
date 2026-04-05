@@ -5,6 +5,7 @@
   "common.retry": "Retry",
   "common.save": "Save",
   "common.cancel": "Cancel",
+  "common.confirm": "Confirm",
   "common.delete": "Delete",
   "common.search": "Search",
   "common.clearFilters": "Clear filters",
