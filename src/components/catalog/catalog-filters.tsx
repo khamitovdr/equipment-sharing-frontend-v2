@@ -135,7 +135,7 @@ export function CatalogFilters({
               }
             >
               <SelectTrigger className="w-full">
-                <span>{currentLabel}</span>
+                <span suppressHydrationWarning>{currentLabel}</span>
               </SelectTrigger>
               <SelectContent>
                 {sortOptions.map((opt) => (
