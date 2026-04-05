@@ -118,7 +118,7 @@ export function CatalogFilters({
 
       {/* Sort */}
       <div>
-        <p className="mb-2 text-sm font-medium">{t("catalog.sort")}</p>
+        <p className="mb-2 text-sm font-medium">{t("catalog.sort.label")}</p>
         <Select
           value={filters.sort ?? "newest"}
           onValueChange={(value) =>
