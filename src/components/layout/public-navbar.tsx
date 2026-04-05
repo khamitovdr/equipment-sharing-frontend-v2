@@ -31,7 +31,7 @@ function Logo() {
 
 const navLinks = [
   { href: "/", labelKey: "nav.home" as const },
-  { href: "/catalog", labelKey: "nav.catalog" as const },
+  { href: "/listings", labelKey: "nav.catalog" as const },
 ] as const;
 
 export function PublicNavbar() {

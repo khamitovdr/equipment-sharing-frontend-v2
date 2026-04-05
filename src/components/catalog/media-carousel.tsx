@@ -3,6 +3,7 @@
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,7 @@ interface MediaCarouselProps {
 }
 
 export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
+  const t = useTranslations();
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -69,7 +71,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
   if (mediaItems.length === 0) {
     return (
       <div className="flex aspect-[16/10] w-full items-center justify-center rounded-xl bg-zinc-100 text-sm text-zinc-400">
-        No media
+        {t("common.noMedia")}
       </div>
     );
   }

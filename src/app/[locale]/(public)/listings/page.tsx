@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { SlidersHorizontal } from "lucide-react";
 
@@ -24,13 +25,6 @@ import {
 } from "@/components/ui/sheet";
 import type { ListingRead } from "@/types/listing";
 
-const DEFAULT_FILTERS: CatalogFilters = {};
-
-function parseFiltersFromState(state: CatalogFilters): CatalogFilters {
-  const result = catalogFiltersSchema.safeParse(state);
-  return result.success ? result.data : DEFAULT_FILTERS;
-}
-
 function hasActiveFilters(filters: CatalogFilters): boolean {
   return Object.values(filters).some((v) => v !== undefined && v !== "");
 }
@@ -52,10 +46,53 @@ function SkeletonGrid() {
 
 export default function CatalogPage() {
   const t = useTranslations();
-  const [filters, setFilters] = useState<CatalogFilters>(DEFAULT_FILTERS);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const parsedFilters = useMemo(() => parseFiltersFromState(filters), [filters]);
+  // Parse filters from URL search params
+  const parsedFilters = useMemo<CatalogFilters>(() => {
+    const raw: Record<string, unknown> = {};
+    if (searchParams.get("search")) raw.search = searchParams.get("search");
+    if (searchParams.get("category")) raw.category_id = searchParams.get("category");
+    if (searchParams.get("price_min")) raw.price_min = searchParams.get("price_min");
+    if (searchParams.get("price_max")) raw.price_max = searchParams.get("price_max");
+    if (searchParams.get("delivery") === "true") raw.delivery = true;
+    if (searchParams.get("with_operator") === "true") raw.with_operator = true;
+    if (searchParams.get("on_owner_site") === "true") raw.on_owner_site = true;
+    if (searchParams.get("installation") === "true") raw.installation = true;
+    if (searchParams.get("setup") === "true") raw.setup = true;
+    if (searchParams.get("sort")) raw.sort = searchParams.get("sort");
+
+    const result = catalogFiltersSchema.safeParse(raw);
+    return result.success ? result.data : {};
+  }, [searchParams]);
+
   const activeFilters = useMemo(() => hasActiveFilters(parsedFilters), [parsedFilters]);
+
+  const updateFilters = useCallback(
+    (partial: Partial<CatalogFilters>) => {
+      const next = { ...parsedFilters, ...partial };
+      const params = new URLSearchParams();
+      if (next.search) params.set("search", next.search);
+      if (next.category_id) params.set("category", next.category_id);
+      if (next.price_min !== undefined) params.set("price_min", String(next.price_min));
+      if (next.price_max !== undefined) params.set("price_max", String(next.price_max));
+      if (next.delivery) params.set("delivery", "true");
+      if (next.with_operator) params.set("with_operator", "true");
+      if (next.on_owner_site) params.set("on_owner_site", "true");
+      if (next.installation) params.set("installation", "true");
+      if (next.setup) params.set("setup", "true");
+      if (next.sort) params.set("sort", next.sort);
+      const qs = params.toString();
+      router.replace(pathname + (qs ? "?" + qs : ""));
+    },
+    [parsedFilters, router, pathname]
+  );
+
+  const clearFilters = useCallback(() => {
+    router.replace(pathname);
+  }, [router, pathname]);
 
   // Fetch categories
   const { data: categories = [] } = useQuery({
@@ -82,7 +119,7 @@ export default function CatalogPage() {
     return params;
   }, [parsedFilters]);
 
-  // Fetch listings with infinite query
+  // Fetch listings with infinite query — key depends on URL-derived filters
   const {
     data,
     isLoading,
@@ -106,20 +143,12 @@ export default function CatalogPage() {
     [data]
   );
 
-  const handleFiltersChange = useCallback((partial: Partial<CatalogFilters>) => {
-    setFilters((prev) => ({ ...prev, ...partial }));
-  }, []);
-
-  const handleClearFilters = useCallback(() => {
-    setFilters(DEFAULT_FILTERS);
-  }, []);
-
   const filtersPanel = (
     <CatalogFiltersPanel
       filters={parsedFilters}
       categories={categories}
-      onChange={handleFiltersChange}
-      onClear={handleClearFilters}
+      onChange={updateFilters}
+      onClear={clearFilters}
       hasActiveFilters={activeFilters}
     />
   );
@@ -135,7 +164,7 @@ export default function CatalogPage() {
       <div className="mb-6">
         <SearchBar
           value={parsedFilters.search ?? ""}
-          onChange={(value) => handleFiltersChange({ search: value || undefined })}
+          onChange={(value) => updateFilters({ search: value || undefined })}
         />
       </div>
 
@@ -174,7 +203,7 @@ export default function CatalogPage() {
                   : t("catalog.noResults")
               }
               ctaLabel={activeFilters ? t("common.clearFilters") : undefined}
-              onCtaClick={activeFilters ? handleClearFilters : undefined}
+              onCtaClick={activeFilters ? clearFilters : undefined}
             />
           ) : (
             <>

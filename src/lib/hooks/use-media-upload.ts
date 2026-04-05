@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { mediaApi } from "@/lib/api/media";
 import type { MediaStatusResponse } from "@/types/media";
@@ -20,6 +20,20 @@ export function useMediaUpload(): UseMediaUploadReturn {
   const [state, setState] = useState<UploadState>("idle");
   const [progress, setProgress] = useState(0);
   const [media, setMedia] = useState<MediaStatusResponse | null>(null);
+
+  const isMountedRef = useRef(true);
+  const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (pollIntervalRef.current !== null) {
+        clearInterval(pollIntervalRef.current);
+        pollIntervalRef.current = null;
+      }
+    };
+  }, []);
 
   const upload = useCallback(
     async (file: File) => {
@@ -68,30 +82,46 @@ export function useMediaUpload(): UseMediaUploadReturn {
           xhr.send(file);
         });
 
+        if (!isMountedRef.current) return;
         setProgress(100);
 
         // 3. Confirm upload
         await mediaApi.confirm(token, media_id);
+
+        if (!isMountedRef.current) return;
         setState("processing");
 
         // 4. Poll for status
-        const pollInterval = setInterval(async () => {
+        pollIntervalRef.current = setInterval(async () => {
+          if (!isMountedRef.current) {
+            if (pollIntervalRef.current !== null) {
+              clearInterval(pollIntervalRef.current);
+              pollIntervalRef.current = null;
+            }
+            return;
+          }
           try {
             const statusResponse = await mediaApi.status(token, media_id);
+            if (!isMountedRef.current) return;
             if (statusResponse.status === "ready") {
-              clearInterval(pollInterval);
+              clearInterval(pollIntervalRef.current!);
+              pollIntervalRef.current = null;
               setMedia(statusResponse);
               setState("ready");
             } else if (statusResponse.status === "failed") {
-              clearInterval(pollInterval);
+              clearInterval(pollIntervalRef.current!);
+              pollIntervalRef.current = null;
               setState("failed");
             }
           } catch {
-            clearInterval(pollInterval);
+            if (!isMountedRef.current) return;
+            clearInterval(pollIntervalRef.current!);
+            pollIntervalRef.current = null;
             setState("failed");
           }
         }, 2000);
       } catch {
+        if (!isMountedRef.current) return;
         setState("failed");
       }
     },

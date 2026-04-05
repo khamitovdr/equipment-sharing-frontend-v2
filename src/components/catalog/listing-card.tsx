@@ -68,7 +68,7 @@ export function ListingCard({ listing }: ListingCardProps) {
             </>
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-zinc-300">
-              No photo
+              {t("common.noPhoto")}
             </div>
           )}
         </div>

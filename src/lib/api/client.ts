@@ -1,3 +1,5 @@
+import { useAuthStore } from "@/lib/stores/auth-store";
+
 export const API_BASE_URL =
   typeof window === "undefined"
     ? process.env.API_URL || "https://api.equip-me.ru/api/v1"
@@ -62,6 +64,12 @@ export async function apiClient<T>(
     } catch {
       detail = response.statusText;
     }
+
+    if (response.status === 401 && typeof window !== "undefined") {
+      useAuthStore.getState().clearAuth();
+      window.location.href = "/login";
+    }
+
     throw new ApiRequestError(response.status, detail);
   }
 

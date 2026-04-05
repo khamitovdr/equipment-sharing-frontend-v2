@@ -186,7 +186,7 @@ export default function OrgProfilePage() {
                   : "border-zinc-200 hover:border-zinc-400",
               ].join(" ")}
             >
-              All
+              {t("common.all")}
             </button>
             {categories.map((cat) => (
               <button
