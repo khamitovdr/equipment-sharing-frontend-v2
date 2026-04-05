@@ -119,27 +119,34 @@ export function CatalogFilters({
       {/* Sort */}
       <div>
         <p className="mb-2 text-sm font-medium">{t("catalog.sort.label")}</p>
-        <Select
-          value={filters.sort ?? "newest"}
-          onValueChange={(value) =>
-            onChange({
-              sort: value as CatalogFilters["sort"],
-            })
-          }
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="newest" label={t("catalog.sort.newest")}>{t("catalog.sort.newest")}</SelectItem>
-            <SelectItem value="price_asc" label={t("catalog.sort.priceAsc")}>
-              {t("catalog.sort.priceAsc")}
-            </SelectItem>
-            <SelectItem value="price_desc" label={t("catalog.sort.priceDesc")}>
-              {t("catalog.sort.priceDesc")}
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        {(() => {
+          const sortOptions = [
+            { value: "newest", label: t("catalog.sort.newest") },
+            { value: "price_asc", label: t("catalog.sort.priceAsc") },
+            { value: "price_desc", label: t("catalog.sort.priceDesc") },
+          ] as const;
+          const currentSort = filters.sort ?? "newest";
+          const currentLabel = sortOptions.find((o) => o.value === currentSort)?.label ?? currentSort;
+          return (
+            <Select
+              value={currentSort}
+              onValueChange={(value) =>
+                onChange({ sort: value as CatalogFilters["sort"] })
+              }
+            >
+              <SelectTrigger className="w-full">
+                <span>{currentLabel}</span>
+              </SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          );
+        })()}
       </div>
 
       {/* Clear filters */}
