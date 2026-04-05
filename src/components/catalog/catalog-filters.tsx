@@ -131,11 +131,11 @@ export function CatalogFilters({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="newest">{t("catalog.sort.newest")}</SelectItem>
-            <SelectItem value="price_asc">
+            <SelectItem value="newest" label={t("catalog.sort.newest")}>{t("catalog.sort.newest")}</SelectItem>
+            <SelectItem value="price_asc" label={t("catalog.sort.priceAsc")}>
               {t("catalog.sort.priceAsc")}
             </SelectItem>
-            <SelectItem value="price_desc">
+            <SelectItem value="price_desc" label={t("catalog.sort.priceDesc")}>
               {t("catalog.sort.priceDesc")}
             </SelectItem>
           </SelectContent>
