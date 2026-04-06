@@ -73,7 +73,7 @@ export async function apiClient<T>(
       detail = response.statusText;
     }
 
-    if (response.status === 401 && typeof window !== "undefined") {
+    if (response.status === 401 && typeof window !== "undefined" && token) {
       useAuthStore.getState().clearAuth();
       window.location.href = "/login";
     }
