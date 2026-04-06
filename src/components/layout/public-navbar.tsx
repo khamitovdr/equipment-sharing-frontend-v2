@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetTrigger,
@@ -68,12 +69,12 @@ export function PublicNavbar() {
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" nativeButton={false} render={<Link href="/login" />}>
+              <Link href="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
                 {t("auth.login")}
-              </Button>
-              <Button size="sm" className="bg-black text-white hover:bg-zinc-800" nativeButton={false} render={<Link href="/register" />}>
+              </Link>
+              <Link href="/register" className={cn(buttonVariants({ size: "sm" }), "bg-black text-white hover:bg-zinc-800")}>
                 {t("auth.register")}
-              </Button>
+              </Link>
             </>
           )}
         </div>
@@ -116,21 +117,20 @@ export function PublicNavbar() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full"
-                      nativeButton={false} render={<Link href="/login" onClick={() => setMobileOpen(false)} />}
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-full")}
                     >
                       {t("auth.login")}
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="w-full bg-black text-white hover:bg-zinc-800"
-                      nativeButton={false} render={<Link href="/register" onClick={() => setMobileOpen(false)} />}
+                    </Link>
+                    <Link
+                      href="/register"
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(buttonVariants({ size: "sm" }), "w-full bg-black text-white hover:bg-zinc-800")}
                     >
                       {t("auth.register")}
-                    </Button>
+                    </Link>
                   </div>
                 )}
               </div>

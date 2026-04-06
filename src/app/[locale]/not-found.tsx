@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function NotFound() {
   const t = useTranslations();
@@ -14,12 +15,12 @@ export default function NotFound() {
         {t("common.notFound")}
       </h1>
       <p className="text-sm text-zinc-500">{t("common.notFoundDescription")}</p>
-      <Button
-        className="mt-2 bg-black text-white hover:bg-zinc-800"
-        nativeButton={false} render={<Link href="/" />}
+      <Link
+        href="/"
+        className={cn(buttonVariants(), "mt-2 bg-black text-white hover:bg-zinc-800")}
       >
         {t("common.backHome")}
-      </Button>
+      </Link>
     </div>
   );
 }

@@ -10,7 +10,8 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ListingCard } from "@/components/catalog/listing-card";
 import type { ListingRead } from "@/types/listing";
 import type { OrganizationListRead } from "@/types/organization";
@@ -44,9 +45,9 @@ export default async function HomePage() {
             {t("home.hero.subtitle")}
           </p>
           <div className="mt-8">
-            <Button size="lg" nativeButton={false} render={<Link href="/listings" />}>
+            <Link href="/listings" className={cn(buttonVariants({ size: "lg" }))}>
               {t("home.hero.cta")}
-            </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -167,9 +168,9 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Button variant="default" nativeButton={false} render={<Link href="/organizations/new" />}>
+                <Link href="/organizations/new" className={cn(buttonVariants({ variant: "default" }))}>
                   {t("nav.createOrg")}
-                </Button>
+                </Link>
               </CardFooter>
             </Card>
 
@@ -182,9 +183,9 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Button variant="outline" nativeButton={false} render={<Link href="/listings" />}>
+                <Link href="/listings" className={cn(buttonVariants({ variant: "outline" }))}>
                   {t("nav.catalog")}
-                </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
