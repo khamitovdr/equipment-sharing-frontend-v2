@@ -126,14 +126,14 @@ export default async function HomePage() {
       {/* ── 4. Partners ──────────────────────────────────────── */}
       <section className="border-t py-16">
         <div className="container mx-auto px-4">
-          <p className="mb-10 text-center text-xs font-medium uppercase tracking-widest text-zinc-400">
+          <h2 className="mb-10 text-center text-2xl font-bold tracking-tight">
             {t("home.partners")}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 sm:gap-16">
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-14 sm:gap-20">
             {[
               { src: "/partners/fsi.webp", href: "https://fasie.ru/?ysclid=mnnd0kqe1x242687024", alt: "Фонд содействия инновациям" },
-              { src: "/partners/ef.webp", href: "https://www.econ.msu.ru/?ysclid=mnnd05ppbg247590508", alt: "Экономический факультет МГУ" },
               { src: "/partners/intc.webp", href: "https://i.moscow/innovacionnyy-nauchno-tehnologicheskiy-centr-mgu-vorobevy-gory", alt: "ИНТЦ МГУ Воробьёвы горы" },
+              { src: "/partners/ef.webp", href: "https://www.econ.msu.ru/?ysclid=mnnd05ppbg247590508", alt: "Экономический факультет МГУ" },
             ].map((partner) => (
               <a
                 key={partner.src}
@@ -145,9 +145,9 @@ export default async function HomePage() {
                 <Image
                   src={partner.src}
                   alt={partner.alt}
-                  width={160}
-                  height={60}
-                  className="h-12 w-auto object-contain sm:h-14"
+                  width={240}
+                  height={80}
+                  className="h-16 w-auto object-contain sm:h-20"
                 />
               </a>
             ))}
