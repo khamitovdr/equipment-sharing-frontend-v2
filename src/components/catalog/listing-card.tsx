@@ -33,7 +33,7 @@ export function ListingCard({ listing }: ListingCardProps) {
     setActivePhotoIndex(0);
   }
 
-  const activePhoto = photos[activePhotoIndex];
+  const activePhoto = photos[activePhotoIndex] ?? photos[0];
 
   return (
     <Link href={`/listings/${listing.id}`} className="block">
@@ -44,7 +44,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
-          {photos.length > 0 ? (
+          {activePhoto ? (
             <>
               <img
                 src={activePhoto.medium_url ?? activePhoto.large_url ?? activePhoto.small_url ?? ""}
