@@ -126,7 +126,7 @@ export default async function HomePage() {
       {/* ── 4. Partners ──────────────────────────────────────── */}
       <section className="border-t py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-10 text-center text-2xl font-bold tracking-tight">
+          <h2 className="mb-10 text-2xl font-bold tracking-tight">
             {t("home.partners")}
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-14 sm:gap-20">
