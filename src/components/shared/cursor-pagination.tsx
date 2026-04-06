@@ -1,9 +1,7 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
-
-import { Button } from "@/components/ui/button";
 
 interface CursorPaginationProps {
   hasMore: boolean;
@@ -16,16 +14,30 @@ export function CursorPagination({
   isLoading,
   onLoadMore,
 }: CursorPaginationProps) {
-  const t = useTranslations();
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
-  if (!hasMore) return null;
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || !hasMore || isLoading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          onLoadMore();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasMore, isLoading, onLoadMore]);
+
+  if (!hasMore && !isLoading) return null;
 
   return (
-    <div className="flex justify-center py-8">
-      <Button variant="outline" onClick={onLoadMore} disabled={isLoading}>
-        {isLoading && <Loader2 className="animate-spin" />}
-        {t("common.loadMore")}
-      </Button>
+    <div ref={sentinelRef} className="flex justify-center py-8">
+      {isLoading && <Loader2 className="h-5 w-5 animate-spin text-zinc-400" />}
     </div>
   );
 }
