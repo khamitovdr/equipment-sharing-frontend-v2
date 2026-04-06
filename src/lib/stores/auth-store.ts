@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { UserRead } from "@/types/user";
 
 interface AuthState {
@@ -10,16 +11,28 @@ interface AuthState {
   setUser: (user: UserRead) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      isAuthenticated: false,
 
-  setAuth: (user, token) =>
-    set({ user, token, isAuthenticated: true }),
+      setAuth: (user, token) =>
+        set({ user, token, isAuthenticated: true }),
 
-  clearAuth: () =>
-    set({ user: null, token: null, isAuthenticated: false }),
+      clearAuth: () =>
+        set({ user: null, token: null, isAuthenticated: false }),
 
-  setUser: (user) => set({ user }),
-}));
+      setUser: (user) => set({ user }),
+    }),
+    {
+      name: "equip-me-auth",
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
+    }
+  )
+);
