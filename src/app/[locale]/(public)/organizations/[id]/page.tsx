@@ -9,6 +9,7 @@ import { CheckCircle, Mail, Phone } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ListingGrid } from "@/components/catalog/listing-grid";
+import { CategoryFilter } from "@/components/catalog/category-filter";
 import { CursorPagination } from "@/components/shared/cursor-pagination";
 import { EmptyState } from "@/components/shared/empty-state";
 import { organizationsApi } from "@/lib/api/organizations";
@@ -176,41 +177,12 @@ export default function OrgProfilePage() {
 
         {/* Category filter pills */}
         {categories.length > 0 && (
-          <div className="mb-5 flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedCategories([])}
-              className={[
-                "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
-                selectedCategories.length === 0
-                  ? "border-black bg-black text-white"
-                  : "border-zinc-200 hover:border-zinc-400",
-              ].join(" ")}
-            >
-              {t("common.all")}
-            </button>
-            {categories.map((cat) => {
-              const isActive = selectedCategories.includes(cat.id);
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() =>
-                    setSelectedCategories(
-                      isActive
-                        ? selectedCategories.filter((c) => c !== cat.id)
-                        : [...selectedCategories, cat.id]
-                    )
-                  }
-                  className={[
-                    "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
-                    isActive
-                      ? "border-black bg-black text-white"
-                      : "border-zinc-200 hover:border-zinc-400",
-                  ].join(" ")}
-                >
-                  {cat.name}
-                </button>
-              );
-            })}
+          <div className="mb-5">
+            <CategoryFilter
+              categories={categories}
+              selected={selectedCategories}
+              onChange={setSelectedCategories}
+            />
           </div>
         )}
 

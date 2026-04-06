@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CategoryFilter } from "@/components/catalog/category-filter";
 import type { CatalogFilters } from "@/lib/validators/listing";
 import type { ListingCategoryRead } from "@/types/listing";
 
@@ -45,31 +46,11 @@ export function CatalogFilters({
       {/* Categories */}
       <div>
         <p className="mb-2 text-sm font-medium">{t("catalog.categories")}</p>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((cat) => {
-            const selected = filters.category_ids ?? [];
-            const isActive = selected.includes(cat.id);
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  const next = isActive
-                    ? selected.filter((id) => id !== cat.id)
-                    : [...selected, cat.id];
-                  onChange({ category_ids: next.length > 0 ? next : undefined });
-                }}
-                className={`rounded-full border px-3 py-1 text-xs transition-colors ${
-                  isActive
-                    ? "border-black bg-black text-white"
-                    : "border-input bg-transparent text-foreground hover:bg-muted"
-                }`}
-              >
-                {cat.name}
-              </button>
-            );
-          })}
-        </div>
+        <CategoryFilter
+          categories={categories}
+          selected={filters.category_ids ?? []}
+          onChange={(ids) => onChange({ category_ids: ids.length > 0 ? ids : undefined })}
+        />
       </div>
 
       {/* Price range */}
