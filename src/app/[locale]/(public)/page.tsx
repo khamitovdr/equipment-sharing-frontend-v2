@@ -124,22 +124,32 @@ export default async function HomePage() {
       </section>
 
       {/* ── 4. Partners ──────────────────────────────────────── */}
-      <section className="py-14">
+      <section className="border-t py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-center text-2xl font-bold tracking-tight">
+          <p className="mb-10 text-center text-xs font-medium uppercase tracking-widest text-zinc-400">
             {t("home.partners")}
-          </h2>
-          <div className="flex flex-wrap items-center justify-center gap-10">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex h-12 w-32 items-center justify-center rounded-lg bg-zinc-100 grayscale"
-                aria-label={`Partner ${i + 1}`}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-12 sm:gap-16">
+            {[
+              { src: "/partners/fsi.webp", href: "https://fasie.ru/?ysclid=mnnd0kqe1x242687024", alt: "Фонд содействия инновациям" },
+              { src: "/partners/ef.webp", href: "https://www.econ.msu.ru/?ysclid=mnnd05ppbg247590508", alt: "Экономический факультет МГУ" },
+              { src: "/partners/intc.webp", href: "https://i.moscow/innovacionnyy-nauchno-tehnologicheskiy-centr-mgu-vorobevy-gory", alt: "ИНТЦ МГУ Воробьёвы горы" },
+            ].map((partner) => (
+              <a
+                key={partner.src}
+                href={partner.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
               >
-                <span className="text-sm font-semibold text-zinc-400">
-                  Partner {i + 1}
-                </span>
-              </div>
+                <Image
+                  src={partner.src}
+                  alt={partner.alt}
+                  width={160}
+                  height={60}
+                  className="h-12 w-auto object-contain sm:h-14"
+                />
+              </a>
             ))}
           </div>
         </div>
