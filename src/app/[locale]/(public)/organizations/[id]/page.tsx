@@ -58,7 +58,7 @@ function OrgProfileSkeleton() {
 export default function OrgProfilePage() {
   const { id } = useParams<{ id: string }>();
   const t = useTranslations();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   // Fetch org
   const { data: org, isLoading: orgLoading } = useQuery({
@@ -82,11 +82,11 @@ export default function OrgProfilePage() {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["listings", { organization_id: id, category_id: selectedCategory }],
+    queryKey: ["listings", { organization_id: id, category_id: selectedCategories }],
     queryFn: ({ pageParam }) =>
       listingsApi.list({
         organization_id: id,
-        category_id: selectedCategory,
+        category_id: selectedCategories.length ? selectedCategories : undefined,
         cursor: pageParam as string | null | undefined,
         limit: 20,
       }),
@@ -178,34 +178,39 @@ export default function OrgProfilePage() {
         {categories.length > 0 && (
           <div className="mb-5 flex flex-wrap gap-2">
             <button
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => setSelectedCategories([])}
               className={[
                 "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
-                selectedCategory === null
+                selectedCategories.length === 0
                   ? "border-black bg-black text-white"
                   : "border-zinc-200 hover:border-zinc-400",
               ].join(" ")}
             >
               {t("common.all")}
             </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === cat.id ? null : cat.id
-                  )
-                }
-                className={[
-                  "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
-                  selectedCategory === cat.id
-                    ? "border-black bg-black text-white"
-                    : "border-zinc-200 hover:border-zinc-400",
-                ].join(" ")}
-              >
-                {cat.name}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const isActive = selectedCategories.includes(cat.id);
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() =>
+                    setSelectedCategories(
+                      isActive
+                        ? selectedCategories.filter((c) => c !== cat.id)
+                        : [...selectedCategories, cat.id]
+                    )
+                  }
+                  className={[
+                    "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
+                    isActive
+                      ? "border-black bg-black text-white"
+                      : "border-zinc-200 hover:border-zinc-400",
+                  ].join(" ")}
+                >
+                  {cat.name}
+                </button>
+              );
+            })}
           </div>
         )}
 

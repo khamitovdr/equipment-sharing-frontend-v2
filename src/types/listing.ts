@@ -64,6 +64,6 @@ export interface ListingsQueryParams {
   cursor?: string | null;
   limit?: number;
   search?: string | null;
-  category_id?: string | null;
+  category_id?: string | string[] | null;
   organization_id?: string | null;
 }

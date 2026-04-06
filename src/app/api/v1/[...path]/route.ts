@@ -41,9 +41,9 @@ async function proxy(request: NextRequest, params: { path: string[] }) {
   const path = params.path.join("/");
   const url = new URL(`/api/v1/${path}/`, API_BASE);
 
-  // Forward query params
+  // Forward query params (append to preserve repeated params like ?category_id=a&category_id=b)
   request.nextUrl.searchParams.forEach((value, key) => {
-    url.searchParams.set(key, value);
+    url.searchParams.append(key, value);
   });
 
   // Forward headers (except host)

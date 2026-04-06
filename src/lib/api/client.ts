@@ -25,7 +25,7 @@ interface RequestOptions {
   method?: string;
   body?: unknown;
   token?: string | null;
-  params?: Record<string, string | number | boolean | null | undefined>;
+  params?: Record<string, string | string[] | number | boolean | null | undefined>;
 }
 
 export async function apiClient<T>(
@@ -47,7 +47,10 @@ export async function apiClient<T>(
   if (params) {
     const searchParams = new URLSearchParams();
     for (const [key, value] of Object.entries(params)) {
-      if (value != null && value !== "") {
+      if (value == null || value === "") continue;
+      if (Array.isArray(value)) {
+        for (const v of value) searchParams.append(key, v);
+      } else {
         searchParams.set(key, String(value));
       }
     }

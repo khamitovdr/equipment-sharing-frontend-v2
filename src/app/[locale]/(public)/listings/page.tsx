@@ -54,8 +54,8 @@ export default function CatalogPage() {
   const parsedFilters = useMemo<CatalogFilters>(() => {
     const raw: Record<string, unknown> = {};
     if (searchParams.get("search")) raw.search = searchParams.get("search");
-    const categoryParam = searchParams.get("category");
-    if (categoryParam) raw.category_ids = categoryParam.split(",");
+    const categoryIds = searchParams.getAll("category_id");
+    if (categoryIds.length) raw.category_ids = categoryIds;
     if (searchParams.get("price_min")) raw.price_min = searchParams.get("price_min");
     if (searchParams.get("price_max")) raw.price_max = searchParams.get("price_max");
     if (searchParams.get("delivery") === "true") raw.delivery = true;
@@ -76,7 +76,9 @@ export default function CatalogPage() {
       const next = { ...parsedFilters, ...partial };
       const params = new URLSearchParams();
       if (next.search) params.set("search", next.search);
-      if (next.category_ids?.length) params.set("category", next.category_ids.join(","));
+      if (next.category_ids?.length) {
+        for (const id of next.category_ids) params.append("category_id", id);
+      }
       if (next.price_min !== undefined) params.set("price_min", String(next.price_min));
       if (next.price_max !== undefined) params.set("price_max", String(next.price_max));
       if (next.delivery) params.set("delivery", "true");
@@ -104,12 +106,11 @@ export default function CatalogPage() {
 
   // Build query params from filters
   const queryParams = useMemo(() => {
-    const params: Record<string, string | number | boolean | null | undefined> = {
+    const params: Record<string, string | string[] | number | boolean | null | undefined> = {
       limit: 18,
     };
     if (parsedFilters.search) params.search = parsedFilters.search;
-    // Backend supports single category_id — send first selected
-    if (parsedFilters.category_ids?.length) params.category_id = parsedFilters.category_ids[0];
+    if (parsedFilters.category_ids?.length) params.category_id = parsedFilters.category_ids;
     if (parsedFilters.price_min !== undefined) params.price_min = parsedFilters.price_min;
     if (parsedFilters.price_max !== undefined) params.price_max = parsedFilters.price_max;
     if (parsedFilters.delivery) params.delivery = true;

@@ -5,7 +5,7 @@ import type { PaginatedResponse } from "@/types/api";
 export const listingsApi = {
   list(params?: ListingsQueryParams, token?: string | null) {
     return apiClient<PaginatedResponse<ListingRead>>("/listings/", {
-      params: params as Record<string, string | number | boolean | null | undefined>,
+      params: params as Record<string, string | string[] | number | boolean | null | undefined>,
       token,
     });
   },
