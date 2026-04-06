@@ -5,11 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 import { listingsApi } from "@/lib/api/listings";
 import { organizationsApi } from "@/lib/api/organizations";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { ListingCard } from "@/components/catalog/listing-card";
@@ -160,34 +156,26 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {/* Rent CTA */}
-            <Card className="p-6">
-              <CardContent className="p-0">
-                <h3 className="text-lg font-bold">{t("home.ctaRent")}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t("home.ctaRentDesc")}
-                </p>
-              </CardContent>
-              <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Link href="/organizations/new" className={cn(buttonVariants({ variant: "default" }))}>
-                  {t("nav.createOrg")}
-                </Link>
-              </CardFooter>
-            </Card>
+            <div className="rounded-xl border bg-card p-6">
+              <h3 className="text-lg font-bold">{t("home.ctaRent")}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("home.ctaRentDesc")}
+              </p>
+              <Link href="/organizations/new" className={cn(buttonVariants({ variant: "default" }), "mt-4")}>
+                {t("nav.createOrg")}
+              </Link>
+            </div>
 
             {/* Search CTA */}
-            <Card className="p-6">
-              <CardContent className="p-0">
-                <h3 className="text-lg font-bold">{t("home.ctaSearch")}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t("home.ctaSearchDesc")}
-                </p>
-              </CardContent>
-              <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Link href="/listings" className={cn(buttonVariants({ variant: "outline" }))}>
-                  {t("nav.catalog")}
-                </Link>
-              </CardFooter>
-            </Card>
+            <div className="rounded-xl border bg-card p-6">
+              <h3 className="text-lg font-bold">{t("home.ctaSearch")}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("home.ctaSearchDesc")}
+              </p>
+              <Link href="/listings" className={cn(buttonVariants({ variant: "outline" }), "mt-4")}>
+                {t("nav.catalog")}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
