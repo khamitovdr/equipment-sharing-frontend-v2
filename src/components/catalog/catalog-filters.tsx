@@ -47,14 +47,18 @@ export function CatalogFilters({
         <p className="mb-2 text-sm font-medium">{t("catalog.categories")}</p>
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => {
-            const isActive = filters.category_id === cat.id;
+            const selected = filters.category_ids ?? [];
+            const isActive = selected.includes(cat.id);
             return (
               <button
                 key={cat.id}
                 type="button"
-                onClick={() =>
-                  onChange({ category_id: isActive ? undefined : cat.id })
-                }
+                onClick={() => {
+                  const next = isActive
+                    ? selected.filter((id) => id !== cat.id)
+                    : [...selected, cat.id];
+                  onChange({ category_ids: next.length > 0 ? next : undefined });
+                }}
                 className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                   isActive
                     ? "border-black bg-black text-white"

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const catalogFiltersSchema = z.object({
   search: z.string().optional(),
-  category_id: z.string().optional(),
+  category_ids: z.array(z.string()).optional(),
   price_min: z.coerce.number().min(0).optional(),
   price_max: z.coerce.number().min(0).optional(),
   delivery: z.boolean().optional(),

@@ -54,7 +54,8 @@ export default function CatalogPage() {
   const parsedFilters = useMemo<CatalogFilters>(() => {
     const raw: Record<string, unknown> = {};
     if (searchParams.get("search")) raw.search = searchParams.get("search");
-    if (searchParams.get("category")) raw.category_id = searchParams.get("category");
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) raw.category_ids = categoryParam.split(",");
     if (searchParams.get("price_min")) raw.price_min = searchParams.get("price_min");
     if (searchParams.get("price_max")) raw.price_max = searchParams.get("price_max");
     if (searchParams.get("delivery") === "true") raw.delivery = true;
@@ -75,7 +76,7 @@ export default function CatalogPage() {
       const next = { ...parsedFilters, ...partial };
       const params = new URLSearchParams();
       if (next.search) params.set("search", next.search);
-      if (next.category_id) params.set("category", next.category_id);
+      if (next.category_ids?.length) params.set("category", next.category_ids.join(","));
       if (next.price_min !== undefined) params.set("price_min", String(next.price_min));
       if (next.price_max !== undefined) params.set("price_max", String(next.price_max));
       if (next.delivery) params.set("delivery", "true");
@@ -107,7 +108,8 @@ export default function CatalogPage() {
       limit: 18,
     };
     if (parsedFilters.search) params.search = parsedFilters.search;
-    if (parsedFilters.category_id) params.category_id = parsedFilters.category_id;
+    // Backend supports single category_id — send first selected
+    if (parsedFilters.category_ids?.length) params.category_id = parsedFilters.category_ids[0];
     if (parsedFilters.price_min !== undefined) params.price_min = parsedFilters.price_min;
     if (parsedFilters.price_max !== undefined) params.price_max = parsedFilters.price_max;
     if (parsedFilters.delivery) params.delivery = true;
