@@ -9,6 +9,7 @@ import { organizationsApi } from "@/lib/api/organizations";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { ListingCard } from "@/components/catalog/listing-card";
+import { ScrollHero } from "@/components/layout/scroll-hero";
 import type { ListingRead } from "@/types/listing";
 import type { OrganizationListRead } from "@/types/organization";
 
@@ -32,21 +33,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ── 1. Hero ─────────────────────────────────────────── */}
-      <section className="border-b bg-zinc-50 py-20 sm:py-28">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            {t("home.hero.title")}
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
-            {t("home.hero.subtitle")}
-          </p>
-          <div className="mt-8">
-            <Link href="/listings" className={cn(buttonVariants({ size: "lg" }))}>
-              {t("home.hero.cta")}
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ScrollHero />
 
       {/* ── 2. Latest listings ──────────────────────────────── */}
       <section className="py-14">

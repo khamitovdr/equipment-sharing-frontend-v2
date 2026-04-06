@@ -48,6 +48,8 @@
   "home": {
     "hero": {
       "title": "Rent equipment for any project",
+      "line1": "Rent equipment",
+      "line2": "for any project",
       "subtitle": "Find and rent machinery and equipment from trusted organizations",
       "cta": "Browse catalog",
       "searchPlaceholder": "Search equipment..."
