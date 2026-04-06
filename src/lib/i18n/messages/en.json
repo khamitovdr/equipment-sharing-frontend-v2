@@ -1,0 +1,116 @@
+{
+  "common": {
+    "appName": "Equip Me",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "search": "Search",
+    "clearFilters": "Clear filters",
+    "noPhoto": "No photo",
+    "noMedia": "No media",
+    "processing": "Processing...",
+    "all": "All",
+    "loadMore": "Load more",
+    "comingSoon": "Coming soon",
+    "notFound": "Page not found",
+    "notFoundDescription": "The page you requested does not exist",
+    "backHome": "Back to home"
+  },
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "myOrders": "My Orders",
+    "settings": "Settings",
+    "createOrg": "Create organization",
+    "joinOrg": "Join organization",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "name": "First name",
+    "surname": "Last name",
+    "middleName": "Middle name",
+    "phone": "Phone",
+    "profilePhoto": "Profile photo",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginError": "Incorrect email or password",
+    "registerError": "Registration error",
+    "emailTaken": "Email already taken"
+  },
+  "home": {
+    "hero": {
+      "title": "Rent equipment for any project",
+      "line1": "Rent equipment",
+      "line2": "for any project",
+      "subtitle": "Find and rent machinery and equipment from trusted organizations",
+      "cta": "Browse catalog",
+      "searchPlaceholder": "Search equipment..."
+    },
+    "latestListings": "Latest equipment",
+    "exploreCatalog": "Explore the full catalog",
+    "topOrganizations": "Trusted organizations",
+    "partners": "Partners",
+    "ctaRent": "Have equipment to rent?",
+    "ctaRentDesc": "Create an organization and start renting out your machinery",
+    "ctaSearch": "Looking for something specific?",
+    "ctaSearchDesc": "Browse the catalog and find the equipment you need"
+  },
+  "catalog": {
+    "title": "Equipment catalog",
+    "filters": "Filters",
+    "noResults": "No listings match your filters",
+    "noResultsSearch": "Nothing found for \"{query}\"",
+    "tryDifferent": "Try a different search",
+    "sort": {
+      "label": "Sort",
+      "newest": "Newest first",
+      "priceAsc": "Price: low to high",
+      "priceDesc": "Price: high to low"
+    },
+    "priceRange": "Price",
+    "priceMin": "from",
+    "priceMax": "to",
+    "services": "Services",
+    "delivery": "Delivery",
+    "withOperator": "With operator",
+    "onOwnerSite": "On owner's site",
+    "installation": "Installation",
+    "setup": "Setup",
+    "perDay": "rub/day",
+    "categories": "Categories"
+  },
+  "listing": {
+    "requestRental": "Request rental",
+    "specifications": "Specifications",
+    "description": "Description",
+    "selectDates": "Select rental dates",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "estimatedCost": "Estimated cost",
+    "days": "days",
+    "reserved": "Reserved",
+    "loginToOrder": "Log in to request rental",
+    "orderSuccess": "Order created successfully"
+  },
+  "org": {
+    "listings": "Equipment",
+    "listingCount": "{count} listings",
+    "noListings": "This organization has no listings yet",
+    "contacts": "Contacts",
+    "verified": "Verified",
+    "legalAddress": "Legal address"
+  },
+  "errors": {
+    "networkError": "Connection lost",
+    "forbidden": "You don't have permission",
+    "serverError": "Service temporarily unavailable, try again"
+  }
+}

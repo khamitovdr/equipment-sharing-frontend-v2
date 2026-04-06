@@ -1,0 +1,116 @@
+{
+  "common": {
+    "appName": "Equip Me",
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "retry": "Повторить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "delete": "Удалить",
+    "search": "Поиск",
+    "clearFilters": "Сбросить фильтры",
+    "noPhoto": "Нет фото",
+    "noMedia": "Нет медиа",
+    "processing": "Обработка...",
+    "all": "Все",
+    "loadMore": "Загрузить ещё",
+    "comingSoon": "Скоро",
+    "notFound": "Страница не найдена",
+    "notFoundDescription": "Запрашиваемая страница не существует",
+    "backHome": "На главную"
+  },
+  "nav": {
+    "home": "Главная",
+    "catalog": "Каталог",
+    "myOrders": "Мои заказы",
+    "settings": "Настройки",
+    "createOrg": "Создать организацию",
+    "joinOrg": "Вступить в организацию",
+    "logout": "Выйти"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "email": "Email",
+    "password": "Пароль",
+    "name": "Имя",
+    "surname": "Фамилия",
+    "middleName": "Отчество",
+    "phone": "Телефон",
+    "profilePhoto": "Фото профиля",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "loginError": "Неверный email или пароль",
+    "registerError": "Ошибка регистрации",
+    "emailTaken": "Email уже занят"
+  },
+  "home": {
+    "hero": {
+      "title": "Аренда оборудования для любых задач",
+      "line1": "Арендуйте технику",
+      "line2": "для любых задач",
+      "subtitle": "Найдите и арендуйте технику и оборудование у проверенных организаций",
+      "cta": "Смотреть каталог",
+      "searchPlaceholder": "Поиск оборудования..."
+    },
+    "latestListings": "Новое оборудование",
+    "exploreCatalog": "Смотреть весь каталог",
+    "topOrganizations": "Надёжные организации",
+    "partners": "Партнёры",
+    "ctaRent": "Есть оборудование для аренды?",
+    "ctaRentDesc": "Создайте организацию и начните сдавать технику",
+    "ctaSearch": "Ищете что-то конкретное?",
+    "ctaSearchDesc": "Просмотрите каталог и найдите нужное оборудование"
+  },
+  "catalog": {
+    "title": "Каталог оборудования",
+    "filters": "Фильтры",
+    "noResults": "Ничего не найдено по вашему запросу",
+    "noResultsSearch": "Ничего не найдено по запросу \"{query}\"",
+    "tryDifferent": "Попробуйте другой запрос",
+    "sort": {
+      "label": "Сортировка",
+      "newest": "Сначала новые",
+      "priceAsc": "Цена: по возрастанию",
+      "priceDesc": "Цена: по убыванию"
+    },
+    "priceRange": "Цена",
+    "priceMin": "от",
+    "priceMax": "до",
+    "services": "Услуги",
+    "delivery": "Доставка",
+    "withOperator": "С оператором",
+    "onOwnerSite": "На площадке владельца",
+    "installation": "Монтаж",
+    "setup": "Настройка",
+    "perDay": "руб/день",
+    "categories": "Категории"
+  },
+  "listing": {
+    "requestRental": "Оставить заявку",
+    "specifications": "Характеристики",
+    "description": "Описание",
+    "selectDates": "Выберите даты аренды",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "estimatedCost": "Ориентировочная стоимость",
+    "days": "дней",
+    "reserved": "Занято",
+    "loginToOrder": "Войдите, чтобы оставить заявку",
+    "orderSuccess": "Заявка успешно создана"
+  },
+  "org": {
+    "listings": "Оборудование",
+    "listingCount": "{count} объявлений",
+    "noListings": "У этой организации пока нет оборудования",
+    "contacts": "Контакты",
+    "verified": "Проверена",
+    "legalAddress": "Юридический адрес"
+  },
+  "errors": {
+    "networkError": "Ошибка сети",
+    "forbidden": "У вас нет доступа",
+    "serverError": "Сервис временно недоступен, попробуйте позже"
+  }
+}
