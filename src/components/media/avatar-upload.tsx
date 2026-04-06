@@ -1,51 +1,53 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Camera } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { UploadProgress } from "@/components/media/upload-progress";
-import { useMediaUpload } from "@/lib/hooks/use-media-upload";
+
+type UploadState = "idle" | "uploading" | "processing" | "ready" | "failed";
 
 interface AvatarUploadProps {
-  onUploaded: (mediaId: string, url: string) => void;
+  /** Called when user selects a file (deferred mode — no upload yet) */
+  onFileSelected?: (file: File) => void;
+  /** Called after upload completes (immediate mode) */
+  onUploaded?: (mediaId: string, url: string) => void;
+  /** Current preview URL */
   currentUrl?: string | null;
+  /** External upload state (for deferred uploads managed by parent) */
+  uploadState?: UploadState;
+  /** External upload progress 0-100 */
+  uploadProgress?: number;
 }
 
-export function AvatarUpload({ onUploaded, currentUrl }: AvatarUploadProps) {
+export function AvatarUpload({
+  onFileSelected,
+  onUploaded,
+  currentUrl,
+  uploadState = "idle",
+  uploadProgress = 0,
+}: AvatarUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { state, progress, media, upload } = useMediaUpload();
+  const [localPreview, setLocalPreview] = useState<string | null>(null);
 
   const handleClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    await upload(file);
+    // Create local preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setLocalPreview(previewUrl);
+
+    // Notify parent
+    onFileSelected?.(file);
   };
 
-  // Notify parent when upload completes
-  useEffect(() => {
-    if (state === "ready" && media) {
-      const url =
-        media.variants["thumbnail"] ||
-        media.variants["original"] ||
-        Object.values(media.variants)[0] ||
-        "";
-      if (url) {
-        onUploaded(media.id, url);
-      }
-    }
-  }, [state, media, onUploaded]);
-
-  const previewUrl =
-    state === "ready" && media
-      ? media.variants["thumbnail"] || media.variants["original"] || Object.values(media.variants)[0]
-      : currentUrl || undefined;
-
-  const isActive = state === "uploading" || state === "processing";
+  const previewUrl = localPreview || currentUrl || undefined;
+  const isActive = uploadState === "uploading" || uploadState === "processing";
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -71,7 +73,7 @@ export function AvatarUpload({ onUploaded, currentUrl }: AvatarUploadProps) {
 
       {isActive && (
         <div className="w-full max-w-[160px]">
-          <UploadProgress state={state as "uploading" | "processing"} progress={progress} />
+          <UploadProgress state={uploadState as "uploading" | "processing"} progress={uploadProgress} />
         </div>
       )}
 

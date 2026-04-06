@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,8 @@ import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/lib/hooks/use-auth";
+import { usersApi } from "@/lib/api/users";
+import { mediaApi } from "@/lib/api/media";
 import { ApiRequestError } from "@/lib/api/client";
 import { registerSchema, type RegisterFormData } from "@/lib/validators/auth";
 import { AvatarUpload } from "@/components/media/avatar-upload";
@@ -20,8 +22,9 @@ export default function RegisterPage() {
   const t = useTranslations();
   const router = useRouter();
   const { register: registerUser } = useAuth();
-  const [profilePhotoId, setProfilePhotoId] = useState<string | null>(null);
-  const [currentPhotoUrl, setCurrentPhotoUrl] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadState, setUploadState] = useState<"idle" | "uploading" | "processing" | "ready" | "failed">("idle");
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [globalError, setGlobalError] = useState<string | null>(null);
 
   const {
@@ -33,23 +36,83 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
-  const handleAvatarUploaded = useCallback((mediaId: string, url: string) => {
-    setProfilePhotoId(mediaId);
-    setCurrentPhotoUrl(url);
+  const handleFileSelected = useCallback((file: File) => {
+    setSelectedFile(file);
   }, []);
+
+  async function uploadPhoto(token: string, file: File): Promise<string | null> {
+    try {
+      setUploadState("uploading");
+      setUploadProgress(0);
+
+      // 1. Get presigned URL
+      const { media_id, upload_url } = await mediaApi.requestUploadUrl(token, {
+        kind: "photo",
+        context: "user_profile",
+        filename: file.name,
+        content_type: file.type,
+        file_size: file.size,
+      });
+
+      // 2. Upload via XHR for progress
+      await new Promise<void>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", (e) => {
+          if (e.lengthComputable) setUploadProgress(Math.round((e.loaded / e.total) * 100));
+        });
+        xhr.addEventListener("load", () =>
+          xhr.status >= 200 && xhr.status < 300 ? resolve() : reject(new Error("Upload failed"))
+        );
+        xhr.addEventListener("error", () => reject(new Error("Network error")));
+        xhr.open("PUT", upload_url);
+        xhr.setRequestHeader("Content-Type", file.type);
+        xhr.send(file);
+      });
+
+      // 3. Confirm
+      await mediaApi.confirm(token, media_id);
+      setUploadState("processing");
+
+      // 4. Poll until ready
+      while (true) {
+        const status = await mediaApi.status(token, media_id);
+        if (status.status === "ready") {
+          setUploadState("ready");
+          return media_id;
+        }
+        if (status.status === "failed") {
+          setUploadState("failed");
+          return null;
+        }
+        await new Promise((r) => setTimeout(r, 2000));
+      }
+    } catch {
+      setUploadState("failed");
+      return null;
+    }
+  }
 
   const onSubmit = async (data: RegisterFormData) => {
     setGlobalError(null);
     try {
-      await registerUser({
+      // Step 1: Register and get token
+      const { access_token } = await registerUser({
         name: data.name,
         surname: data.surname,
         middle_name: data.middle_name || null,
         email: data.email,
         phone: data.phone,
         password: data.password,
-        profile_photo_id: profilePhotoId,
       });
+
+      // Step 2: If photo selected, upload with fresh token and patch profile
+      if (selectedFile && access_token) {
+        const mediaId = await uploadPhoto(access_token, selectedFile);
+        if (mediaId) {
+          await usersApi.update(access_token, { profile_photo_id: mediaId });
+        }
+      }
+
       router.push("/");
     } catch (err) {
       if (err instanceof ApiRequestError && err.status === 409) {
@@ -66,11 +129,12 @@ export default function RegisterPage() {
         <h1 className="mb-6 text-xl font-semibold">{t("auth.register")}</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-          {/* Avatar upload */}
+          {/* Avatar — file stored locally, uploaded after registration */}
           <div className="flex justify-center">
             <AvatarUpload
-              onUploaded={handleAvatarUploaded}
-              currentUrl={currentPhotoUrl}
+              onFileSelected={handleFileSelected}
+              uploadState={uploadState}
+              uploadProgress={uploadProgress}
             />
           </div>
 
@@ -80,7 +144,7 @@ export default function RegisterPage() {
             </p>
           )}
 
-          {/* Name + Surname row */}
+          {/* Name + Surname */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label htmlFor="name">{t("auth.name")}</Label>
@@ -95,7 +159,6 @@ export default function RegisterPage() {
                 <p className="text-xs text-destructive">{errors.name.message}</p>
               )}
             </div>
-
             <div className="space-y-1.5">
               <Label htmlFor="surname">{t("auth.surname")}</Label>
               <Input
@@ -118,12 +181,8 @@ export default function RegisterPage() {
               id="middle_name"
               type="text"
               autoComplete="additional-name"
-              aria-invalid={!!errors.middle_name}
               {...register("middle_name")}
             />
-            {errors.middle_name && (
-              <p className="text-xs text-destructive">{errors.middle_name.message}</p>
-            )}
           </div>
 
           {/* Email */}

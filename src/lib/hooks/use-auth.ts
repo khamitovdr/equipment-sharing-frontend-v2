@@ -25,7 +25,7 @@ export function useAuth() {
       const { access_token } = await usersApi.register(data);
       const me = await usersApi.me(access_token);
       setAuth(me, access_token);
-      return me;
+      return { user: me, access_token };
     },
     [setAuth]
   );
