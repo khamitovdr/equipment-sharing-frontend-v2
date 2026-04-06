@@ -51,14 +51,11 @@ export function ScrollHero() {
         </div>
       </div>
 
-      {/* Subtitle + CTA centered on top */}
-      <div className="relative z-10 mt-10 flex flex-col items-center gap-6 px-4 text-center">
-        <p className="max-w-md text-sm text-zinc-500 sm:text-base">
-          {t("home.hero.subtitle")}
-        </p>
+      {/* CTA */}
+      <div className="relative z-10 mt-12 flex items-center justify-center px-4">
         <Link
           href="/listings"
-          className={cn(buttonVariants({ size: "lg" }), "gap-2")}
+          className={cn(buttonVariants({ size: "lg" }), "h-12 gap-2 px-8 text-base")}
         >
           {t("home.hero.cta")}
         </Link>
