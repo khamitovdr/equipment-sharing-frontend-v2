@@ -22,7 +22,12 @@ export function Footer() {
             <p className="text-xs leading-relaxed text-zinc-500">
               ООО &laquo;Цифровая платформа совместного использования активов&raquo;
             </p>
-            <div className="flex items-center gap-2 mt-2">
+            <a
+              href="https://fasie.ru/?ysclid=mnnd0kqe1x242687024"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-2 transition-opacity hover:opacity-80"
+            >
               <Image
                 src="/partners/fsi.webp"
                 alt="Фонд содействия инновациям"
@@ -34,7 +39,7 @@ export function Footer() {
                 Проект создан при поддержке<br />
                 Фонда содействия инновациям
               </p>
-            </div>
+            </a>
           </div>
 
           {/* Contacts */}

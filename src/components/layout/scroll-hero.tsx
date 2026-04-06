@@ -37,14 +37,14 @@ export function ScrollHero() {
       <div className="flex flex-col items-center gap-2 sm:gap-4">
         <div
           ref={line1Ref}
-          className="whitespace-nowrap text-5xl font-black uppercase tracking-tighter text-black sm:text-7xl lg:text-8xl xl:text-9xl"
+          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-black sm:text-7xl lg:text-8xl xl:text-9xl"
           style={{ willChange: "transform" }}
         >
           {t("home.hero.line1")}
         </div>
         <div
           ref={line2Ref}
-          className="whitespace-nowrap text-5xl font-black uppercase tracking-tighter text-zinc-300 sm:text-7xl lg:text-8xl xl:text-9xl"
+          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-zinc-300 sm:text-7xl lg:text-8xl xl:text-9xl"
           style={{ willChange: "transform" }}
         >
           {t("home.hero.line2")}
