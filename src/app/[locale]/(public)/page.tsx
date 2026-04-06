@@ -78,7 +78,7 @@ export default async function HomePage() {
           </h2>
 
           {organizations.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {organizations.map((org) => {
                 const displayName = org.short_name ?? org.full_name ?? org.inn;
                 const initial = displayName.charAt(0).toUpperCase();
@@ -87,32 +87,32 @@ export default async function HomePage() {
                   <Link
                     key={org.id}
                     href={`/organizations/${org.id}`}
-                    className="group flex flex-col items-center gap-2 rounded-xl p-4 text-center transition-colors hover:bg-white hover:shadow-sm"
+                    className="flex items-center gap-4 rounded-xl border bg-white p-4 transition-all hover:shadow-md"
                   >
-                    {/* Avatar */}
-                    <div className="relative h-14 w-14 overflow-hidden rounded-full bg-zinc-200">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-zinc-100">
                       {org.photo?.small_url ? (
                         <Image
                           src={org.photo.small_url}
                           alt={displayName}
                           fill
                           className="object-cover"
-                          sizes="56px"
+                          sizes="48px"
                         />
                       ) : (
-                        <span className="flex h-full w-full items-center justify-center text-lg font-semibold text-zinc-600">
+                        <span className="flex h-full w-full items-center justify-center text-base font-bold text-zinc-400">
                           {initial}
                         </span>
                       )}
                     </div>
-                    {/* Name */}
-                    <span className="line-clamp-2 text-xs font-medium leading-tight">
-                      {displayName}
-                    </span>
-                    {/* Listing count */}
-                    <span className="text-xs text-muted-foreground">
-                      {org.published_listing_count}
-                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium">{displayName}</p>
+                      {org.published_listing_count > 0 && (
+                        <p className="mt-0.5 text-xs text-zinc-500">
+                          {t("org.listingCount", { count: org.published_listing_count })}
+                        </p>
+                      )}
+                    </div>
+                    <ArrowRight className="h-4 w-4 shrink-0 text-zinc-300" />
                   </Link>
                 );
               })}

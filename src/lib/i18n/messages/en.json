@@ -102,6 +102,7 @@
   },
   "org": {
     "listings": "Equipment",
+    "listingCount": "{count} listings",
     "noListings": "This organization has no listings yet",
     "contacts": "Contacts",
     "verified": "Verified",
