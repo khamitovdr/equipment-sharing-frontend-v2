@@ -16,7 +16,7 @@ export default function NotFound() {
       <p className="text-sm text-zinc-500">{t("common.notFoundDescription")}</p>
       <Button
         className="mt-2 bg-black text-white hover:bg-zinc-800"
-        render={<Link href="/" />}
+        nativeButton={false} render={<Link href="/" />}
       >
         {t("common.backHome")}
       </Button>

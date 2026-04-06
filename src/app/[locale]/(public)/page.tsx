@@ -44,7 +44,7 @@ export default async function HomePage() {
             {t("home.hero.subtitle")}
           </p>
           <div className="mt-8">
-            <Button size="lg" render={<Link href="/listings" />}>
+            <Button size="lg" nativeButton={false} render={<Link href="/listings" />}>
               {t("home.hero.cta")}
             </Button>
           </div>
@@ -167,7 +167,7 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Button variant="default" render={<Link href="/organizations/new" />}>
+                <Button variant="default" nativeButton={false} render={<Link href="/organizations/new" />}>
                   {t("nav.createOrg")}
                 </Button>
               </CardFooter>
@@ -182,7 +182,7 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-4 border-0 bg-transparent p-0">
-                <Button variant="outline" render={<Link href="/listings" />}>
+                <Button variant="outline" nativeButton={false} render={<Link href="/listings" />}>
                   {t("nav.catalog")}
                 </Button>
               </CardFooter>

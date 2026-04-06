@@ -68,10 +68,10 @@ export function PublicNavbar() {
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" render={<Link href="/login" />}>
+              <Button variant="ghost" size="sm" nativeButton={false} render={<Link href="/login" />}>
                 {t("auth.login")}
               </Button>
-              <Button size="sm" className="bg-black text-white hover:bg-zinc-800" render={<Link href="/register" />}>
+              <Button size="sm" className="bg-black text-white hover:bg-zinc-800" nativeButton={false} render={<Link href="/register" />}>
                 {t("auth.register")}
               </Button>
             </>
@@ -120,14 +120,14 @@ export function PublicNavbar() {
                       variant="outline"
                       size="sm"
                       className="w-full"
-                      render={<Link href="/login" onClick={() => setMobileOpen(false)} />}
+                      nativeButton={false} render={<Link href="/login" onClick={() => setMobileOpen(false)} />}
                     >
                       {t("auth.login")}
                     </Button>
                     <Button
                       size="sm"
                       className="w-full bg-black text-white hover:bg-zinc-800"
-                      render={<Link href="/register" onClick={() => setMobileOpen(false)} />}
+                      nativeButton={false} render={<Link href="/register" onClick={() => setMobileOpen(false)} />}
                     >
                       {t("auth.register")}
                     </Button>
