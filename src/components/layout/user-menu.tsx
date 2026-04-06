@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -36,14 +35,14 @@ export function UserMenu() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col gap-0.5">
+        <div className="flex flex-col gap-0.5 px-2 py-1.5">
           <span className="text-sm font-medium text-foreground">
             {[user?.name, user?.surname].filter(Boolean).join(" ") || t("common.appName")}
           </span>
-          <span className="text-xs font-normal text-muted-foreground">
+          <span className="text-xs text-muted-foreground">
             {user?.email}
           </span>
-        </DropdownMenuLabel>
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem render={<Link href="/orders" />}>
           <ShoppingBag />
