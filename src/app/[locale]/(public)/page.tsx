@@ -20,7 +20,7 @@ export default async function HomePage() {
 
   try {
     const [listingsRes, orgsRes] = await Promise.all([
-      listingsApi.list({ limit: 10 }),
+      listingsApi.list({ limit: 12 }),
       organizationsApi.list({ limit: 6 }),
     ]);
     listings = listingsRes.items;
@@ -51,24 +51,32 @@ export default async function HomePage() {
       {/* ── 2. Latest listings ──────────────────────────────── */}
       <section className="py-14">
         <div className="container mx-auto px-4">
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-bold tracking-tight">
-              {t("home.latestListings")}
-            </h2>
-            <Link
-              href="/listings"
-              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              {t("nav.catalog")}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <h2 className="mb-6 text-2xl font-bold tracking-tight">
+            {t("home.latestListings")}
+          </h2>
 
           {listings.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {listings.map((listing) => (
-                <ListingCard key={listing.id} listing={listing} />
-              ))}
+            <div className="relative">
+              {/* Grid — show 2 rows worth, overflow hidden */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {listings.map((listing) => (
+                  <ListingCard key={listing.id} listing={listing} />
+                ))}
+              </div>
+
+              {/* Gradient fade over last row + CTA */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-48 items-end justify-center bg-gradient-to-t from-white via-white/90 to-transparent pb-4">
+                <Link
+                  href="/listings"
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "pointer-events-auto gap-2 border-zinc-300 bg-white shadow-sm"
+                  )}
+                >
+                  {t("home.exploreCatalog")}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           ) : (
             <p className="text-muted-foreground">{t("common.comingSoon")}</p>
