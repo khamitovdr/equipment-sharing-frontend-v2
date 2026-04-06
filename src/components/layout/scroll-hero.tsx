@@ -16,12 +16,9 @@ export function ScrollHero() {
     function handleScroll() {
       if (!sectionRef.current || !line1Ref.current || !line2Ref.current) return;
 
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = sectionRef.current.offsetHeight;
-      // Progress: 0 when section top is at viewport top, 1 when section is fully scrolled past
-      const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
-
-      const shift = progress * 120; // pixels to shift
+      // Use raw scroll position — movement starts immediately on any scroll
+      const scrollY = window.scrollY;
+      const shift = scrollY * 0.4; // 0.4px shift per 1px scroll
       line1Ref.current.style.transform = `translateX(${-shift}px)`;
       line2Ref.current.style.transform = `translateX(${shift}px)`;
     }
