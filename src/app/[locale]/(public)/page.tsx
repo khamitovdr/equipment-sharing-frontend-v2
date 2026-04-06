@@ -56,16 +56,15 @@ export default async function HomePage() {
           </h2>
 
           {listings.length > 0 ? (
-            <div className="relative">
-              {/* Grid — show 2 rows worth, overflow hidden */}
+            <div className="relative max-h-[680px] overflow-hidden">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
                 ))}
               </div>
 
-              {/* Gradient fade over last row + CTA */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-48 items-end justify-center bg-gradient-to-t from-white via-white/90 to-transparent pb-4">
+              {/* Gradient fade + CTA */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center bg-gradient-to-t from-white from-20% via-white/95 via-50% to-transparent pb-6">
                 <Link
                   href="/listings"
                   className={cn(
