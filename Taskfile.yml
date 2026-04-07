@@ -1,0 +1,16 @@
+version: "3"
+
+tasks:
+  dev:
+    desc: Start Next.js dev server (Turbopack)
+    cmd: npx next dev --turbopack
+
+  dev:clean:
+    desc: Drop caches and restart dev server (forces SSR recompilation)
+    cmds:
+      - rm -rf .next
+      - npx next dev --turbopack
+
+  test:
+    desc: Run vitest in watch mode
+    cmd: npx vitest
