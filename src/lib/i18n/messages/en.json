@@ -38,12 +38,52 @@
     "surname": "Last name",
     "middleName": "Middle name",
     "phone": "Phone",
+    "confirmPassword": "Confirm password",
     "profilePhoto": "Profile photo",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "loginError": "Incorrect email or password",
     "registerError": "Registration error",
     "emailTaken": "Email already taken"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "avatar": {
+      "change": "Change photo"
+    },
+    "name": "First name",
+    "surname": "Last name",
+    "middleName": "Middle name",
+    "email": "Email",
+    "phone": "Phone",
+    "save": "Save",
+    "password": {
+      "title": "Change Password",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "update": "Update Password"
+    },
+    "success": {
+      "profile": "Profile updated",
+      "password": "Password changed"
+    },
+    "validation": {
+      "nameRequired": "First name is required",
+      "surnameRequired": "Last name is required",
+      "emailInvalid": "Invalid email address",
+      "emailTaken": "Email already taken",
+      "phoneInvalid": "Phone must be in format +7 (XXX) XXX-XX-XX",
+      "currentPasswordRequired": "Current password is required",
+      "confirmPasswordRequired": "Confirm your new password",
+      "passwordMinLength": "At least 8 characters",
+      "passwordLowercase": "At least one lowercase letter (a-z or а-яё)",
+      "passwordUppercase": "At least one uppercase letter (A-Z or А-ЯЁ)",
+      "passwordDigit": "At least one digit",
+      "passwordMismatch": "Passwords do not match",
+      "wrongPassword": "Current password is incorrect"
+    }
   },
   "home": {
     "hero": {

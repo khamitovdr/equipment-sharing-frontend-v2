@@ -38,12 +38,52 @@
     "surname": "Фамилия",
     "middleName": "Отчество",
     "phone": "Телефон",
+    "confirmPassword": "Подтвердите пароль",
     "profilePhoto": "Фото профиля",
     "noAccount": "Нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
     "loginError": "Неверный email или пароль",
     "registerError": "Ошибка регистрации",
     "emailTaken": "Email уже занят"
+  },
+  "settings": {
+    "title": "Настройки",
+    "profile": "Профиль",
+    "avatar": {
+      "change": "Изменить фото"
+    },
+    "name": "Имя",
+    "surname": "Фамилия",
+    "middleName": "Отчество",
+    "email": "Email",
+    "phone": "Телефон",
+    "save": "Сохранить",
+    "password": {
+      "title": "Изменить пароль",
+      "current": "Текущий пароль",
+      "new": "Новый пароль",
+      "confirm": "Подтвердите новый пароль",
+      "update": "Обновить пароль"
+    },
+    "success": {
+      "profile": "Профиль обновлён",
+      "password": "Пароль изменён"
+    },
+    "validation": {
+      "nameRequired": "Имя обязательно",
+      "surnameRequired": "Фамилия обязательна",
+      "emailInvalid": "Неверный email",
+      "emailTaken": "Email уже занят",
+      "phoneInvalid": "Телефон в формате +7 (XXX) XXX-XX-XX",
+      "currentPasswordRequired": "Введите текущий пароль",
+      "confirmPasswordRequired": "Подтвердите новый пароль",
+      "passwordMinLength": "Минимум 8 символов",
+      "passwordLowercase": "Минимум одна строчная буква (a-z или а-яё)",
+      "passwordUppercase": "Минимум одна заглавная буква (A-Z или А-ЯЁ)",
+      "passwordDigit": "Минимум одна цифра",
+      "passwordMismatch": "Пароли не совпадают",
+      "wrongPassword": "Неверный текущий пароль"
+    }
   },
   "home": {
     "hero": {

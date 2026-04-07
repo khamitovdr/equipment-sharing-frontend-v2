@@ -32,8 +32,9 @@ describe("registerSchema", () => {
     name: "Ivan",
     surname: "Petrov",
     email: "ivan@example.com",
-    phone: "+79991234567",
+    phone: "+7 (999) 123-45-67",
     password: "Password1!",
+    confirm_password: "Password1!",
   };
 
   it("accepts valid registration data", () => {
@@ -61,6 +62,15 @@ describe("registerSchema", () => {
     const result = registerSchema.safeParse({
       ...validData,
       password: "123",
+      confirm_password: "123",
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects mismatched confirm_password", () => {
+    const result = registerSchema.safeParse({
+      ...validData,
+      confirm_password: "Different1!",
     });
     expect(result.success).toBe(false);
   });
