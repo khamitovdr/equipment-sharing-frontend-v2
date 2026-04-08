@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
@@ -59,7 +59,6 @@ function SortablePhoto({ photo, onRemove }: SortablePhotoProps) {
       style={style}
       className="relative group aspect-square rounded-md overflow-hidden border border-border"
     >
-      {/* Drag handle covers the image */}
       <div {...attributes} {...listeners} className="w-full h-full cursor-grab active:cursor-grabbing">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -80,11 +79,7 @@ function SortablePhoto({ photo, onRemove }: SortablePhotoProps) {
   );
 }
 
-interface UploadingPhotoProps {
-  progress: number;
-}
-
-function UploadingPhoto({ progress }: UploadingPhotoProps) {
+function UploadingPhoto({ progress }: { progress: number }) {
   return (
     <div className="relative aspect-square rounded-md overflow-hidden border border-border bg-muted flex items-center justify-center">
       <Loader2 className="size-6 text-muted-foreground animate-spin" />
@@ -108,22 +103,37 @@ export function PhotoGrid({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<UploadingItem[]>([]);
 
-  // Ref to latest photos so concurrent uploads don't use stale closures
-  const photosRef = useRef(photos);
-  photosRef.current = photos;
+  // Internal photos state — functional updater avoids stale closures
+  // when multiple concurrent uploads complete near-simultaneously
+  const [internalPhotos, setInternalPhotos] = useState<PhotoItem[]>(photos);
+
+  // Sync parent → internal when parent changes (e.g. initial load, external edits)
+  useEffect(() => {
+    setInternalPhotos(photos);
+  }, [photos]);
+
+  // Sync internal → parent on change
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  useEffect(() => {
+    // Only notify parent if internal differs from what parent gave us
+    if (internalPhotos !== photos) {
+      onChangeRef.current(internalPhotos);
+    }
+  }, [internalPhotos]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
       if (over && active.id !== over.id) {
-        const oldIndex = photos.findIndex((p) => p.id === active.id);
-        const newIndex = photos.findIndex((p) => p.id === over.id);
-        onChange(arrayMove(photos, oldIndex, newIndex));
+        setInternalPhotos((prev) => {
+          const oldIndex = prev.findIndex((p) => p.id === active.id);
+          const newIndex = prev.findIndex((p) => p.id === over.id);
+          return arrayMove(prev, oldIndex, newIndex);
+        });
       }
     },
-    [photos, onChange]
+    []
   );
 
   const uploadFile = useCallback(
@@ -136,7 +146,6 @@ export function PhotoGrid({
       setUploading((prev) => [...prev, { tempId, progress: 0 }]);
 
       try {
-        // 1. Request presigned URL
         const { media_id, upload_url } = await mediaApi.requestUploadUrl(
           token,
           {
@@ -148,7 +157,6 @@ export function PhotoGrid({
           }
         );
 
-        // 2. Upload via XHR with progress tracking
         await new Promise<void>((resolve, reject) => {
           const xhr = new XMLHttpRequest();
           xhr.upload.addEventListener("progress", (e) => {
@@ -174,16 +182,13 @@ export function PhotoGrid({
           xhr.send(file);
         });
 
-        // 3. Confirm upload
         await mediaApi.confirm(token, media_id);
 
-        // 4. Poll until ready
         while (true) {
           const statusRes = await mediaApi.status(token, media_id);
           if (statusRes.status === "ready") {
-            // variants contains relative S3 paths (not signed URLs),
-            // so use the local blob preview — real URLs come when listing is fetched after save
-            onChangeRef.current([...photosRef.current, { id: media_id, url: localPreviewUrl }]);
+            // Functional updater — safe for concurrent completions
+            setInternalPhotos((prev) => [...prev, { id: media_id, url: localPreviewUrl }]);
             break;
           }
           if (statusRes.status === "failed") {
@@ -202,10 +207,10 @@ export function PhotoGrid({
   );
 
   const handleFilesSelected = useCallback(
-    async (files: FileList | null) => {
+    (files: FileList | null) => {
       if (!files) return;
 
-      const remaining = maxPhotos - photos.length - uploading.length;
+      const remaining = maxPhotos - internalPhotos.length - uploading.length;
       const filesToProcess = Array.from(files).slice(0, remaining);
 
       for (const file of filesToProcess) {
@@ -220,18 +225,18 @@ export function PhotoGrid({
         uploadFile(file);
       }
     },
-    [maxPhotos, photos.length, uploading.length, uploadFile, t]
+    [maxPhotos, internalPhotos.length, uploading.length, uploadFile, t]
   );
 
   const handleRemove = useCallback(
     (id: string) => {
-      onChange(photos.filter((p) => p.id !== id));
+      setInternalPhotos((prev) => prev.filter((p) => p.id !== id));
     },
-    [photos, onChange]
+    []
   );
 
-  const isAtMax = photos.length + uploading.length >= maxPhotos;
-  const totalShown = photos.length + uploading.length;
+  const isAtMax = internalPhotos.length + uploading.length >= maxPhotos;
+  const totalShown = internalPhotos.length + uploading.length;
 
   return (
     <div className="space-y-3">
@@ -247,15 +252,14 @@ export function PhotoGrid({
         </span>
       </div>
 
-      {/* Photo grid */}
-      {(photos.length > 0 || uploading.length > 0) && (
+      {(internalPhotos.length > 0 || uploading.length > 0) && (
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext
-            items={photos.map((p) => p.id)}
+            items={internalPhotos.map((p) => p.id)}
             strategy={rectSortingStrategy}
           >
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-              {photos.map((photo) => (
+              {internalPhotos.map((photo) => (
                 <SortablePhoto
                   key={photo.id}
                   photo={photo}
@@ -270,7 +274,6 @@ export function PhotoGrid({
         </DndContext>
       )}
 
-      {/* Upload button / drop zone */}
       <div>
         <input
           ref={fileInputRef}
@@ -280,7 +283,6 @@ export function PhotoGrid({
           className="hidden"
           onChange={(e) => handleFilesSelected(e.target.files)}
           onClick={(e) => {
-            // Reset value so same file can be selected again
             (e.target as HTMLInputElement).value = "";
           }}
         />
