@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { LayoutGrid, Users, Settings, Menu } from "lucide-react";
 import { useState } from "react";
-import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import {
   Sheet,
@@ -13,30 +12,13 @@ import {
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { OrgSwitcher } from "./org-switcher";
 
 function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
-  const currentOrg = useOrgStore((s) => s.currentOrg);
   const { role } = useOrgGuard();
-
-  const orgName = currentOrg?.short_name ?? currentOrg?.full_name ?? "…";
-  const initials = orgName
-    .split(" ")
-    .slice(0, 2)
-    .map((w: string) => w[0]?.toUpperCase() ?? "")
-    .join("");
-
-  const roleLabelMap: Record<string, string> = {
-    admin: t("members.role.admin"),
-    editor: t("members.role.editor"),
-    viewer: t("members.role.viewer"),
-  };
-  const roleLabel = role ? (roleLabelMap[role] ?? role) : null;
 
   const navLinks = [
     {
@@ -63,7 +45,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       {/* Logo — link to home */}
-      <Link href={`/${locale}`} onClick={onNavClick} className="flex items-center gap-2 px-4 pt-4 pb-2">
+      <Link href={`/${locale}`} onClick={onNavClick} className="flex items-center gap-2 border-b border-zinc-200 px-4 py-4">
         <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
           E
         </span>
@@ -71,30 +53,6 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           equip me
         </span>
       </Link>
-
-      {/* Org header */}
-      <div className="flex items-center gap-3 px-4 py-3">
-        <Avatar size="lg">
-          {currentOrg?.photo?.medium_url ? (
-            <img
-              src={currentOrg.photo.medium_url}
-              alt={orgName}
-              className="aspect-square size-full rounded-full object-cover"
-            />
-          ) : null}
-          <AvatarFallback>{initials}</AvatarFallback>
-        </Avatar>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-zinc-900">
-            {orgName}
-          </p>
-          {roleLabel && (
-            <Badge variant="secondary" className="mt-0.5 text-xs">
-              {roleLabel}
-            </Badge>
-          )}
-        </div>
-      </div>
 
       {/* Nav links */}
       <nav className="flex-1 space-y-0.5 px-3">

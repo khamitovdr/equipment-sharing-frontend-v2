@@ -3,7 +3,10 @@
 import { useTranslations } from "next-intl";
 import { ChevronsUpDown } from "lucide-react";
 import { useOrgStore } from "@/lib/stores/org-store";
+import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { useOrg } from "@/lib/hooks/use-org";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -12,18 +15,64 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function OrgSwitcher() {
-  const t = useTranslations("dashboard.sidebar");
+  const t = useTranslations();
   const { organizations, currentOrg } = useOrgStore();
   const { switchOrg } = useOrg();
+  const { role } = useOrgGuard();
 
-  if (organizations.length <= 1) return null;
+  const orgName = currentOrg?.short_name ?? currentOrg?.full_name ?? "…";
+  const initials = orgName
+    .split(" ")
+    .slice(0, 2)
+    .map((w: string) => w[0]?.toUpperCase() ?? "")
+    .join("");
+
+  const roleLabelMap: Record<string, string> = {
+    admin: t("members.role.admin"),
+    editor: t("members.role.editor"),
+    viewer: t("members.role.viewer"),
+  };
+  const roleLabel = role ? (roleLabelMap[role] ?? role) : null;
+
+  const hasMultipleOrgs = organizations.length > 1;
+
+  const content = (
+    <div className="flex w-full items-center gap-3">
+      <Avatar className="size-8 shrink-0 rounded-md">
+        {currentOrg?.photo?.medium_url ? (
+          <img
+            src={currentOrg.photo.medium_url}
+            alt={orgName}
+            className="aspect-square size-full rounded-md object-cover"
+          />
+        ) : null}
+        <AvatarFallback className="rounded-md text-xs">{initials}</AvatarFallback>
+      </Avatar>
+      <div className="min-w-0 flex-1 text-left">
+        <p className="truncate text-sm font-medium text-zinc-900">{orgName}</p>
+        {roleLabel && (
+          <p className="text-xs text-zinc-500">{roleLabel}</p>
+        )}
+      </div>
+      {hasMultipleOrgs && (
+        <ChevronsUpDown className="size-4 shrink-0 text-zinc-400" />
+      )}
+    </div>
+  );
+
+  if (!hasMultipleOrgs) {
+    return (
+      <div className="border-t border-zinc-200 p-3">
+        <div className="rounded-md px-2 py-1.5">{content}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-t border-zinc-200 p-3">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm text-zinc-600 hover:bg-zinc-50 outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <span className="truncate">{t("switchOrg")}</span>
-          <ChevronsUpDown className="size-4 shrink-0 text-zinc-400" />
+        <DropdownMenuTrigger className="flex w-full rounded-md px-2 py-1.5 hover:bg-zinc-50 outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors">
+          {content}
         </DropdownMenuTrigger>
         <DropdownMenuContent side="top" align="start" className="w-52">
           {organizations.map((org) => {
