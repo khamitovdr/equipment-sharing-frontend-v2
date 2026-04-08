@@ -8,6 +8,7 @@ import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrg } from "@/lib/hooks/use-org";
 import { OrgSidebar } from "@/components/layout/org-sidebar";
+import { ScrollToTop } from "@/components/shared/scroll-to-top";
 
 export default function DashboardLayout({
   children,
@@ -70,6 +71,7 @@ export default function DashboardLayout({
     <div className="flex min-h-screen">
       <OrgSidebar />
       <main className="flex-1 overflow-auto pt-14 lg:pt-0">{children}</main>
+      <ScrollToTop />
     </div>
   );
 }
