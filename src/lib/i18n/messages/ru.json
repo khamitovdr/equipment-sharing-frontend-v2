@@ -156,7 +156,7 @@
     "serverError": "Сервис временно недоступен, попробуйте позже"
   },
   "dashboard": {
-    "sidebar": { "listings": "Объявления", "members": "Участники", "settings": "Настройки", "switchOrg": "Сменить организацию" },
+    "sidebar": { "listings": "Объявления", "orders": "Заказы", "members": "Участники", "settings": "Настройки", "switchOrg": "Сменить организацию" },
     "noOrgs": "Сначала нужно создать организацию или вступить в существующую",
     "permissionDenied": "У вас нет доступа к этой странице"
   },
@@ -235,5 +235,90 @@
     "title": "Настройки организации",
     "profile": { "title": "Профиль организации", "photo": "Фото организации", "info": "Данные организации", "fullName": "Полное название", "shortName": "Сокращённое название", "inn": "ИНН", "address": "Юридический адрес", "manager": "Руководитель", "registrationDate": "Дата регистрации", "status": "Статус" },
     "contacts": { "title": "Контакты", "save": "Сохранить контакты", "saved": "Контакты сохранены" }
+  },
+  "orders": {
+    "title": "Мои заказы",
+    "search": { "placeholder": "Поиск по ID или названию..." },
+    "filter": { "allStatuses": "Все статусы", "dateFrom": "С", "dateTo": "По" },
+    "empty": "У вас пока нет заказов",
+    "emptyFiltered": "Нет заказов по выбранным фильтрам",
+    "browseCatalog": "Перейти в каталог",
+    "status": {
+      "pending": "Ожидает",
+      "offered": "Предложение",
+      "accepted": "Принято",
+      "confirmed": "Подтверждено",
+      "active": "Активен",
+      "finished": "Завершён",
+      "canceled_by_user": "Отменён",
+      "canceled_by_organization": "Отменён",
+      "expired": "Истёк"
+    },
+    "columns": { "listing": "Оборудование", "status": "Статус", "dates": "Даты", "cost": "Стоимость", "id": "ID" },
+    "detail": {
+      "title": "Заказ",
+      "backToOrders": "Назад к заказам",
+      "requestedDates": "Запрошенные даты",
+      "estimatedCost": "Ориентировочная стоимость",
+      "offeredDates": "Предложенные даты",
+      "offeredCost": "Предложенная стоимость",
+      "requested": "Запрос",
+      "offered": "Предложение",
+      "created": "Создан",
+      "orderId": "Номер заказа"
+    },
+    "actions": {
+      "accept": "Принять предложение",
+      "cancel": "Отменить заказ"
+    },
+    "cancelConfirm": "Вы уверены, что хотите отменить заказ?",
+    "accepted": "Предложение принято",
+    "canceled": "Заказ отменён",
+    "chat": { "comingSoon": "Чат скоро появится", "comingSoonDescription": "Здесь вы сможете связаться с организацией" }
+  },
+  "orgOrders": {
+    "title": "Заказы",
+    "search": { "placeholder": "Поиск по ID или названию..." },
+    "filter": { "allStatuses": "Все статусы", "dateFrom": "С", "dateTo": "По" },
+    "empty": "Входящих заказов пока нет",
+    "emptyFiltered": "Нет заказов по выбранным фильтрам",
+    "columns": { "listing": "Оборудование", "requester": "Заказчик", "status": "Статус", "dates": "Даты", "cost": "Стоимость", "id": "ID" },
+    "detail": {
+      "title": "Заказ",
+      "backToOrders": "Назад к заказам",
+      "requester": "Заказчик",
+      "requestedDates": "Запрошенные даты",
+      "estimatedCost": "Ориентировочная стоимость",
+      "offeredDates": "Предложенные даты",
+      "offeredCost": "Предложенная стоимость",
+      "requested": "Запрос",
+      "offered": "Предложение",
+      "created": "Создан",
+      "orderId": "Номер заказа"
+    },
+    "actions": {
+      "makeOffer": "Сделать предложение",
+      "reOffer": "Изменить предложение",
+      "approve": "Одобрить",
+      "cancel": "Отменить заказ"
+    },
+    "cancelConfirm": "Отменить заказ? Арендатор получит уведомление.",
+    "offered": "Предложение отправлено",
+    "approved": "Заказ одобрен",
+    "canceled": "Заказ отменён",
+    "approveError": "Невозможно одобрить — даты пересекаются с существующим бронированием",
+    "offerForm": {
+      "title": "Сделать предложение",
+      "cost": "Предложенная стоимость",
+      "startDate": "Дата начала",
+      "endDate": "Дата окончания",
+      "submit": "Отправить предложение",
+      "cancel": "Отмена"
+    },
+    "listingOrders": {
+      "title": "Заказы",
+      "empty": "Нет заказов по этому объявлению"
+    },
+    "chat": { "comingSoon": "Чат скоро появится", "comingSoonDescription": "Здесь вы сможете связаться с арендатором" }
   }
 }
