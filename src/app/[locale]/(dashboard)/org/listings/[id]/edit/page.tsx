@@ -12,6 +12,7 @@ import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { listingsApi } from "@/lib/api/listings";
 import { ListingForm } from "@/components/org/listing-form";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
+import { BackButton } from "@/components/shared/back-button";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -137,6 +138,8 @@ export default function EditListingPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 space-y-4">
+      <BackButton />
+
       {listing && (
         <div className="flex items-center gap-3">
           <ListingStatusSelect

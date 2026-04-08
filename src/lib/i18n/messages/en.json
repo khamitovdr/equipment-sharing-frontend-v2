@@ -19,6 +19,7 @@
     "notFound": "Page not found",
     "notFoundDescription": "The page you requested does not exist",
     "backHome": "Back to home",
+    "back": "Back",
     "you": "you"
   },
   "nav": {
@@ -156,7 +157,7 @@
     "serverError": "Service temporarily unavailable, try again"
   },
   "dashboard": {
-    "sidebar": { "listings": "Listings", "members": "Members", "settings": "Settings", "switchOrg": "Switch organization" },
+    "sidebar": { "listings": "Listings", "orders": "Orders", "members": "Members", "settings": "Settings", "switchOrg": "Switch organization" },
     "noOrgs": "You need to create or join an organization first",
     "permissionDenied": "You don't have permission to access this page"
   },
@@ -235,5 +236,90 @@
     "title": "Organization Settings",
     "profile": { "title": "Organization Profile", "photo": "Organization photo", "info": "Organization details", "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager", "registrationDate": "Registration date", "status": "Status" },
     "contacts": { "title": "Contacts", "save": "Save contacts", "saved": "Contacts saved" }
+  },
+  "orders": {
+    "title": "My Orders",
+    "search": { "placeholder": "Search by ID or listing name..." },
+    "filter": { "allStatuses": "All statuses", "dateFrom": "From", "dateTo": "To" },
+    "empty": "You haven't placed any orders yet",
+    "emptyFiltered": "No orders match your filters",
+    "browseCatalog": "Browse catalog",
+    "status": {
+      "pending": "Pending",
+      "offered": "Offered",
+      "accepted": "Accepted",
+      "confirmed": "Confirmed",
+      "active": "Active",
+      "finished": "Finished",
+      "canceled_by_user": "Canceled",
+      "canceled_by_organization": "Canceled",
+      "expired": "Expired"
+    },
+    "columns": { "listing": "Equipment", "status": "Status", "dates": "Dates", "cost": "Cost", "id": "ID" },
+    "detail": {
+      "title": "Order",
+  
+      "requestedDates": "Requested dates",
+      "estimatedCost": "Estimated cost",
+      "offeredDates": "Offered dates",
+      "offeredCost": "Offered cost",
+      "requested": "Requested",
+      "offered": "Offer",
+      "created": "Created",
+      "orderId": "Order ID"
+    },
+    "actions": {
+      "accept": "Accept offer",
+      "cancel": "Cancel order"
+    },
+    "cancelConfirm": "Are you sure you want to cancel this order?",
+    "accepted": "Offer accepted",
+    "canceled": "Order canceled",
+    "chat": { "comingSoon": "Chat coming soon", "comingSoonDescription": "You'll be able to message the organization here" }
+  },
+  "orgOrders": {
+    "title": "Orders",
+    "search": { "placeholder": "Search by ID or listing name..." },
+    "filter": { "allStatuses": "All statuses", "dateFrom": "From", "dateTo": "To" },
+    "empty": "No incoming orders yet",
+    "emptyFiltered": "No orders match your filters",
+    "columns": { "listing": "Equipment", "requester": "Requester", "status": "Status", "dates": "Dates", "cost": "Cost", "id": "ID" },
+    "detail": {
+      "title": "Order",
+  
+      "requester": "Requester",
+      "requestedDates": "Requested dates",
+      "estimatedCost": "Estimated cost",
+      "offeredDates": "Offered dates",
+      "offeredCost": "Offered cost",
+      "requested": "Requested",
+      "offered": "Offer",
+      "created": "Created",
+      "orderId": "Order ID"
+    },
+    "actions": {
+      "makeOffer": "Make offer",
+      "reOffer": "Revise offer",
+      "approve": "Approve",
+      "cancel": "Cancel order"
+    },
+    "cancelConfirm": "Are you sure you want to cancel this order? The renter will be notified.",
+    "offered": "Offer sent",
+    "approved": "Order approved",
+    "canceled": "Order canceled",
+    "approveError": "Cannot approve — dates overlap with an existing reservation",
+    "offerForm": {
+      "title": "Make an offer",
+      "cost": "Offered cost",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "submit": "Send offer",
+      "cancel": "Cancel"
+    },
+    "listingOrders": {
+      "title": "Orders",
+      "empty": "No orders for this listing yet"
+    },
+    "chat": { "comingSoon": "Chat coming soon", "comingSoonDescription": "You'll be able to message the renter here" }
   }
 }

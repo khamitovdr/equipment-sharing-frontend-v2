@@ -30,3 +30,19 @@ export interface OrderCreate {
   requested_start_date: string;
   requested_end_date: string;
 }
+
+export interface OrderOffer {
+  offered_cost: string;
+  offered_start_date: string;
+  offered_end_date: string;
+}
+
+export interface OrderListParams {
+  cursor?: string | null;
+  limit?: number;
+  status?: OrderStatus;
+  listing_id?: string;
+  date_from?: string;
+  date_to?: string;
+  search?: string;
+}

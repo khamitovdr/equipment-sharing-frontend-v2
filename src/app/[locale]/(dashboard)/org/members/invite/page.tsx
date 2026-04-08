@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UserSearch } from "@/components/org/user-search";
+import { BackButton } from "@/components/shared/back-button";
 import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
@@ -63,7 +64,9 @@ export default function InviteMemberPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-8">
+    <div className="max-w-md mx-auto px-4 py-8 space-y-4">
+      <BackButton />
+
       <Card>
         <CardHeader>
           <CardTitle>{t("invite.title")}</CardTitle>

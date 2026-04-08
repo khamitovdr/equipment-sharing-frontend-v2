@@ -10,6 +10,8 @@ import { ListingDescription } from "@/components/catalog/listing-description";
 import { ListingSpecs } from "@/components/catalog/listing-specs";
 import { MediaCarousel } from "@/components/catalog/media-carousel";
 import { OrderForm } from "@/components/catalog/order-form";
+import { BackButton } from "@/components/shared/back-button";
+import { formatCost } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ id: string; locale: string }>;
@@ -46,6 +48,10 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="mb-6">
+        <BackButton />
+      </div>
+
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
         {/* Left column (~60%) */}
         <div className="flex flex-col gap-8 lg:w-[60%]">
@@ -63,7 +69,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
             <span className="text-xs text-zinc-500">{listing.category.name}</span>
             <h1 className="mt-1 text-xl font-bold leading-tight">{listing.name}</h1>
             <p className="mt-2 text-2xl font-bold">
-              {listing.price.toLocaleString()}{" "}
+              {formatCost(listing.price)}{" "}
               <span className="text-base font-normal text-zinc-500">
                 {t("catalog.perDay")}
               </span>

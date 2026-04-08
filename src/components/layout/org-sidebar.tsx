@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { LayoutGrid, Users, Settings, Menu } from "lucide-react";
+import { LayoutGrid, Users, Settings, Menu, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import {
@@ -25,6 +25,11 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
       href: `/${locale}/org/listings`,
       label: t("dashboard.sidebar.listings"),
       icon: LayoutGrid,
+    },
+    {
+      href: `/${locale}/org/orders`,
+      label: t("dashboard.sidebar.orders"),
+      icon: ShoppingBag,
     },
     {
       href: `/${locale}/org/members`,
