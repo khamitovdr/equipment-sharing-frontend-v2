@@ -18,7 +18,8 @@
     "comingSoon": "Coming soon",
     "notFound": "Page not found",
     "notFoundDescription": "The page you requested does not exist",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "you": "you"
   },
   "nav": {
     "home": "Home",
