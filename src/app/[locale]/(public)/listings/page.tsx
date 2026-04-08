@@ -165,7 +165,7 @@ export default function CatalogPage() {
 
       <div className="flex gap-8">
         {/* Desktop sidebar */}
-        <aside className="hidden w-64 shrink-0 lg:block">
+        <aside className="hidden w-64 shrink-0 lg:block lg:sticky lg:top-[72px] lg:self-start">
           {filtersPanel}
         </aside>
 
