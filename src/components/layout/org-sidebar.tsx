@@ -125,8 +125,8 @@ export function OrgSidebar() {
         <SidebarContent />
       </aside>
 
-      {/* Mobile fixed header */}
-      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center border-b border-zinc-200 bg-white px-4 lg:hidden">
+      {/* Mobile sidebar toggle */}
+      <div className="flex items-center border-b border-zinc-200 px-4 py-2 lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             aria-label="Open menu"
@@ -139,9 +139,6 @@ export function OrgSidebar() {
           </SheetContent>
         </Sheet>
       </div>
-
-      {/* Spacer so content doesn't go behind fixed header on mobile */}
-      <div className="h-14 lg:hidden" />
     </>
   );
 }
