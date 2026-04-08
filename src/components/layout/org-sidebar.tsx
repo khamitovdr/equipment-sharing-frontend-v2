@@ -90,7 +90,7 @@ export function OrgSidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden w-60 shrink-0 border-r border-zinc-200 bg-white lg:block">
+      <aside className="hidden w-60 shrink-0 border-r border-zinc-200 bg-white lg:block h-screen sticky top-0 overflow-y-auto">
         <SidebarContent />
       </aside>
 
