@@ -85,6 +85,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
 
 export function OrgSidebar() {
   const [open, setOpen] = useState(false);
+  const locale = useLocale();
 
   return (
     <>
@@ -94,7 +95,7 @@ export function OrgSidebar() {
       </aside>
 
       {/* Mobile fixed header */}
-      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center border-b border-zinc-200 bg-white px-4 lg:hidden">
+      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-zinc-200 bg-white px-4 lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             aria-label="Open menu"
@@ -106,6 +107,14 @@ export function OrgSidebar() {
             <SidebarContent onNavClick={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
+        <Link href={`/${locale}`} className="flex items-center gap-2">
+          <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
+            E
+          </span>
+          <span className="text-sm font-semibold tracking-tight text-black">
+            equip me
+          </span>
+        </Link>
       </div>
 
     </>
