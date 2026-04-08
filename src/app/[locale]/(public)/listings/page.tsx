@@ -181,9 +181,9 @@ export default function CatalogPage() {
             />
           </div>
 
-          {/* Category pills */}
+          {/* Category pills — desktop only, mobile uses filter sheet */}
           {categories.length > 0 && (
-            <div className="mb-6">
+            <div className="mb-6 hidden sm:block">
               <CategoryFilter
                 categories={categories}
                 selected={parsedFilters.category_ids ?? []}
