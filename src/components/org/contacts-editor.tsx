@@ -31,12 +31,9 @@ export function ContactsEditor({ control, errors }: ContactsEditorProps) {
             key={field.id}
             className="rounded-lg border border-zinc-200 p-4 space-y-4"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">
-                {t("title")} #{index + 1}
-              </span>
-              {fields.length > 1 && (
+            {/* Header — remove button only */}
+            {fields.length > 1 && (
+              <div className="flex justify-end">
                 <Button
                   type="button"
                   variant="ghost"
@@ -47,8 +44,8 @@ export function ContactsEditor({ control, errors }: ContactsEditorProps) {
                   <Trash2 className="size-4" />
                   {t("remove")}
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Display name */}
             <div className="space-y-1.5">
