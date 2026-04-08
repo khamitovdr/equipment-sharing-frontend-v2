@@ -108,8 +108,6 @@ export function OrgSidebar() {
         </Sheet>
       </div>
 
-      {/* Spacer so content doesn't go behind fixed header on mobile */}
-      <div className="h-14 lg:hidden" />
     </>
   );
 }
