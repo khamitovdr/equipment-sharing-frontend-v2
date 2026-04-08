@@ -17,6 +17,8 @@ import { ListingStatusSelect } from "@/components/org/listing-status-select";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -156,10 +158,10 @@ export default function OrgListingsPage() {
           {t("orgListings.title")}
         </h1>
         {canEdit && (
-          <Button render={<Link href={`/${locale}/org/listings/new`} />}>
-            <Plus className="size-4 mr-2" />
+          <Link href={`/${locale}/org/listings/new`} className={cn(buttonVariants(), "gap-2")}>
+            <Plus className="size-4" />
             {t("orgListings.create")}
-          </Button>
+          </Link>
         )}
       </div>
 

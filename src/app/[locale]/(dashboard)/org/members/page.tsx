@@ -14,6 +14,8 @@ import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { MemberTable } from "@/components/org/member-table";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { MembershipRead } from "@/types/organization";
 import type { UserRead } from "@/types/user";
@@ -118,10 +120,10 @@ export default function MembersPage() {
           {t("members.title")}
         </h1>
         {isAdmin && (
-          <Button render={<Link href={`/${locale}/org/members/invite`} />}>
-            <UserPlus className="size-4 mr-2" />
+          <Link href={`/${locale}/org/members/invite`} className={cn(buttonVariants(), "gap-2")}>
+            <UserPlus className="size-4" />
             {t("invite.title")}
-          </Button>
+          </Link>
         )}
       </div>
 
