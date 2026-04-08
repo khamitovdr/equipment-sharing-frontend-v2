@@ -91,7 +91,9 @@ export function CategorySelect({
               <Loader2 className="size-4 animate-spin" />
             </span>
           ) : (
-            <SelectValue placeholder={t("category")} />
+            <SelectValue placeholder={t("category")}>
+              {categories?.find((c) => c.id === value)?.name ?? t("category")}
+            </SelectValue>
           )}
         </SelectTrigger>
         <SelectContent>
