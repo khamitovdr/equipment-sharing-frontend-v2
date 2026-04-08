@@ -177,14 +177,9 @@ export function PhotoGrid({
         while (true) {
           const statusRes = await mediaApi.status(token, media_id);
           if (statusRes.status === "ready") {
-            // Use server URL if available, fall back to local preview
-            const serverUrl =
-              statusRes.variants["medium"] ??
-              statusRes.variants["medium_url"] ??
-              Object.values(statusRes.variants)[0];
-
-            // 5. Append to photos list
-            onChange([...photos, { id: media_id, url: serverUrl || localPreviewUrl }]);
+            // variants contains relative S3 paths (not signed URLs),
+            // so use the local blob preview — real URLs come when listing is fetched after save
+            onChange([...photos, { id: media_id, url: localPreviewUrl }]);
             break;
           }
           if (statusRes.status === "failed") {
