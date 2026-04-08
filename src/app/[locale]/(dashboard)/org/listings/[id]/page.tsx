@@ -1,10 +1,10 @@
 "use client";
 
-import { use } from "react";
+import { use, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
-import { MapPin, Pencil, Settings, Truck, User, Wrench } from "lucide-react";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { Loader2, MapPin, Pencil, Settings, Truck, User, Wrench } from "lucide-react";
 
 import { listingsApi } from "@/lib/api/listings";
 import { useAuthStore } from "@/lib/stores/auth-store";
@@ -21,6 +21,11 @@ import { MediaCarousel } from "@/components/catalog/media-carousel";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { ordersApi } from "@/lib/api/orders";
+import { OrderTable } from "@/components/order/order-table";
+import { EmptyState } from "@/components/shared/empty-state";
+import { Button } from "@/components/ui/button";
+import type { OrderRead } from "@/types/order";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -51,6 +56,31 @@ export default function OrgListingDetailPage({ params }: PageProps) {
       toast.error(t("common.error"));
     }
   }
+
+  const {
+    data: ordersData,
+    isLoading: ordersLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["org-orders", orgId, { listing_id: listingId }],
+    queryFn: ({ pageParam }) =>
+      ordersApi.orgList(token!, orgId!, {
+        listing_id: listingId,
+        cursor: pageParam as string | null | undefined,
+        limit: 10,
+      }),
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) =>
+      lastPage.has_more ? lastPage.next_cursor : undefined,
+    enabled: !!token && !!orgId,
+  });
+
+  const orders = useMemo<OrderRead[]>(
+    () => ordersData?.pages.flatMap((p) => p.items) ?? [],
+    [ordersData]
+  );
 
   if (isLoading || !listing) {
     return (
@@ -151,6 +181,44 @@ export default function OrgListingDetailPage({ params }: PageProps) {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Orders section */}
+      <div className="mt-10">
+        <h2 className="text-lg font-semibold mb-4">
+          {t("orgOrders.listingOrders.title")}
+          {orders.length > 0 && (
+            <span className="ml-2 text-sm font-normal text-zinc-400">
+              ({orders.length})
+            </span>
+          )}
+        </h2>
+
+        {ordersLoading ? (
+          <OrderTable orders={[]} variant="org-listing" isLoading detailPath={() => ""} />
+        ) : orders.length === 0 ? (
+          <EmptyState message={t("orgOrders.listingOrders.empty")} />
+        ) : (
+          <>
+            <OrderTable
+              orders={orders}
+              variant="org-listing"
+              detailPath={(id) => `/${locale}/org/orders/${id}`}
+            />
+            {hasNextPage && (
+              <div className="flex justify-center pt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                >
+                  {isFetchingNextPage && <Loader2 className="size-4 mr-2 animate-spin" />}
+                  {t("common.loadMore")}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
