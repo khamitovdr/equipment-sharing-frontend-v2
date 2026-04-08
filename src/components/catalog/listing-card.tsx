@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ListingRead } from "@/types/listing";
+import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 
 interface ListingCardProps {
   listing: ListingRead;
@@ -67,9 +68,7 @@ export function ListingCard({ listing }: ListingCardProps) {
               )}
             </>
           ) : (
-            <div className="flex h-full items-center justify-center text-sm text-zinc-300">
-              {t("common.noPhoto")}
-            </div>
+            <EquipmentPlaceholder className="h-full w-full" />
           )}
         </div>
         <CardContent className="flex flex-col gap-1">

@@ -16,6 +16,7 @@ import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { EmptyState } from "@/components/shared/empty-state";
+import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
@@ -246,11 +247,7 @@ export default function OrgListingsPage() {
                           className="size-10 rounded object-cover"
                         />
                       ) : (
-                        <div className="size-10 rounded bg-muted flex items-center justify-center">
-                          <span className="text-xs text-muted-foreground">
-                            {t("common.noPhoto")}
-                          </span>
-                        </div>
+                        <EquipmentPlaceholder className="size-10 rounded" />
                       )}
                     </td>
                     {/* Name */}
