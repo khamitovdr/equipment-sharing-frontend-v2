@@ -1,7 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { formatCost } from "@/lib/utils";
+import { useTranslations, useLocale } from "next-intl";
+import { formatCost, formatDate } from "@/lib/utils";
 import type { OrderRead } from "@/types/order";
 
 interface OfferDetailsProps {
@@ -10,6 +10,7 @@ interface OfferDetailsProps {
 
 export function OfferDetails({ order }: OfferDetailsProps) {
   const t = useTranslations("orders.detail");
+  const locale = useLocale();
 
   if (!order.offered_cost && !order.offered_start_date) return null;
 
@@ -26,7 +27,7 @@ export function OfferDetails({ order }: OfferDetailsProps) {
           <p className="text-xs font-medium text-zinc-500 uppercase">{t("requested")}</p>
           <div>
             <p className="text-xs text-zinc-400">{t("requestedDates")}</p>
-            <p>{order.requested_start_date} — {order.requested_end_date}</p>
+            <p>{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</p>
           </div>
           <div>
             <p className="text-xs text-zinc-400">{t("estimatedCost")}</p>
@@ -40,7 +41,7 @@ export function OfferDetails({ order }: OfferDetailsProps) {
           <div>
             <p className="text-xs text-zinc-400">{t("offeredDates")}</p>
             <p className={datesChanged ? "font-semibold text-blue-700" : ""}>
-              {order.offered_start_date} — {order.offered_end_date}
+              {formatDate(order.offered_start_date!, locale)} — {formatDate(order.offered_end_date!, locale)}
             </p>
           </div>
           <div>

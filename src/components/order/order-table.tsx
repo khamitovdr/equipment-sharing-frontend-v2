@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -8,7 +8,7 @@ import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder"
 import { OrderStatusBadge } from "./order-status-badge";
 import { listingsApi } from "@/lib/api/listings";
 import { usersApi } from "@/lib/api/users";
-import { formatCost } from "@/lib/utils";
+import { formatCost, formatDate } from "@/lib/utils";
 import type { OrderRead } from "@/types/order";
 
 type OrderTableVariant = "renter" | "org" | "org-listing";
@@ -22,6 +22,7 @@ interface OrderTableProps {
 
 export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTableProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const router = useRouter();
 
   if (isLoading) return <OrderTableSkeleton />;
@@ -66,7 +67,7 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
                   <OrderStatusBadge status={order.status} />
                 </td>
                 <td className="p-3 text-zinc-600 whitespace-nowrap">
-                  {order.requested_start_date} — {order.requested_end_date}
+                  {formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}
                 </td>
                 <td className="p-3 whitespace-nowrap font-medium">
                   <OrderCost order={order} />
@@ -96,7 +97,7 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
               <OrderStatusBadge status={order.status} />
             </div>
             <div className="flex items-center justify-between text-sm text-zinc-500">
-              <span>{order.requested_start_date} — {order.requested_end_date}</span>
+              <span>{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</span>
               <span className="font-medium text-black"><OrderCost order={order} /></span>
             </div>
           </div>

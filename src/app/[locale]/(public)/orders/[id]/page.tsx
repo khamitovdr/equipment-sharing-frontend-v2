@@ -17,7 +17,7 @@ import { ChatPlaceholder } from "@/components/order/chat-placeholder";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiRequestError } from "@/lib/api/client";
-import { formatCost } from "@/lib/utils";
+import { formatCost, formatDate } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -132,7 +132,7 @@ export default function OrderDetailPage({ params }: PageProps) {
             <div className="grid grid-cols-2 gap-4 text-sm pt-2 border-t">
               <div>
                 <p className="text-xs text-zinc-400">{t("orders.detail.requestedDates")}</p>
-                <p className="font-medium">{order.requested_start_date} — {order.requested_end_date}</p>
+                <p className="font-medium">{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</p>
               </div>
               <div>
                 <p className="text-xs text-zinc-400">{t("orders.detail.estimatedCost")}</p>
@@ -146,7 +146,7 @@ export default function OrderDetailPage({ params }: PageProps) {
               </div>
               <div>
                 <p className="text-xs text-zinc-400">{t("orders.detail.created")}</p>
-                <p className="text-zinc-600">{new Date(order.created_at).toLocaleDateString()}</p>
+                <p className="text-zinc-600">{formatDate(order.created_at, locale)}</p>
               </div>
             </div>
           </div>
