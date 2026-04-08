@@ -169,7 +169,7 @@ export default function OrgCreatePage() {
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {/* Section 1: INN / Name Search */}
-        <Card>
+        <Card className="overflow-visible">
           <CardHeader>
             <CardTitle className="text-base">{t("search.label")}</CardTitle>
           </CardHeader>
