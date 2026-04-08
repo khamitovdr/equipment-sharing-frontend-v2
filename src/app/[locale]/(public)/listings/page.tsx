@@ -163,14 +163,6 @@ export default function CatalogPage() {
         {t("catalog.title")}
       </h1>
 
-      {/* Search bar */}
-      <div className="mb-6">
-        <SearchBar
-          value={parsedFilters.search ?? ""}
-          onChange={(value) => updateFilters({ search: value || undefined })}
-        />
-      </div>
-
       <div className="flex gap-8">
         {/* Desktop sidebar */}
         <aside className="hidden w-64 shrink-0 lg:block">
@@ -179,6 +171,14 @@ export default function CatalogPage() {
 
         {/* Main content */}
         <div className="flex-1 min-w-0">
+          {/* Search bar */}
+          <div className="mb-6">
+            <SearchBar
+              value={parsedFilters.search ?? ""}
+              onChange={(value) => updateFilters({ search: value || undefined })}
+            />
+          </div>
+
           {/* Mobile filter button */}
           <div className="mb-4 flex items-center justify-between lg:hidden">
             <Sheet>
