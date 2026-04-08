@@ -7,6 +7,7 @@ import { listingsApi } from "@/lib/api/listings";
 import { organizationsApi } from "@/lib/api/organizations";
 
 import { buttonVariants } from "@/components/ui/button-variants";
+import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { cn } from "@/lib/utils";
 import { ListingCard } from "@/components/catalog/listing-card";
 import { ScrollHero } from "@/components/layout/scroll-hero";
@@ -99,9 +100,7 @@ export default async function HomePage() {
                           sizes="48px"
                         />
                       ) : (
-                        <span className="flex h-full w-full items-center justify-center text-base font-bold text-zinc-400">
-                          {initial}
-                        </span>
+                        <OrgPlaceholder className="h-full w-full" />
                       )}
                     </div>
                     <div className="min-w-0 flex-1">

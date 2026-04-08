@@ -11,6 +11,7 @@ import { ListingSpecs } from "@/components/catalog/listing-specs";
 import { MediaCarousel } from "@/components/catalog/media-carousel";
 import { OrderForm } from "@/components/catalog/order-form";
 import { BackButton } from "@/components/shared/back-button";
+import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { formatCost } from "@/lib/utils";
 
 interface PageProps {
@@ -106,9 +107,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
                   className="h-10 w-10 rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-200 text-sm font-semibold text-zinc-600">
-                  {orgInitial}
-                </div>
+                <OrgPlaceholder className="h-10 w-10" />
               )}
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">{orgDisplayName}</p>

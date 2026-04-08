@@ -12,7 +12,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { ApiRequestError } from "@/lib/api/client";
@@ -141,12 +142,13 @@ export function JoinOrgDialog({ open, onOpenChange }: JoinOrgDialogProps) {
                     onClick={() => handleSelect(org)}
                     disabled={!!joining}
                   >
-                    <Avatar size="sm">
-                      {(org.photo?.small_url ?? org.photo?.medium_url) && (
+                    {(org.photo?.small_url ?? org.photo?.medium_url) ? (
+                      <Avatar size="sm">
                         <AvatarImage src={(org.photo?.small_url ?? org.photo?.medium_url)!} alt={org.short_name ?? ""} />
-                      )}
-                      <AvatarFallback>{getInitials(org)}</AvatarFallback>
-                    </Avatar>
+                      </Avatar>
+                    ) : (
+                      <OrgPlaceholder className="size-6 shrink-0" />
+                    )}
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">
                         {org.short_name ?? org.full_name}

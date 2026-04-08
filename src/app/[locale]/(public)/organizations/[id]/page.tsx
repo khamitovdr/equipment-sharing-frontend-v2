@@ -13,6 +13,7 @@ import { CategoryFilter } from "@/components/catalog/category-filter";
 import { CursorPagination } from "@/components/shared/cursor-pagination";
 import { EmptyState } from "@/components/shared/empty-state";
 import { BackButton } from "@/components/shared/back-button";
+import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { organizationsApi } from "@/lib/api/organizations";
 import { listingsApi } from "@/lib/api/listings";
 import type { ListingCategoryRead } from "@/types/listing";
@@ -129,9 +130,7 @@ export default function OrgProfilePage() {
             className="h-20 w-20 rounded-full object-cover shrink-0"
           />
         ) : (
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-2xl font-semibold text-zinc-600">
-            {orgInitial}
-          </div>
+          <OrgPlaceholder className="h-20 w-20 shrink-0" />
         )}
         <div className="min-w-0">
           <h1 className="text-2xl font-bold leading-tight">{orgDisplayName}</h1>
