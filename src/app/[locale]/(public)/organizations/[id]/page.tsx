@@ -121,100 +121,98 @@ export default function OrgProfilePage() {
         <BackButton />
       </div>
 
-      {/* Header */}
-      <div className="mb-8 flex items-start gap-4">
-        {org.photo ? (
-          <img
-            src={org.photo.medium_url}
-            alt={orgDisplayName}
-            className="h-20 w-20 rounded-full object-cover shrink-0"
-          />
-        ) : (
-          <OrgPlaceholder className="h-20 w-20 shrink-0" />
-        )}
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold leading-tight">{orgDisplayName}</h1>
-          {org.status === "verified" && (
-            <div className="mt-1 flex items-center gap-1 text-sm text-emerald-600">
-              <CheckCircle className="h-4 w-4" />
-              <span>{t("org.verified")}</span>
+      <div className="flex flex-col lg:flex-row lg:items-start gap-8">
+        {/* Sidebar — org info */}
+        <div className="lg:w-72 lg:shrink-0 lg:sticky lg:top-8 space-y-6">
+          {/* Photo + name */}
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            {org.photo ? (
+              <img
+                src={org.photo.medium_url}
+                alt={orgDisplayName}
+                className="h-24 w-24 rounded-full object-cover"
+              />
+            ) : (
+              <OrgPlaceholder className="h-24 w-24" />
+            )}
+            <h1 className="mt-3 text-xl font-bold leading-tight">{orgDisplayName}</h1>
+            {org.status === "verified" && (
+              <div className="mt-1 flex items-center gap-1 text-sm text-emerald-600">
+                <CheckCircle className="h-4 w-4" />
+                <span>{t("org.verified")}</span>
+              </div>
+            )}
+            {org.legal_address && (
+              <p className="mt-2 text-sm text-zinc-500">
+                {org.legal_address}
+              </p>
+            )}
+          </div>
+
+          {/* Contacts */}
+          {org.contacts.length > 0 && (
+            <div className="space-y-3">
+              <h2 className="text-sm font-semibold text-zinc-500 uppercase">{t("org.contacts")}</h2>
+              {org.contacts.map((contact) => (
+                <div key={contact.id} className="rounded-lg border p-3">
+                  <p className="mb-1.5 text-sm font-medium">{contact.display_name}</p>
+                  {contact.phone && (
+                    <div className="flex items-center gap-1.5 text-sm text-zinc-600">
+                      <Phone className="h-3.5 w-3.5 shrink-0" />
+                      <span>{contact.phone}</span>
+                    </div>
+                  )}
+                  {contact.email && (
+                    <div className="mt-1 flex items-center gap-1.5 text-sm text-zinc-600">
+                      <Mail className="h-3.5 w-3.5 shrink-0" />
+                      <span>{contact.email}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
-          {org.legal_address && (
-            <p className="mt-1 text-sm text-zinc-500">
-              <span className="font-medium">{t("org.legalAddress")}:</span>{" "}
-              {org.legal_address}
-            </p>
+        </div>
+
+        {/* Main — listings */}
+        <div className="min-w-0 flex-1">
+          <h2 className="mb-4 text-lg font-semibold">{t("org.listings")}</h2>
+
+          {categories.length > 0 && (
+            <div className="mb-5">
+              <CategoryFilter
+                categories={categories}
+                selected={selectedCategories}
+                onChange={setSelectedCategories}
+              />
+            </div>
+          )}
+
+          {listingsLoading ? (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex flex-col gap-2">
+                  <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+                  <Skeleton className="h-4 w-1/3" />
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-4 w-1/4" />
+                </div>
+              ))}
+            </div>
+          ) : listings.length === 0 ? (
+            <EmptyState message={t("org.noListings")} />
+          ) : (
+            <>
+              <ListingGrid listings={listings} />
+              <CursorPagination
+                hasMore={hasNextPage ?? false}
+                isLoading={isFetchingNextPage}
+                onLoadMore={fetchNextPage}
+              />
+            </>
           )}
         </div>
       </div>
-
-      {/* Contacts */}
-      {org.contacts.length > 0 && (
-        <section className="mb-8">
-          <h2 className="mb-3 text-base font-semibold">{t("org.contacts")}</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {org.contacts.map((contact) => (
-              <div key={contact.id} className="rounded-lg border p-3">
-                <p className="mb-2 font-medium">{contact.display_name}</p>
-                {contact.phone && (
-                  <div className="flex items-center gap-1.5 text-sm text-zinc-600">
-                    <Phone className="h-3.5 w-3.5 shrink-0" />
-                    <span>{contact.phone}</span>
-                  </div>
-                )}
-                {contact.email && (
-                  <div className="mt-1 flex items-center gap-1.5 text-sm text-zinc-600">
-                    <Mail className="h-3.5 w-3.5 shrink-0" />
-                    <span>{contact.email}</span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Listings section */}
-      <section>
-        <h2 className="mb-4 text-base font-semibold">{t("org.listings")}</h2>
-
-        {/* Category filter pills */}
-        {categories.length > 0 && (
-          <div className="mb-5">
-            <CategoryFilter
-              categories={categories}
-              selected={selectedCategories}
-              onChange={setSelectedCategories}
-            />
-          </div>
-        )}
-
-        {/* Listings grid */}
-        {listingsLoading ? (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="flex flex-col gap-2">
-                <Skeleton className="aspect-[4/3] w-full rounded-xl" />
-                <Skeleton className="h-4 w-1/3" />
-                <Skeleton className="h-4 w-2/3" />
-                <Skeleton className="h-4 w-1/4" />
-              </div>
-            ))}
-          </div>
-        ) : listings.length === 0 ? (
-          <EmptyState message={t("org.noListings")} />
-        ) : (
-          <>
-            <ListingGrid listings={listings} />
-            <CursorPagination
-              hasMore={hasNextPage ?? false}
-              isLoading={isFetchingNextPage}
-              onLoadMore={fetchNextPage}
-            />
-          </>
-        )}
-      </section>
     </div>
   );
 }
