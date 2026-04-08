@@ -6,7 +6,7 @@ import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { listingsApi } from "@/lib/api/listings";
@@ -21,6 +21,7 @@ interface OrderFormProps {
 
 export function OrderForm({ listingId, pricePerDay }: OrderFormProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated, token } = useAuthStore();
@@ -50,9 +51,10 @@ export function OrderForm({ listingId, pricePerDay }: OrderFormProps) {
         requested_end_date: format(dateRange.to, "yyyy-MM-dd"),
       });
     },
-    onSuccess: () => {
+    onSuccess: (order) => {
       toast.success(t("listing.orderSuccess"));
       setDateRange(undefined);
+      router.push(`/${locale}/orders/${order.id}`);
     },
     onError: () => {
       toast.error(t("common.error"));
