@@ -65,9 +65,9 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
       {/* Org header */}
       <div className="flex items-center gap-3 px-4 py-5">
         <Avatar size="lg">
-          {currentOrg?.photo?.url ? (
+          {currentOrg?.photo?.medium_url ? (
             <img
-              src={currentOrg.photo.url}
+              src={currentOrg.photo.medium_url}
               alt={orgName}
               className="aspect-square size-full rounded-full object-cover"
             />

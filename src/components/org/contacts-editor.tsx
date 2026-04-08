@@ -24,7 +24,7 @@ export function ContactsEditor({ control, errors }: ContactsEditorProps) {
   return (
     <div className="space-y-4">
       {fields.map((field, index) => {
-        const contactErrors = errors.contacts?.[index] as FieldErrors<any> | undefined;
+        const contactErrors = (errors.contacts as FieldErrors<any>[] | undefined)?.[index];
 
         return (
           <div
