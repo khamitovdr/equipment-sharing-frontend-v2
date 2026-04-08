@@ -67,3 +67,35 @@ export interface ListingsQueryParams {
   category_id?: string | string[] | null;
   organization_id?: string | null;
 }
+
+export interface ListingCreate {
+  name: string;
+  category_id: string;
+  price: number;
+  description?: string;
+  specifications?: Record<string, string>;
+  with_operator?: boolean;
+  on_owner_site?: boolean;
+  delivery?: boolean;
+  installation?: boolean;
+  setup?: boolean;
+  photo_ids?: string[];
+}
+
+export type ListingUpdate = Partial<ListingCreate>;
+
+export interface ListingStatusUpdate {
+  status: ListingStatus;
+}
+
+export interface ListingCategoryCreate {
+  name: string;
+}
+
+export interface OrgListingsQueryParams {
+  cursor?: string | null;
+  limit?: number;
+  search?: string | null;
+  status?: ListingStatus | null;
+  category_id?: string | null;
+}

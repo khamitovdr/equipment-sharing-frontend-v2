@@ -2,6 +2,51 @@ import type { ProfilePhotoRead } from "./user";
 
 export type OrganizationStatus = "created" | "verified";
 
+export type MembershipRole = "admin" | "editor" | "viewer";
+export type MembershipStatus = "candidate" | "invited" | "member";
+
+export interface MembershipRead {
+  id: string;
+  user_id: string;
+  organization_id: string;
+  role: MembershipRole;
+  status: MembershipStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ContactCreate {
+  display_name: string;
+  phone?: string | null;
+  email?: string | null;
+}
+
+export interface OrganizationCreate {
+  inn: string;
+  contacts: ContactCreate[];
+}
+
+export interface OrganizationPhotoUpdate {
+  photo_id: string | null;
+}
+
+export interface ContactsReplace {
+  contacts: ContactCreate[];
+}
+
+export interface MembershipInvite {
+  user_id: string;
+  role: MembershipRole;
+}
+
+export interface MembershipApprove {
+  role: MembershipRole;
+}
+
+export interface MembershipRoleUpdate {
+  role: MembershipRole;
+}
+
 export interface ContactRead {
   id: string;
   display_name: string;
