@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,21 +33,19 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
   return (
     <div className="w-full">
       {/* Desktop */}
-      <div className="hidden sm:flex items-center gap-0">
+      <div className="hidden sm:flex items-start">
         {FLOW_STEPS.map((step, i) => {
           const isCompleted = !isTerminal && currentIndex > i;
           const isCurrent = !isTerminal && currentIndex === i;
-          const isFuture = !isTerminal && currentIndex < i;
 
           return (
-            <div key={step} className="flex items-center flex-1 last:flex-none">
+            <React.Fragment key={step}>
               <div className="flex flex-col items-center gap-1.5">
                 <div
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border-2 text-xs font-medium transition-colors",
-                    isCompleted && "border-black bg-black text-white",
-                    isCurrent && "border-black bg-black text-white",
-                    isFuture && "border-zinc-300 text-zinc-400",
+                    (isCompleted || isCurrent) && !isTerminal && "border-black bg-black text-white",
+                    !isCompleted && !isCurrent && "border-zinc-300 text-zinc-400",
                     isTerminal && "border-zinc-200 text-zinc-400"
                   )}
                 >
@@ -66,19 +65,17 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
               {i < FLOW_STEPS.length - 1 && (
                 <div
                   className={cn(
-                    "h-0.5 flex-1 mx-2 mt-[-18px]",
-                    !isTerminal && currentIndex > i
-                      ? "bg-black"
-                      : "bg-zinc-200"
+                    "h-0.5 flex-1 mx-2 mt-3.5",
+                    !isTerminal && currentIndex > i ? "bg-black" : "bg-zinc-200"
                   )}
                 />
               )}
-            </div>
+            </React.Fragment>
           );
         })}
         {isTerminal && (
           <>
-            <div className="h-0.5 w-4 mx-2 mt-[-18px] bg-red-300" />
+            <div className="h-0.5 w-6 mx-2 mt-3.5 bg-red-300" />
             <div className="flex flex-col items-center gap-1.5">
               <div className="flex size-7 items-center justify-center rounded-full border-2 border-red-500 bg-red-50 text-xs font-medium text-red-600">
                 ✕
