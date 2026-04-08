@@ -289,7 +289,7 @@ export default function OrgListingsPage() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem
                             onClick={() =>
-                              router.push(`/${locale}/org/listings/${listing.id}/edit`)
+                              router.push(`/${locale}/org/listings/${listing.id}`)
                             }
                           >
                             <Pencil className="size-4 mr-2" />
@@ -320,7 +320,7 @@ export default function OrgListingsPage() {
                 key={listing.id}
                 className="rounded-lg border p-4 cursor-pointer hover:bg-muted/40 transition-colors"
                 onClick={() =>
-                  router.push(`/${locale}/org/listings/${listing.id}/edit`)
+                  router.push(`/${locale}/org/listings/${listing.id}`)
                 }
               >
                 <div className="flex items-start justify-between gap-3">

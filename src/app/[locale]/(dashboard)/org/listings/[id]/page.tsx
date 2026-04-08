@@ -1,0 +1,136 @@
+"use client";
+
+import { use } from "react";
+import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
+import { MapPin, Pencil, Settings, Truck, User, Wrench } from "lucide-react";
+
+import { listingsApi } from "@/lib/api/listings";
+import { useAuthStore } from "@/lib/stores/auth-store";
+import { useOrgStore } from "@/lib/stores/org-store";
+import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button-variants";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import { ListingStatusSelect } from "@/components/org/listing-status-select";
+import { ListingDescription } from "@/components/catalog/listing-description";
+import { ListingSpecs } from "@/components/catalog/listing-specs";
+import { MediaCarousel } from "@/components/catalog/media-carousel";
+import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function OrgListingDetailPage({ params }: PageProps) {
+  const { id: listingId } = use(params);
+  const t = useTranslations();
+  const locale = useLocale();
+  const token = useAuthStore((s) => s.token);
+  const orgId = useOrgStore((s) => s.currentOrg?.id);
+  const { hasRole: canEdit } = useOrgGuard({ minRole: "editor" });
+  const queryClient = useQueryClient();
+
+  const { data: listing, isLoading } = useQuery({
+    queryKey: ["org-listing", orgId, listingId],
+    queryFn: () => listingsApi.orgGet(token!, orgId!, listingId),
+    enabled: !!token && !!orgId,
+  });
+
+  async function handleStatusChange(status: "hidden" | "published" | "archived") {
+    if (!token || !orgId) return;
+    try {
+      await listingsApi.orgUpdateStatus(token, orgId, listingId, { status });
+      await queryClient.invalidateQueries({ queryKey: ["org-listing", orgId, listingId] });
+      toast.success(t("orgListings.statusChanged"));
+    } catch {
+      toast.error(t("common.error"));
+    }
+  }
+
+  if (isLoading || !listing) {
+    return (
+      <div className="container mx-auto max-w-5xl px-4 py-8 space-y-6">
+        <Skeleton className="h-8 w-48" />
+        <Skeleton className="aspect-[4/3] w-full rounded-lg" />
+        <Skeleton className="h-24 w-full" />
+      </div>
+    );
+  }
+
+  const serviceFlags = [
+    { key: "delivery", label: t("catalog.delivery"), enabled: listing.delivery, icon: Truck },
+    { key: "with_operator", label: t("catalog.withOperator"), enabled: listing.with_operator, icon: User },
+    { key: "on_owner_site", label: t("catalog.onOwnerSite"), enabled: listing.on_owner_site, icon: MapPin },
+    { key: "installation", label: t("catalog.installation"), enabled: listing.installation, icon: Wrench },
+    { key: "setup", label: t("catalog.setup"), enabled: listing.setup, icon: Settings },
+  ].filter((f) => f.enabled);
+
+  return (
+    <div className="container mx-auto max-w-5xl px-4 py-8">
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+        {/* Left column */}
+        <div className="flex flex-col gap-8 lg:w-[60%]">
+          {listing.photos.length > 0 ? (
+            <MediaCarousel photos={listing.photos} videos={listing.videos} />
+          ) : (
+            <EquipmentPlaceholder className="aspect-[4/3] w-full rounded-lg" />
+          )}
+
+          <ListingDescription description={listing.description} />
+
+          <ListingSpecs specifications={listing.specifications} />
+        </div>
+
+        {/* Right column */}
+        <div className="flex flex-col gap-6 lg:sticky lg:top-8 lg:w-[40%]">
+          {/* Status + Edit */}
+          <div className="flex items-center justify-between gap-3">
+            <ListingStatusSelect
+              currentStatus={listing.status}
+              onStatusChange={handleStatusChange}
+              disabled={!canEdit}
+            />
+            {canEdit && (
+              <Link
+                href={`/${locale}/org/listings/${listingId}/edit`}
+                className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-2")}
+              >
+                <Pencil className="size-4" />
+                {t("orgListings.actions.edit")}
+              </Link>
+            )}
+          </div>
+
+          {/* Price & name */}
+          <div>
+            <span className="text-xs text-zinc-500">{listing.category.name}</span>
+            <h1 className="mt-1 text-xl font-bold leading-tight">{listing.name}</h1>
+            <p className="mt-2 text-2xl font-bold">
+              {listing.price.toLocaleString()}{" "}
+              <span className="text-base font-normal text-zinc-500">
+                {t("catalog.perDay")}
+              </span>
+            </p>
+          </div>
+
+          {/* Service flags */}
+          {serviceFlags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {serviceFlags.map((flag) => (
+                <Badge key={flag.key} variant="secondary" className="gap-1.5 px-2.5 py-1">
+                  <flag.icon className="h-3 w-3" />
+                  {flag.label}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
