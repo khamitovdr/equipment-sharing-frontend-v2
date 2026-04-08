@@ -15,7 +15,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
   const hasSelection = selected.length > 0;
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-1.5">
       {categories.map((cat) => {
         const isActive = selected.includes(cat.id);
         return (
@@ -28,7 +28,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
                 : [...selected, cat.id];
               onChange(next);
             }}
-            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+            className={`flex-grow rounded-full border px-2.5 py-0.5 text-xs text-center transition-colors ${
               isActive
                 ? "border-black bg-black text-white"
                 : "border-input bg-transparent text-foreground hover:bg-muted"
@@ -42,7 +42,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
         <button
           type="button"
           onClick={() => onChange([])}
-          className="inline-flex items-center gap-1 rounded-full border border-zinc-300 px-2 py-1 text-xs text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
+          className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-2 py-0.5 text-xs text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
         >
           <X className="h-3 w-3" />
         </button>
