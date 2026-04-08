@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { ApiRequestError } from "@/lib/api/client";
@@ -142,14 +142,9 @@ export function JoinOrgDialog({ open, onOpenChange }: JoinOrgDialogProps) {
                     disabled={!!joining}
                   >
                     <Avatar size="sm">
-                      {org.photo ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={org.photo.small_url ?? org.photo.medium_url}
-                          alt={org.short_name ?? ""}
-                          className="aspect-square size-full rounded-full object-cover"
-                        />
-                      ) : null}
+                      {(org.photo?.small_url ?? org.photo?.medium_url) && (
+                        <AvatarImage src={(org.photo?.small_url ?? org.photo?.medium_url)!} alt={org.short_name ?? ""} />
+                      )}
                       <AvatarFallback>{getInitials(org)}</AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">

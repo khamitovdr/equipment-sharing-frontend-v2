@@ -5,7 +5,7 @@ import { ChevronsUpDown } from "lucide-react";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { useOrg } from "@/lib/hooks/use-org";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
@@ -39,13 +39,9 @@ export function OrgSwitcher() {
   const content = (
     <div className="flex w-full items-center gap-3">
       <Avatar className="size-8 shrink-0 rounded-md">
-        {currentOrg?.photo?.medium_url ? (
-          <img
-            src={currentOrg.photo.medium_url}
-            alt={orgName}
-            className="aspect-square size-full rounded-md object-cover"
-          />
-        ) : null}
+        {currentOrg?.photo?.medium_url && (
+          <AvatarImage src={currentOrg.photo.medium_url} alt={orgName} className="rounded-md" />
+        )}
         <AvatarFallback className="rounded-md text-xs">{initials}</AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1 text-left">

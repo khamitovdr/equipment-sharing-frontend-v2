@@ -9,7 +9,7 @@ import { MoreHorizontal, Shield, Loader2 } from "lucide-react";
 import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -184,16 +184,10 @@ export function MemberTable({
                   {/* Avatar */}
                   <td className="p-3 w-12">
                     <Avatar>
-                      {user?.profile_photo?.small_url ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={user.profile_photo.small_url}
-                          alt={getUserName(user)}
-                          className="aspect-square size-full rounded-full object-cover"
-                        />
-                      ) : (
-                        <AvatarFallback>{getUserInitials(user)}</AvatarFallback>
+                      {user?.profile_photo?.small_url && (
+                        <AvatarImage src={user.profile_photo.small_url} alt={getUserName(user)} />
                       )}
+                      <AvatarFallback>{getUserInitials(user)}</AvatarFallback>
                     </Avatar>
                   </td>
 
