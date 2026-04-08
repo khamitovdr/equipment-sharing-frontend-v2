@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { orderOfferSchema, type OrderOfferFormData } from "@/lib/validators/order";
-import type { OrderRead, OrderStatus } from "@/types/order";
+import type { OrderRead } from "@/types/order";
 
 type RenterAction = "accept" | "cancel";
 type OrgAction = "offer" | "re-offer" | "approve" | "cancel";
@@ -133,7 +133,6 @@ export function OrderActionsBar({
           order={order}
           onSubmit={(data) => {
             onOffer?.(data);
-            setShowOfferForm(false);
           }}
           onCancel={() => setShowOfferForm(false)}
           isPending={isPending}
