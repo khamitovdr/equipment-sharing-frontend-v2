@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { LogOut, ShoppingBag, Settings, Building2, UserPlus, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useQuery } from "@tanstack/react-query";
@@ -23,6 +23,7 @@ import { JoinOrgDialog } from "@/components/org/join-org-dialog";
 
 export function UserMenu() {
   const t = useTranslations();
+  const locale = useLocale();
   const { user, logout } = useAuth();
   const [joinOpen, setJoinOpen] = React.useState(false);
   const token = useAuthStore((s) => s.token);
@@ -59,22 +60,22 @@ export function UserMenu() {
             </span>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuItem render={<Link href="/orders" />}>
+          <DropdownMenuItem render={<Link href={`/${locale}/orders`} />}>
             <ShoppingBag />
             {t("nav.myOrders")}
           </DropdownMenuItem>
-          <DropdownMenuItem render={<Link href="/settings" />}>
+          <DropdownMenuItem render={<Link href={`/${locale}/settings`} />}>
             <Settings />
             {t("nav.settings")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {hasOrgs && (
-            <DropdownMenuItem render={<Link href="/org/listings" />}>
+            <DropdownMenuItem render={<Link href={`/${locale}/org/listings`} />}>
               <LayoutDashboard />
               {t("nav.dashboard")}
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem render={<Link href="/organizations/new" />}>
+          <DropdownMenuItem render={<Link href={`/${locale}/organizations/new`} />}>
             <Building2 />
             {t("nav.createOrg")}
           </DropdownMenuItem>
