@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
@@ -49,7 +51,15 @@ export default function CreateListingPage() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="mx-auto max-w-2xl px-4 py-8 space-y-4">
+      <Link
+        href={`/${locale}/org/listings`}
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black"
+      >
+        <ArrowLeft className="size-4" />
+        {t("orgListings.backToListings")}
+      </Link>
+
       <ListingForm
         mode="create"
         onSubmit={handleSubmit}

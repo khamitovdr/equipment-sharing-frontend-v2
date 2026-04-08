@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,7 +64,15 @@ export default function InviteMemberPage() {
   }
 
   return (
-    <div className="max-w-md mx-auto px-4 py-8">
+    <div className="max-w-md mx-auto px-4 py-8 space-y-4">
+      <Link
+        href={`/${locale}/org/members`}
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black"
+      >
+        <ArrowLeft className="size-4" />
+        {t("invite.backToMembers")}
+      </Link>
+
       <Card>
         <CardHeader>
           <CardTitle>{t("invite.title")}</CardTitle>

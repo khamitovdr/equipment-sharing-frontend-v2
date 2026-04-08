@@ -1,11 +1,12 @@
 "use client";
 
 import { use, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
@@ -137,6 +138,14 @@ export default function EditListingPage({
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 space-y-4">
+      <Link
+        href={`/${locale}/org/listings/${listingId}`}
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black"
+      >
+        <ArrowLeft className="size-4" />
+        {t("orgListings.backToListing")}
+      </Link>
+
       {listing && (
         <div className="flex items-center gap-3">
           <ListingStatusSelect

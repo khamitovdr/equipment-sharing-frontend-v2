@@ -140,7 +140,8 @@
     "days": "days",
     "reserved": "Reserved",
     "loginToOrder": "Log in to request rental",
-    "orderSuccess": "Order created successfully"
+    "orderSuccess": "Order created successfully",
+    "backToCatalog": "Back to catalog"
   },
   "org": {
     "listings": "Equipment",
@@ -188,7 +189,9 @@
     "actions": { "edit": "Edit", "delete": "Delete", "changeStatus": "Change status", "publish": "Publish", "hide": "Hide", "archive": "Archive" },
     "deleteConfirm": "Delete this listing? This cannot be undone.",
     "statusChanged": "Listing status updated",
-    "deleted": "Listing deleted"
+    "deleted": "Listing deleted",
+    "backToListings": "Back to listings",
+    "backToListing": "Back to listing"
   },
   "listingForm": {
     "createTitle": "Create Listing",
@@ -229,7 +232,8 @@
     "role": { "label": "Role" },
     "submit": "Send invitation",
     "success": "Invitation sent",
-    "error": { "alreadyMember": "User is already a member or has a pending invitation" }
+    "error": { "alreadyMember": "User is already a member or has a pending invitation" },
+    "backToMembers": "Back to members"
   },
   "orgSettings": {
     "title": "Organization Settings",

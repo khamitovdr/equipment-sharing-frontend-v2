@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Settings, Truck, User, Wrench } from "lucide-react";
+import { ArrowLeft, MapPin, Settings, Truck, User, Wrench } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { listingsApi } from "@/lib/api/listings";
@@ -17,7 +17,7 @@ interface PageProps {
 }
 
 export default async function ListingDetailPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id, locale } = await params;
   const t = await getTranslations();
 
   let listing;
@@ -47,6 +47,14 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Link
+        href={`/${locale}/listings`}
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black mb-6"
+      >
+        <ArrowLeft className="size-4" />
+        {t("listing.backToCatalog")}
+      </Link>
+
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
         {/* Left column (~60%) */}
         <div className="flex flex-col gap-8 lg:w-[60%]">

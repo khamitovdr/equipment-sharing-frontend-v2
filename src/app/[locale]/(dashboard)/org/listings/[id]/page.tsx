@@ -4,7 +4,7 @@ import { use, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { Loader2, MapPin, Pencil, Settings, Truck, User, Wrench } from "lucide-react";
+import { ArrowLeft, Loader2, MapPin, Pencil, Settings, Truck, User, Wrench } from "lucide-react";
 
 import { listingsApi } from "@/lib/api/listings";
 import { useAuthStore } from "@/lib/stores/auth-store";
@@ -102,6 +102,14 @@ export default function OrgListingDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-8">
+      <Link
+        href={`/${locale}/org/listings`}
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black mb-6"
+      >
+        <ArrowLeft className="size-4" />
+        {t("orgListings.backToListings")}
+      </Link>
+
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
         {/* Left column */}
         <div className="flex flex-col gap-8 lg:w-[60%]">
