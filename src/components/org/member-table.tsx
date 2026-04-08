@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { MoreHorizontal, Shield, Loader2 } from "lucide-react";
 
 import { organizationsApi } from "@/lib/api/organizations";
+import { formatDate } from "@/lib/utils";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -50,14 +51,6 @@ function getUserName(user: UserRead | undefined): string {
   return parts.join(" ") || user.email;
 }
 
-function formatDate(dateStr: string): string {
-  try {
-    return new Date(dateStr).toLocaleDateString();
-  } catch {
-    return dateStr;
-  }
-}
-
 const ROLE_BADGE_VARIANT: Record<
   MembershipRole,
   "default" | "secondary" | "outline"
@@ -76,6 +69,7 @@ export function MemberTable({
   orgId,
 }: MemberTableProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const token = useAuthStore((s) => s.token);
   const queryClient = useQueryClient();
 
@@ -225,14 +219,14 @@ export function MemberTable({
                         </Badge>
                       </td>
                       <td className="p-3 text-muted-foreground hidden md:table-cell">
-                        {formatDate(member.created_at)}
+                        {formatDate(member.created_at, locale)}
                       </td>
                     </>
                   )}
 
                   {tab === "pending" && (
                     <td className="p-3 text-muted-foreground hidden md:table-cell">
-                      {formatDate(member.created_at)}
+                      {formatDate(member.created_at, locale)}
                     </td>
                   )}
 
