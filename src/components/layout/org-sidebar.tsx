@@ -62,8 +62,18 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
+      {/* Logo — link to home */}
+      <Link href={`/${locale}`} onClick={onNavClick} className="flex items-center gap-2 px-4 pt-4 pb-2">
+        <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
+          E
+        </span>
+        <span className="text-sm font-semibold tracking-tight text-black">
+          equip me
+        </span>
+      </Link>
+
       {/* Org header */}
-      <div className="flex items-center gap-3 px-4 py-5">
+      <div className="flex items-center gap-3 px-4 py-3">
         <Avatar size="lg">
           {currentOrg?.photo?.medium_url ? (
             <img
