@@ -75,7 +75,7 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
         })}
         {isTerminal && (
           <>
-            <div className="h-0.5 w-6 mx-2 mt-3.5 bg-red-300" />
+            <div className="h-0.5 flex-1 mx-2 mt-3.5 bg-red-300" />
             <div className="flex flex-col items-center gap-1.5">
               <div className="flex size-7 items-center justify-center rounded-full border-2 border-red-500 bg-red-50 text-xs font-medium text-red-600">
                 ✕
