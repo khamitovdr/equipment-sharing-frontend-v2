@@ -38,11 +38,11 @@ export function OrgSwitcher() {
 
   const content = (
     <div className="flex w-full items-center gap-3">
-      <Avatar className="size-8 shrink-0 rounded-md">
+      <Avatar className="size-8 shrink-0">
         {currentOrg?.photo?.medium_url && (
-          <AvatarImage src={currentOrg.photo.medium_url} alt={orgName} className="rounded-md" />
+          <AvatarImage src={currentOrg.photo.medium_url} alt={orgName} />
         )}
-        <AvatarFallback className="rounded-md text-xs">{initials}</AvatarFallback>
+        <AvatarFallback className="text-xs">{initials}</AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1 text-left">
         <p className="truncate text-sm font-medium text-zinc-900">{orgName}</p>
