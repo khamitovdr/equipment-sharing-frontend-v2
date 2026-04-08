@@ -23,11 +23,7 @@ const STATUS_STYLES: Record<ListingStatus, string> = {
   archived: "bg-amber-50 text-amber-700 border-amber-200",
 };
 
-const TRANSITIONS: Record<ListingStatus, ListingStatus[]> = {
-  hidden: ["published"],
-  published: ["hidden", "archived"],
-  archived: ["hidden"],
-};
+const ALL_STATUSES: ListingStatus[] = ["published", "hidden", "archived"];
 
 const ACTION_KEYS: Record<ListingStatus, string> = {
   published: "publish",
@@ -42,9 +38,9 @@ export function ListingStatusSelect({
 }: ListingStatusSelectProps) {
   const t = useTranslations("orgListings.actions");
 
-  const transitions = TRANSITIONS[currentStatus];
+  const transitions = ALL_STATUSES.filter((s) => s !== currentStatus);
 
-  if (disabled || transitions.length === 0) {
+  if (disabled) {
     return (
       <Badge className={STATUS_STYLES[currentStatus]} variant="outline">
         {t(ACTION_KEYS[currentStatus])}
