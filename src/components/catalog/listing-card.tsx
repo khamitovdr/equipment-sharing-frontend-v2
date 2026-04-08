@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ListingRead } from "@/types/listing";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
+import { formatCost } from "@/lib/utils";
 
 interface ListingCardProps {
   listing: ListingRead;
@@ -75,7 +76,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           <span className="text-xs text-zinc-500">{listing.category.name}</span>
           <h3 className="text-sm font-medium line-clamp-1">{listing.name}</h3>
           <p className="text-sm font-bold">
-            {listing.price.toLocaleString()} {t("catalog.perDay")}
+            {formatCost(listing.price)} {t("catalog.perDay")}
           </p>
         </CardContent>
       </Card>

@@ -19,7 +19,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
-import { cn } from "@/lib/utils";
+import { cn, formatCost } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -266,7 +266,7 @@ export default function OrgListingsPage() {
                     </td>
                     {/* Price */}
                     <td className="p-3 whitespace-nowrap">
-                      {listing.price.toLocaleString()} / {t("catalog.perDay")}
+                      {formatCost(listing.price)} / {t("catalog.perDay")}
                     </td>
                     {/* Status */}
                     <td className="p-3" onClick={(e) => e.stopPropagation()}>
@@ -329,7 +329,7 @@ export default function OrgListingsPage() {
                     <p className="font-medium truncate">{listing.name}</p>
                     <p className="text-sm text-muted-foreground mt-0.5">
                       {listing.category.name} &middot;{" "}
-                      {listing.price.toLocaleString()} / {t("catalog.perDay")}
+                      {formatCost(listing.price)} / {t("catalog.perDay")}
                     </p>
                   </div>
                   <ListingStatusSelect

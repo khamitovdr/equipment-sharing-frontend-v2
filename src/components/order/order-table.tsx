@@ -8,6 +8,7 @@ import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder"
 import { OrderStatusBadge } from "./order-status-badge";
 import { listingsApi } from "@/lib/api/listings";
 import { usersApi } from "@/lib/api/users";
+import { formatCost } from "@/lib/utils";
 import type { OrderRead } from "@/types/order";
 
 type OrderTableVariant = "renter" | "org" | "org-listing";
@@ -149,7 +150,7 @@ function RequesterCell({ requesterId }: { requesterId: string }) {
 function OrderCost({ order }: { order: OrderRead }) {
   const cost = order.offered_cost ?? order.estimated_cost;
   if (!cost) return "—";
-  return `${Number(cost).toLocaleString()} ₽`;
+  return `${formatCost(cost)} ₽`;
 }
 
 function OrderTableSkeleton() {

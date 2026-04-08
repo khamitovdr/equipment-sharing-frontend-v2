@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { listingsApi } from "@/lib/api/listings";
 import { ordersApi } from "@/lib/api/orders";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { formatCost } from "@/lib/utils";
 import { ReservationCalendar } from "./reservation-calendar";
 
 interface OrderFormProps {
@@ -85,7 +86,7 @@ export function OrderForm({ listingId, pricePerDay }: OrderFormProps) {
             {t("listing.estimatedCost")} ({days} {t("listing.days")})
           </span>
           <span className="font-semibold">
-            {estimatedCost.toLocaleString()} ₽
+            {formatCost(estimatedCost)} ₽
           </span>
         </div>
       )}

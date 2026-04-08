@@ -13,7 +13,7 @@ import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn, formatCost } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
@@ -162,7 +162,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
             <span className="text-xs text-zinc-500">{listing.category.name}</span>
             <h1 className="mt-1 text-xl font-bold leading-tight">{listing.name}</h1>
             <p className="mt-2 text-2xl font-bold">
-              {listing.price.toLocaleString()}{" "}
+              {formatCost(listing.price)}{" "}
               <span className="text-base font-normal text-zinc-500">
                 {t("catalog.perDay")}
               </span>

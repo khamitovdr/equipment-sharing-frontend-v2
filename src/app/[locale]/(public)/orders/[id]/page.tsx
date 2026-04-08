@@ -17,6 +17,7 @@ import { ChatPlaceholder } from "@/components/order/chat-placeholder";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiRequestError } from "@/lib/api/client";
+import { formatCost } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -136,7 +137,7 @@ export default function OrderDetailPage({ params }: PageProps) {
               <div>
                 <p className="text-xs text-zinc-400">{t("orders.detail.estimatedCost")}</p>
                 <p className="font-medium">
-                  {order.estimated_cost ? `${Number(order.estimated_cost).toLocaleString()} ₽` : "—"}
+                  {order.estimated_cost ? `${formatCost(order.estimated_cost)} ₽` : "—"}
                 </p>
               </div>
               <div>
