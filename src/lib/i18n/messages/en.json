@@ -184,6 +184,7 @@
     "filter": { "allStatuses": "All statuses", "allCategories": "All categories" },
     "empty": "No listings yet",
     "emptyFiltered": "No listings match your filters",
+    "status": { "published": "Published", "hidden": "Hidden", "archived": "Archived" },
     "actions": { "edit": "Edit", "delete": "Delete", "changeStatus": "Change status", "publish": "Publish", "hide": "Hide", "archive": "Archive" },
     "deleteConfirm": "Delete this listing? This cannot be undone.",
     "statusChanged": "Listing status updated",

@@ -36,14 +36,14 @@ export function ListingStatusSelect({
   onStatusChange,
   disabled,
 }: ListingStatusSelectProps) {
-  const t = useTranslations("orgListings.actions");
+  const t = useTranslations("orgListings");
 
   const transitions = ALL_STATUSES.filter((s) => s !== currentStatus);
 
   if (disabled) {
     return (
       <Badge className={STATUS_STYLES[currentStatus]} variant="outline">
-        {t(ACTION_KEYS[currentStatus])}
+        {t(`status.${currentStatus}`)}
       </Badge>
     );
   }
@@ -55,7 +55,7 @@ export function ListingStatusSelect({
         disabled={disabled}
       >
         <Badge className={STATUS_STYLES[currentStatus]} variant="outline">
-          {t(ACTION_KEYS[currentStatus])}
+          {t(`status.${currentStatus}`)}
           <ChevronDown className="size-3 ml-0.5" />
         </Badge>
       </DropdownMenuTrigger>
@@ -65,7 +65,7 @@ export function ListingStatusSelect({
             key={status}
             onClick={() => onStatusChange(status)}
           >
-            {t(ACTION_KEYS[status])}
+            {t(`actions.${ACTION_KEYS[status]}`)}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

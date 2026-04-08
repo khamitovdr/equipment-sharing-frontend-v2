@@ -201,17 +201,14 @@ export default function OrgListingsPage() {
         >
           <SelectTrigger className="w-full sm:w-44">
             <SelectValue placeholder={t("orgListings.filter.allStatuses")}>
-              {status === "hidden" ? t("orgListings.actions.hide")
-                : status === "published" ? t("orgListings.actions.publish")
-                : status === "archived" ? t("orgListings.actions.archive")
-                : t("orgListings.filter.allStatuses")}
+              {status ? t(`orgListings.status.${status}`) : t("orgListings.filter.allStatuses")}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="">{t("orgListings.filter.allStatuses")}</SelectItem>
-            <SelectItem value="hidden">{t("orgListings.actions.hide")}</SelectItem>
-            <SelectItem value="published">{t("orgListings.actions.publish")}</SelectItem>
-            <SelectItem value="archived">{t("orgListings.actions.archive")}</SelectItem>
+            <SelectItem value="published">{t("orgListings.status.published")}</SelectItem>
+            <SelectItem value="hidden">{t("orgListings.status.hidden")}</SelectItem>
+            <SelectItem value="archived">{t("orgListings.status.archived")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
