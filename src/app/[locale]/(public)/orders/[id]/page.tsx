@@ -89,10 +89,11 @@ export default function OrderDetailPage({ params }: PageProps) {
         {t("orders.detail.backToOrders")}
       </Link>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <OrderStatusStepper status={order.status} />
+
+      <div className="flex flex-col lg:flex-row gap-8 mt-6">
         {/* Left column — order info */}
         <div className="flex-1 space-y-6 min-w-0">
-          <OrderStatusStepper status={order.status} />
 
           <OrderActionsBar
             order={order}
@@ -151,7 +152,7 @@ export default function OrderDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right column — chat placeholder */}
-        <div className="w-full lg:w-[380px] shrink-0">
+        <div className="w-full lg:w-1/2 shrink-0">
           <ChatPlaceholder translationPrefix="orders" />
         </div>
       </div>
