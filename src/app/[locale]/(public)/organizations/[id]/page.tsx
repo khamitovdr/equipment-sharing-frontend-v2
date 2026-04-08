@@ -22,37 +22,42 @@ import type { ListingRead } from "@/types/listing";
 function OrgProfileSkeleton() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      {/* Header skeleton */}
-      <div className="mb-8 flex items-center gap-4">
-        <Skeleton className="h-20 w-20 rounded-full" />
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-7 w-48" />
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-4 w-64" />
-        </div>
-      </div>
-      {/* Contacts skeleton */}
-      <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-20 rounded-lg" />
-        ))}
-      </div>
-      {/* Pills skeleton */}
-      <div className="mb-6 flex gap-2">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-8 w-20 rounded-full" />
-        ))}
-      </div>
-      {/* Grid skeleton */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex flex-col gap-2">
-            <Skeleton className="aspect-[4/3] w-full rounded-xl" />
-            <Skeleton className="h-4 w-1/3" />
-            <Skeleton className="h-4 w-2/3" />
-            <Skeleton className="h-4 w-1/4" />
+      <Skeleton className="h-5 w-16 mb-6" />
+      <div className="flex flex-col lg:flex-row lg:items-start gap-8">
+        {/* Sidebar skeleton */}
+        <div className="lg:w-72 lg:shrink-0 space-y-6">
+          <div className="flex flex-col items-center lg:items-start gap-3">
+            <Skeleton className="h-24 w-24 rounded-full" />
+            <Skeleton className="h-6 w-40" />
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-56" />
           </div>
-        ))}
+          <div className="space-y-3">
+            <Skeleton className="h-4 w-20" />
+            {Array.from({ length: 2 }).map((_, i) => (
+              <Skeleton key={i} className="h-20 w-full rounded-lg" />
+            ))}
+          </div>
+        </div>
+        {/* Listings skeleton */}
+        <div className="min-w-0 flex-1">
+          <Skeleton className="h-6 w-32 mb-4" />
+          <div className="mb-5 flex gap-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-8 w-20 rounded-full" />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex flex-col gap-2">
+                <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+                <Skeleton className="h-4 w-1/3" />
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-4 w-1/4" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -123,7 +128,7 @@ export default function OrgProfilePage() {
 
       <div className="flex flex-col lg:flex-row lg:items-start gap-8">
         {/* Sidebar — org info */}
-        <div className="lg:w-72 lg:shrink-0 lg:sticky lg:top-8 space-y-6">
+        <div className="lg:w-72 lg:shrink-0 lg:sticky lg:top-[72px] space-y-6">
           {/* Photo + name */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             {org.photo ? (
