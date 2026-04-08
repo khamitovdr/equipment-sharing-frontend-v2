@@ -9,12 +9,14 @@ import { toast } from "sonner";
 
 import { ordersApi } from "@/lib/api/orders";
 import { listingsApi } from "@/lib/api/listings";
+import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { OrderStatusStepper } from "@/components/order/order-status-stepper";
 import { OrderActionsBar } from "@/components/order/order-actions-bar";
 import { OfferDetails } from "@/components/order/offer-details";
 import { ChatPlaceholder } from "@/components/order/chat-placeholder";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
+import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiRequestError } from "@/lib/api/client";
 import { formatCost, formatDate } from "@/lib/utils";
@@ -40,6 +42,13 @@ export default function OrderDetailPage({ params }: PageProps) {
     queryKey: ["listing", order?.listing_id],
     queryFn: () => listingsApi.get(order!.listing_id),
     enabled: !!order?.listing_id,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const { data: organization } = useQuery({
+    queryKey: ["organization", order?.organization_id],
+    queryFn: () => organizationsApi.get(order!.organization_id),
+    enabled: !!order?.organization_id,
     staleTime: 5 * 60 * 1000,
   });
 
@@ -125,7 +134,27 @@ export default function OrderDetailPage({ params }: PageProps) {
               </Link>
             )}
 
-            <div className="grid grid-cols-2 gap-4 text-sm pt-2 border-t">
+            {organization && (
+              <Link
+                href={`/${locale}/organizations/${organization.id}`}
+                className="flex items-center gap-2.5 pt-3 border-t hover:opacity-80 transition-opacity"
+              >
+                {organization.photo?.small_url ? (
+                  <img
+                    src={organization.photo.small_url}
+                    alt={organization.short_name ?? organization.full_name ?? ""}
+                    className="size-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <OrgPlaceholder className="size-8" />
+                )}
+                <span className="text-sm font-medium">
+                  {organization.short_name ?? organization.full_name ?? organization.inn}
+                </span>
+              </Link>
+            )}
+
+            <div className="grid grid-cols-2 gap-4 text-sm pt-3 border-t">
               <div>
                 <p className="text-xs text-zinc-400">{t("orders.detail.requestedDates")}</p>
                 <p className="font-medium">{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</p>
