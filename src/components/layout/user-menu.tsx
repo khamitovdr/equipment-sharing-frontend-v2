@@ -79,7 +79,7 @@ export function UserMenu() {
             <Building2 />
             {t("nav.createOrg")}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setJoinOpen(true)}>
+          <DropdownMenuItem onClick={() => setJoinOpen(true)}>
             <UserPlus />
             {t("nav.joinOrg")}
           </DropdownMenuItem>
