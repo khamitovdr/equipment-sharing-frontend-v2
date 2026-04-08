@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { usersApi } from "@/lib/api/users";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import type { UserRead } from "@/types/user";
@@ -156,14 +156,9 @@ export function UserSearch({ onSelect, selectedUser, onClear }: UserSearchProps)
                   }}
                 >
                   <Avatar size="sm">
-                    {user.profile_photo ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={user.profile_photo.small_url}
-                        alt={getUserFullName(user)}
-                        className="aspect-square size-full rounded-full object-cover"
-                      />
-                    ) : null}
+                    {user.profile_photo?.small_url && (
+                      <AvatarImage src={user.profile_photo.small_url} alt={getUserFullName(user)} />
+                    )}
                     <AvatarFallback>{getUserInitials(user)}</AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1">
@@ -183,14 +178,9 @@ export function UserSearch({ onSelect, selectedUser, onClear }: UserSearchProps)
       {selectedUser && (
         <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/30 px-3 py-2.5">
           <Avatar size="sm">
-            {selectedUser.profile_photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={selectedUser.profile_photo.small_url}
-                alt={getUserFullName(selectedUser)}
-                className="aspect-square size-full rounded-full object-cover"
-              />
-            ) : null}
+            {selectedUser.profile_photo?.small_url && (
+              <AvatarImage src={selectedUser.profile_photo.small_url} alt={getUserFullName(selectedUser)} />
+            )}
             <AvatarFallback>{getUserInitials(selectedUser)}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
