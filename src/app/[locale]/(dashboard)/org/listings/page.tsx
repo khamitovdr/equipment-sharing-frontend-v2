@@ -244,7 +244,11 @@ export default function OrgListingsPage() {
             <table className="w-full text-sm">
               <tbody className="divide-y">
                 {listings.map((listing) => (
-                  <tr key={listing.id} className="hover:bg-muted/40 transition-colors">
+                  <tr
+                    key={listing.id}
+                    className="hover:bg-muted/40 transition-colors cursor-pointer"
+                    onClick={() => router.push(`/${locale}/org/listings/${listing.id}`)}
+                  >
                     {/* Thumbnail */}
                     <td className="p-3 w-14">
                       {listing.photos[0]?.small_url ? (
