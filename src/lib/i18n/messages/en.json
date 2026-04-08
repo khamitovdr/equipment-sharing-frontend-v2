@@ -152,5 +152,85 @@
     "networkError": "Connection lost",
     "forbidden": "You don't have permission",
     "serverError": "Service temporarily unavailable, try again"
+  },
+  "dashboard": {
+    "sidebar": { "listings": "Listings", "members": "Members", "settings": "Settings", "switchOrg": "Switch organization" },
+    "noOrgs": "You need to create or join an organization first",
+    "permissionDenied": "You don't have permission to access this page"
+  },
+  "orgCreate": {
+    "title": "Create Organization",
+    "search": { "label": "Organization", "placeholder": "Enter organization name or INN", "noResults": "No organizations found" },
+    "details": { "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager" },
+    "photo": { "label": "Organization photo" },
+    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "phone": "Phone", "email": "Email", "minOne": "At least one contact is required" },
+    "submit": "Create organization",
+    "success": "Organization created",
+    "error": { "innRequired": "Select an organization from the list", "alreadyExists": "Organization with this INN already exists" }
+  },
+  "joinOrg": {
+    "title": "Join Organization",
+    "search": { "placeholder": "Search by name", "noResults": "No organizations found" },
+    "submit": "Send request",
+    "success": "Request sent, waiting for admin approval",
+    "error": { "alreadyMember": "You are already a member or have a pending request" }
+  },
+  "orgListings": {
+    "title": "Listings",
+    "create": "Create listing",
+    "search": { "placeholder": "Search listings..." },
+    "filter": { "allStatuses": "All statuses", "allCategories": "All categories" },
+    "empty": "No listings yet",
+    "emptyFiltered": "No listings match your filters",
+    "actions": { "edit": "Edit", "delete": "Delete", "changeStatus": "Change status", "publish": "Publish", "hide": "Hide", "archive": "Archive" },
+    "deleteConfirm": "Delete this listing? This cannot be undone.",
+    "statusChanged": "Listing status updated",
+    "deleted": "Listing deleted"
+  },
+  "listingForm": {
+    "createTitle": "Create Listing",
+    "editTitle": "Edit Listing",
+    "name": "Name",
+    "category": "Category",
+    "categoryCreate": "Create new category",
+    "categoryName": "Category name",
+    "price": "Price",
+    "pricePerDay": "per day",
+    "description": "Description",
+    "descriptionHint": "Supports Markdown",
+    "specs": { "title": "Specifications", "key": "Name", "value": "Value", "add": "Add specification" },
+    "flags": { "title": "Service options", "withOperator": "With operator", "onOwnerSite": "On owner's site", "delivery": "Delivery", "installation": "Installation", "setup": "Setup" },
+    "photos": { "title": "Photos", "upload": "Upload photos", "limit": "{count} / {max} photos", "maxReached": "Maximum photos reached", "invalidType": "Only JPEG, PNG, and WebP images are allowed", "tooLarge": "File is too large (max 10 MB)" },
+    "save": "Save",
+    "delete": "Delete listing",
+    "created": "Listing created",
+    "updated": "Listing updated",
+    "validation": { "nameRequired": "Name is required", "categoryRequired": "Category is required", "priceRequired": "Price is required", "pricePositive": "Price must be greater than 0" }
+  },
+  "members": {
+    "title": "Members",
+    "tabs": { "members": "Members", "pending": "Pending Requests", "invitations": "Invitations" },
+    "role": { "admin": "Admin", "editor": "Editor", "viewer": "Viewer" },
+    "actions": { "changeRole": "Change role", "remove": "Remove", "approve": "Approve", "reject": "Reject", "cancelInvite": "Cancel invitation" },
+    "removeConfirm": "Remove {name} from the organization?",
+    "roleChanged": "Role updated",
+    "removed": "Member removed",
+    "approved": "Member approved",
+    "rejected": "Request rejected",
+    "inviteCanceled": "Invitation canceled",
+    "empty": { "members": "No members yet", "pending": "No pending requests", "invitations": "No pending invitations" }
+  },
+  "invite": {
+    "title": "Invite Member",
+    "search": { "label": "User email", "placeholder": "Search by email", "noResults": "No users found for this email", "minChars": "Type at least 3 characters" },
+    "role": { "label": "Role" },
+    "submit": "Send invitation",
+    "success": "Invitation sent",
+    "error": { "alreadyMember": "User is already a member or has a pending invitation" }
+  },
+  "orgSettings": {
+    "title": "Organization Settings",
+    "profile": { "title": "Organization Profile", "photo": "Organization photo", "info": "Organization details", "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager", "registrationDate": "Registration date", "status": "Status" },
+    "contacts": { "title": "Contacts", "save": "Save contacts", "saved": "Contacts saved" }
   }
 }
