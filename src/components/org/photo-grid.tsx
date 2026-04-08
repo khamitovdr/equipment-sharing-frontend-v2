@@ -103,24 +103,20 @@ export function PhotoGrid({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<UploadingItem[]>([]);
 
-  // Internal photos state — functional updater avoids stale closures
-  // when multiple concurrent uploads complete near-simultaneously
+  // Internal source of truth — functional updater ensures concurrent
+  // uploads don't lose each other's additions
   const [internalPhotos, setInternalPhotos] = useState<PhotoItem[]>(photos);
 
-  // Sync parent → internal when parent changes (e.g. initial load, external edits)
-  useEffect(() => {
-    setInternalPhotos(photos);
-  }, [photos]);
-
-  // Sync internal → parent on change
+  // Notify parent whenever internal state changes
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  const prevPhotosRef = useRef(internalPhotos);
   useEffect(() => {
-    // Only notify parent if internal differs from what parent gave us
-    if (internalPhotos !== photos) {
+    if (prevPhotosRef.current !== internalPhotos) {
+      prevPhotosRef.current = internalPhotos;
       onChangeRef.current(internalPhotos);
     }
-  }, [internalPhotos]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [internalPhotos]);
 
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
