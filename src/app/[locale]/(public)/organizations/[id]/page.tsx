@@ -12,6 +12,7 @@ import { ListingGrid } from "@/components/catalog/listing-grid";
 import { CategoryFilter } from "@/components/catalog/category-filter";
 import { CursorPagination } from "@/components/shared/cursor-pagination";
 import { EmptyState } from "@/components/shared/empty-state";
+import { BackButton } from "@/components/shared/back-button";
 import { organizationsApi } from "@/lib/api/organizations";
 import { listingsApi } from "@/lib/api/listings";
 import type { ListingCategoryRead } from "@/types/listing";
@@ -115,6 +116,10 @@ export default function OrgProfilePage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      <div className="mb-6">
+        <BackButton />
+      </div>
+
       {/* Header */}
       <div className="mb-8 flex items-start gap-4">
         {org.photo ? (
