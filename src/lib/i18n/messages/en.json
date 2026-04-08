@@ -19,6 +19,7 @@
     "notFound": "Page not found",
     "notFoundDescription": "The page you requested does not exist",
     "backHome": "Back to home",
+    "back": "Back",
     "you": "you"
   },
   "nav": {
@@ -140,8 +141,7 @@
     "days": "days",
     "reserved": "Reserved",
     "loginToOrder": "Log in to request rental",
-    "orderSuccess": "Order created successfully",
-    "backToCatalog": "Back to catalog"
+    "orderSuccess": "Order created successfully"
   },
   "org": {
     "listings": "Equipment",
@@ -189,9 +189,7 @@
     "actions": { "edit": "Edit", "delete": "Delete", "changeStatus": "Change status", "publish": "Publish", "hide": "Hide", "archive": "Archive" },
     "deleteConfirm": "Delete this listing? This cannot be undone.",
     "statusChanged": "Listing status updated",
-    "deleted": "Listing deleted",
-    "backToListings": "Back to listings",
-    "backToListing": "Back to listing"
+    "deleted": "Listing deleted"
   },
   "listingForm": {
     "createTitle": "Create Listing",
@@ -232,8 +230,7 @@
     "role": { "label": "Role" },
     "submit": "Send invitation",
     "success": "Invitation sent",
-    "error": { "alreadyMember": "User is already a member or has a pending invitation" },
-    "backToMembers": "Back to members"
+    "error": { "alreadyMember": "User is already a member or has a pending invitation" }
   },
   "orgSettings": {
     "title": "Organization Settings",
@@ -261,7 +258,7 @@
     "columns": { "listing": "Equipment", "status": "Status", "dates": "Dates", "cost": "Cost", "id": "ID" },
     "detail": {
       "title": "Order",
-      "backToOrders": "Back to orders",
+  
       "requestedDates": "Requested dates",
       "estimatedCost": "Estimated cost",
       "offeredDates": "Offered dates",
@@ -289,7 +286,7 @@
     "columns": { "listing": "Equipment", "requester": "Requester", "status": "Status", "dates": "Dates", "cost": "Cost", "id": "ID" },
     "detail": {
       "title": "Order",
-      "backToOrders": "Back to orders",
+  
       "requester": "Requester",
       "requestedDates": "Requested dates",
       "estimatedCost": "Estimated cost",

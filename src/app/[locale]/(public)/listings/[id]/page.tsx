@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, MapPin, Settings, Truck, User, Wrench } from "lucide-react";
+import { MapPin, Settings, Truck, User, Wrench } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { listingsApi } from "@/lib/api/listings";
@@ -10,6 +10,7 @@ import { ListingDescription } from "@/components/catalog/listing-description";
 import { ListingSpecs } from "@/components/catalog/listing-specs";
 import { MediaCarousel } from "@/components/catalog/media-carousel";
 import { OrderForm } from "@/components/catalog/order-form";
+import { BackButton } from "@/components/shared/back-button";
 import { formatCost } from "@/lib/utils";
 
 interface PageProps {
@@ -17,7 +18,7 @@ interface PageProps {
 }
 
 export default async function ListingDetailPage({ params }: PageProps) {
-  const { id, locale } = await params;
+  const { id } = await params;
   const t = await getTranslations();
 
   let listing;
@@ -47,13 +48,9 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Link
-        href={`/${locale}/listings`}
-        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black mb-6"
-      >
-        <ArrowLeft className="size-4" />
-        {t("listing.backToCatalog")}
-      </Link>
+      <div className="mb-6">
+        <BackButton />
+      </div>
 
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
         {/* Left column (~60%) */}

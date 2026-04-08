@@ -4,7 +4,7 @@ import { use } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
+import { BackButton } from "@/components/shared/back-button";
 import { toast } from "sonner";
 
 import { ordersApi } from "@/lib/api/orders";
@@ -117,13 +117,9 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
 
   return (
     <div className="p-6">
-      <Link
-        href={`/${locale}/org/orders`}
-        className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-black mb-6"
-      >
-        <ArrowLeft className="size-4" />
-        {t("orgOrders.detail.backToOrders")}
-      </Link>
+      <div className="mb-6">
+        <BackButton />
+      </div>
 
       <OrderStatusStepper status={order.status} />
 
