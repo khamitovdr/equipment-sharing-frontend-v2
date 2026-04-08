@@ -11,6 +11,7 @@ import { catalogFiltersSchema } from "@/lib/validators/listing";
 import type { CatalogFilters } from "@/lib/validators/listing";
 import { SearchBar } from "@/components/catalog/search-bar";
 import { CatalogFilters as CatalogFiltersPanel } from "@/components/catalog/catalog-filters";
+import { CategoryFilter } from "@/components/catalog/category-filter";
 import { ListingGrid } from "@/components/catalog/listing-grid";
 import { CursorPagination } from "@/components/shared/cursor-pagination";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -146,13 +147,14 @@ export default function CatalogPage() {
     [data]
   );
 
-  const filtersPanel = (
+  const filtersPanel = (hideCategories?: boolean) => (
     <CatalogFiltersPanel
       filters={parsedFilters}
       categories={categories}
       onChange={updateFilters}
       onClear={clearFilters}
       hasActiveFilters={activeFilters}
+      hideCategories={hideCategories}
     />
   );
 
@@ -166,18 +168,29 @@ export default function CatalogPage() {
       <div className="flex gap-8">
         {/* Desktop sidebar */}
         <aside className="hidden w-64 shrink-0 lg:block lg:sticky lg:top-[72px] lg:self-start">
-          {filtersPanel}
+          {filtersPanel(true)}
         </aside>
 
         {/* Main content */}
         <div className="flex-1 min-w-0">
           {/* Search bar */}
-          <div className="mb-6">
+          <div className="mb-4">
             <SearchBar
               value={parsedFilters.search ?? ""}
               onChange={(value) => updateFilters({ search: value || undefined })}
             />
           </div>
+
+          {/* Category pills */}
+          {categories.length > 0 && (
+            <div className="mb-6">
+              <CategoryFilter
+                categories={categories}
+                selected={parsedFilters.category_ids ?? []}
+                onChange={(ids) => updateFilters({ category_ids: ids.length > 0 ? ids : undefined })}
+              />
+            </div>
+          )}
 
           {/* Mobile filter button */}
           <div className="mb-4 flex items-center justify-between lg:hidden">
@@ -190,7 +203,7 @@ export default function CatalogPage() {
                 <SheetHeader>
                   <SheetTitle>{t("catalog.filters")}</SheetTitle>
                 </SheetHeader>
-                <div className="mt-4">{filtersPanel}</div>
+                <div className="mt-4">{filtersPanel()}</div>
               </SheetContent>
             </Sheet>
           </div>

@@ -22,6 +22,7 @@ interface CatalogFiltersProps {
   onChange: (filters: Partial<CatalogFilters>) => void;
   onClear: () => void;
   hasActiveFilters: boolean;
+  hideCategories?: boolean;
 }
 
 const SERVICE_FLAGS = [
@@ -38,20 +39,23 @@ export function CatalogFilters({
   onChange,
   onClear,
   hasActiveFilters,
+  hideCategories,
 }: CatalogFiltersProps) {
   const t = useTranslations();
 
   return (
     <div className="flex flex-col gap-6">
       {/* Categories */}
-      <div>
-        <p className="mb-2 text-sm font-medium">{t("catalog.categories")}</p>
-        <CategoryFilter
-          categories={categories}
-          selected={filters.category_ids ?? []}
-          onChange={(ids) => onChange({ category_ids: ids.length > 0 ? ids : undefined })}
-        />
-      </div>
+      {!hideCategories && (
+        <div>
+          <p className="mb-2 text-sm font-medium">{t("catalog.categories")}</p>
+          <CategoryFilter
+            categories={categories}
+            selected={filters.category_ids ?? []}
+            onChange={(ids) => onChange({ category_ids: ids.length > 0 ? ids : undefined })}
+          />
+        </div>
+      )}
 
       {/* Price range */}
       <div>
