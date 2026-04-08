@@ -57,23 +57,21 @@ function SortablePhoto({ photo, onRemove }: SortablePhotoProps) {
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
       className="relative group aspect-square rounded-md overflow-hidden border border-border"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={photo.url}
-        alt=""
-        className="w-full h-full object-cover"
-        draggable={false}
-      />
+      {/* Drag handle covers the image */}
+      <div {...attributes} {...listeners} className="w-full h-full cursor-grab active:cursor-grabbing">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={photo.url}
+          alt=""
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+      </div>
       <button
         type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onRemove();
-        }}
+        onClick={onRemove}
         className="absolute top-1 right-1 z-10 flex items-center justify-center w-5 h-5 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 focus:outline-none"
       >
         <X className="size-3" />
