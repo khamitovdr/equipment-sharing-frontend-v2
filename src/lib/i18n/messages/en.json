@@ -166,7 +166,7 @@
     "search": { "label": "Organization", "placeholder": "Enter organization name or INN", "noResults": "No organizations found" },
     "details": { "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager" },
     "photo": { "label": "Organization photo" },
-    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "displayNameRequired": "Contact name is required", "phone": "Phone", "email": "Email", "minOne": "At least one contact is required" },
+    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "displayNameRequired": "Contact name is required", "phone": "Phone", "phoneInvalid": "Phone must be in format +7 (XXX) XXX-XX-XX", "email": "Email", "emailInvalid": "Invalid email address", "minOne": "At least one contact is required" },
     "submit": "Create organization",
     "success": "Organization created",
     "error": { "innRequired": "Select an organization from the list", "alreadyExists": "Organization with this INN already exists" }
@@ -209,7 +209,7 @@
     "delete": "Delete listing",
     "created": "Listing created",
     "updated": "Listing updated",
-    "validation": { "nameRequired": "Name is required", "categoryRequired": "Category is required", "priceRequired": "Price is required", "pricePositive": "Price must be greater than 0" }
+    "validation": { "nameRequired": "Name is required", "categoryRequired": "Category is required", "priceRequired": "Price is required", "pricePositive": "Price must be greater than 0", "tooManyPhotos": "Maximum 10 photos allowed" }
   },
   "members": {
     "title": "Members",

@@ -166,7 +166,7 @@
     "search": { "label": "Организация", "placeholder": "Введите название или ИНН", "noResults": "Организации не найдены" },
     "details": { "fullName": "Полное название", "shortName": "Сокращённое название", "inn": "ИНН", "address": "Юридический адрес", "manager": "Руководитель" },
     "photo": { "label": "Фото организации" },
-    "contacts": { "title": "Контакты", "add": "Добавить контакт", "remove": "Удалить", "displayName": "Имя контакта", "displayNameRequired": "Укажите имя контакта", "phone": "Телефон", "email": "Email", "minOne": "Необходимо указать хотя бы один контакт" },
+    "contacts": { "title": "Контакты", "add": "Добавить контакт", "remove": "Удалить", "displayName": "Имя контакта", "displayNameRequired": "Укажите имя контакта", "phone": "Телефон", "phoneInvalid": "Телефон в формате +7 (XXX) XXX-XX-XX", "email": "Email", "emailInvalid": "Неверный email", "minOne": "Необходимо указать хотя бы один контакт" },
     "submit": "Создать организацию",
     "success": "Организация создана",
     "error": { "innRequired": "Выберите организацию из списка", "alreadyExists": "Организация с таким ИНН уже существует" }
@@ -209,7 +209,7 @@
     "delete": "Удалить объявление",
     "created": "Объявление создано",
     "updated": "Объявление обновлено",
-    "validation": { "nameRequired": "Название обязательно", "categoryRequired": "Категория обязательна", "priceRequired": "Цена обязательна", "pricePositive": "Цена должна быть больше 0" }
+    "validation": { "nameRequired": "Название обязательно", "categoryRequired": "Категория обязательна", "priceRequired": "Цена обязательна", "pricePositive": "Цена должна быть больше 0", "tooManyPhotos": "Максимум 10 фото" }
   },
   "members": {
     "title": "Участники",
