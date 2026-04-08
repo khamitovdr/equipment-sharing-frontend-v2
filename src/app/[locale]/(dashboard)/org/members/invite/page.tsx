@@ -86,7 +86,9 @@ export default function InviteMemberPage() {
                 onValueChange={(value) => setRole(value as MembershipRole)}
               >
                 <SelectTrigger id="role-select" className="w-full">
-                  <SelectValue />
+                  <SelectValue>
+                    {t(`members.role.${role}`)}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="admin">

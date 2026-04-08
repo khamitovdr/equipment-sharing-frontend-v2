@@ -182,7 +182,9 @@ export default function OrgListingsPage() {
           onValueChange={(v) => setCategoryId(v ?? "")}
         >
           <SelectTrigger className="w-full sm:w-48">
-            <SelectValue placeholder={t("orgListings.filter.allCategories")} />
+            <SelectValue placeholder={t("orgListings.filter.allCategories")}>
+              {categoryId ? categories.find((c) => c.id === categoryId)?.name ?? categoryId : t("orgListings.filter.allCategories")}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="">{t("orgListings.filter.allCategories")}</SelectItem>
@@ -198,7 +200,12 @@ export default function OrgListingsPage() {
           onValueChange={(v) => setStatus((v ?? "") as ListingStatus | "")}
         >
           <SelectTrigger className="w-full sm:w-44">
-            <SelectValue placeholder={t("orgListings.filter.allStatuses")} />
+            <SelectValue placeholder={t("orgListings.filter.allStatuses")}>
+              {status === "hidden" ? t("orgListings.actions.hide")
+                : status === "published" ? t("orgListings.actions.publish")
+                : status === "archived" ? t("orgListings.actions.archive")
+                : t("orgListings.filter.allStatuses")}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="">{t("orgListings.filter.allStatuses")}</SelectItem>

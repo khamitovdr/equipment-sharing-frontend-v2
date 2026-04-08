@@ -309,7 +309,9 @@ export function MemberTable({
                               }
                             >
                               <SelectTrigger size="sm" className="w-32">
-                                <SelectValue />
+                                <SelectValue>
+                                  {t(`members.role.${approveState?.role ?? "viewer"}`)}
+                                </SelectValue>
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="admin">
