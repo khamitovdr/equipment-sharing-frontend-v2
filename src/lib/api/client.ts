@@ -82,7 +82,7 @@ export async function apiClient<T>(
     throw new ApiRequestError(response.status, detail);
   }
 
-  if (response.status === 204 || response.headers.get("content-length") === "0") {
+  if (response.status === 204 || response.headers?.get?.("content-length") === "0") {
     return undefined as T;
   }
 
