@@ -127,6 +127,7 @@ export function PhotoGrid({
       if (!token) return;
 
       const tempId = `uploading-${Date.now()}-${Math.random()}`;
+      const localPreviewUrl = URL.createObjectURL(file);
 
       setUploading((prev) => [...prev, { tempId, progress: 0 }]);
 
@@ -176,13 +177,14 @@ export function PhotoGrid({
         while (true) {
           const statusRes = await mediaApi.status(token, media_id);
           if (statusRes.status === "ready") {
-            const mediumUrl =
+            // Use server URL if available, fall back to local preview
+            const serverUrl =
               statusRes.variants["medium"] ??
-              statusRes.variants["original"] ??
+              statusRes.variants["medium_url"] ??
               Object.values(statusRes.variants)[0];
 
             // 5. Append to photos list
-            onChange([...photos, { id: media_id, url: mediumUrl }]);
+            onChange([...photos, { id: media_id, url: serverUrl || localPreviewUrl }]);
             break;
           }
           if (statusRes.status === "failed") {
