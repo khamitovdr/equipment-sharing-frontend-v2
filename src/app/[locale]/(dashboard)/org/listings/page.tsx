@@ -272,7 +272,7 @@ export default function OrgListingsPage() {
                       {listing.price.toLocaleString()} / {t("catalog.perDay")}
                     </td>
                     {/* Status */}
-                    <td className="p-3">
+                    <td className="p-3" onClick={(e) => e.stopPropagation()}>
                       <ListingStatusSelect
                         currentStatus={listing.status}
                         onStatusChange={(s) => handleStatusChange(listing.id, s)}
@@ -280,7 +280,7 @@ export default function OrgListingsPage() {
                       />
                     </td>
                     {/* Actions */}
-                    <td className="p-3 w-10">
+                    <td className="p-3 w-10" onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger
                           render={
