@@ -55,7 +55,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
       </Link>
 
       {/* Nav links */}
-      <nav className="flex-1 space-y-0.5 px-3">
+      <nav className="flex-1 space-y-0.5 px-3 pt-4">
         {navLinks.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
           return (
