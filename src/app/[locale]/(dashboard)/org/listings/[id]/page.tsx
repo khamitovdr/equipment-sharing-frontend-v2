@@ -14,9 +14,9 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
+import rehypeSanitize from "rehype-sanitize";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
-import { ListingDescription } from "@/components/catalog/listing-description";
-import { ListingSpecs } from "@/components/catalog/listing-specs";
 import { MediaCarousel } from "@/components/catalog/media-carousel";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { useQueryClient } from "@tanstack/react-query";
@@ -81,9 +81,30 @@ export default function OrgListingDetailPage({ params }: PageProps) {
             <EquipmentPlaceholder className="aspect-[4/3] w-full rounded-lg" />
           )}
 
-          <ListingDescription description={listing.description} />
+          {listing.description && (
+            <section>
+              <h2 className="mb-3 text-lg font-semibold">{t("listing.description")}</h2>
+              <div className="prose prose-sm prose-zinc max-w-none">
+                <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{listing.description}</ReactMarkdown>
+              </div>
+            </section>
+          )}
 
-          <ListingSpecs specifications={listing.specifications} />
+          {listing.specifications && Object.keys(listing.specifications).length > 0 && (
+            <section>
+              <h2 className="mb-3 text-lg font-semibold">{t("listing.specifications")}</h2>
+              <table className="w-full text-sm">
+                <tbody>
+                  {Object.entries(listing.specifications).map(([key, value]) => (
+                    <tr key={key} className="border-b last:border-0">
+                      <td className="py-2 pr-4 text-zinc-500">{key}</td>
+                      <td className="py-2 font-medium">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          )}
         </div>
 
         {/* Right column */}
