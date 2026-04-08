@@ -27,19 +27,18 @@ export function useOrgGuard(
 ): UseOrgGuardResult {
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations("OrgGuard");
-  const membership = useOrgStore((s) => s.membership);
+  const t = useTranslations("dashboard");
+  const currentRole = useOrgStore((s) => s.currentRole);
 
-  const role = membership?.role ?? null;
   const hasRole =
-    role !== null && ROLE_HIERARCHY[role] >= ROLE_HIERARCHY[minRole];
+    currentRole !== null && ROLE_HIERARCHY[currentRole] >= ROLE_HIERARCHY[minRole];
 
   useEffect(() => {
-    if (role !== null && !hasRole) {
-      toast.error(t("insufficientPermissions"));
+    if (currentRole !== null && !hasRole) {
+      toast.error(t("permissionDenied"));
       router.push(`/${locale}/org/listings`);
     }
-  }, [role, hasRole, locale, router, t]);
+  }, [currentRole, hasRole, locale, router, t]);
 
-  return { hasRole, role };
+  return { hasRole, role: currentRole };
 }

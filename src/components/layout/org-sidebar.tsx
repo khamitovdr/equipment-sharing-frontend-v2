@@ -21,7 +21,7 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
-  const { currentOrg, membership } = useOrgStore();
+  const currentOrg = useOrgStore((s) => s.currentOrg);
   const { role } = useOrgGuard();
 
   const orgName = currentOrg?.short_name ?? currentOrg?.full_name ?? "…";

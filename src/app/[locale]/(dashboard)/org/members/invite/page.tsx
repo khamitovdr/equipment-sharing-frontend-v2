@@ -30,7 +30,7 @@ export default function InviteMemberPage() {
   const locale = useLocale();
   const router = useRouter();
   const token = useAuthStore((s) => s.token);
-  const orgId = useOrgStore((s) => s.membership?.organization_id);
+  const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "admin" });
 
   const [selectedUser, setSelectedUser] = useState<UserRead | null>(null);

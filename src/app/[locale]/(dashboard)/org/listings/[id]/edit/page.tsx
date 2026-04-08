@@ -29,7 +29,7 @@ export default function EditListingPage({
   const router = useRouter();
   const queryClient = useQueryClient();
   const token = useAuthStore((s) => s.token);
-  const orgId = useOrgStore((s) => s.membership?.organization_id);
+  const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "editor" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);

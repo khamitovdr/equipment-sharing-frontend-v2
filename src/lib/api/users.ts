@@ -1,6 +1,7 @@
 import { apiClient } from "./client";
 import type { UserRead, UserCreate, UserUpdate, LoginRequest, TokenResponse } from "@/types/user";
-import type { MembershipRead } from "@/types/organization";
+import type { OrganizationRead } from "@/types/organization";
+import type { PaginatedResponse } from "@/types/api";
 
 export const usersApi = {
   register(data: UserCreate) {
@@ -34,7 +35,7 @@ export const usersApi = {
   },
 
   myOrganizations(token: string) {
-    return apiClient<MembershipRead[]>("/users/me/organizations", { token });
+    return apiClient<PaginatedResponse<OrganizationRead>>("/users/me/organizations", { token });
   },
 
   search(token: string, params: { email: string; limit?: number }) {

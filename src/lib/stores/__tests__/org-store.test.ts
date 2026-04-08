@@ -1,17 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { useOrgStore } from "../org-store";
-import type { MembershipRead, OrganizationRead } from "@/types/organization";
-
-const makeMembership = (overrides: Partial<MembershipRead> = {}): MembershipRead => ({
-  id: "m1",
-  user_id: "u1",
-  organization_id: "org1",
-  role: "admin",
-  status: "member",
-  created_at: "2026-01-01T00:00:00Z",
-  updated_at: "2026-01-01T00:00:00Z",
-  ...overrides,
-});
+import type { OrganizationRead } from "@/types/organization";
 
 const makeOrg = (overrides: Partial<OrganizationRead> = {}): OrganizationRead => ({
   id: "org1",
@@ -33,67 +22,66 @@ describe("orgStore", () => {
   beforeEach(() => {
     useOrgStore.setState({
       currentOrg: null,
-      membership: null,
+      currentRole: null,
       organizations: [],
     });
   });
 
-  it("starts with null currentOrg, null membership, empty organizations", () => {
+  it("starts with null currentOrg, null currentRole, empty organizations", () => {
     const state = useOrgStore.getState();
     expect(state.currentOrg).toBeNull();
-    expect(state.membership).toBeNull();
+    expect(state.currentRole).toBeNull();
     expect(state.organizations).toEqual([]);
   });
 
-  it("setOrganizations stores memberships", () => {
-    const memberships = [
-      makeMembership({ id: "m1", organization_id: "org1" }),
-      makeMembership({ id: "m2", organization_id: "org2" }),
+  it("setOrganizations stores orgs", () => {
+    const orgs = [
+      makeOrg({ id: "org1" }),
+      makeOrg({ id: "org2", short_name: "Org 2" }),
     ];
-
-    useOrgStore.getState().setOrganizations(memberships);
-
-    expect(useOrgStore.getState().organizations).toEqual(memberships);
+    useOrgStore.getState().setOrganizations(orgs);
+    expect(useOrgStore.getState().organizations).toEqual(orgs);
   });
 
-  it("switchOrg selects the correct membership by orgId", () => {
-    const m1 = makeMembership({ id: "m1", organization_id: "org1" });
-    const m2 = makeMembership({ id: "m2", organization_id: "org2" });
-    useOrgStore.getState().setOrganizations([m1, m2]);
+  it("switchOrg selects the correct org by id", () => {
+    const org1 = makeOrg({ id: "org1" });
+    const org2 = makeOrg({ id: "org2", short_name: "Org 2" });
+    useOrgStore.getState().setOrganizations([org1, org2]);
 
     useOrgStore.getState().switchOrg("org2");
 
-    expect(useOrgStore.getState().membership).toEqual(m2);
+    expect(useOrgStore.getState().currentOrg).toEqual(org2);
   });
 
-  it("switchOrg sets membership to null when orgId not found", () => {
-    const m1 = makeMembership({ id: "m1", organization_id: "org1" });
-    useOrgStore.getState().setOrganizations([m1]);
+  it("switchOrg sets currentOrg to null when id not found", () => {
+    useOrgStore.getState().setOrganizations([makeOrg({ id: "org1" })]);
 
     useOrgStore.getState().switchOrg("nonexistent");
 
-    expect(useOrgStore.getState().membership).toBeNull();
+    expect(useOrgStore.getState().currentOrg).toBeNull();
   });
 
   it("setCurrentOrg stores the organization", () => {
     const org = makeOrg({ id: "org1" });
     useOrgStore.getState().setCurrentOrg(org);
-
     expect(useOrgStore.getState().currentOrg).toEqual(org);
   });
 
+  it("setCurrentRole stores the role", () => {
+    useOrgStore.getState().setCurrentRole("editor");
+    expect(useOrgStore.getState().currentRole).toBe("editor");
+  });
+
   it("clearOrgContext resets all fields", () => {
-    const org = makeOrg();
-    const membership = makeMembership();
-    useOrgStore.getState().setCurrentOrg(org);
-    useOrgStore.getState().setOrganizations([membership]);
-    useOrgStore.getState().switchOrg("org1");
+    useOrgStore.getState().setCurrentOrg(makeOrg());
+    useOrgStore.getState().setCurrentRole("admin");
+    useOrgStore.getState().setOrganizations([makeOrg()]);
 
     useOrgStore.getState().clearOrgContext();
 
     const state = useOrgStore.getState();
     expect(state.currentOrg).toBeNull();
-    expect(state.membership).toBeNull();
+    expect(state.currentRole).toBeNull();
     expect(state.organizations).toEqual([]);
   });
 });

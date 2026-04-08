@@ -1,14 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { OrganizationRead, MembershipRead } from "@/types/organization";
+import type { OrganizationRead, MembershipRole } from "@/types/organization";
 
 interface OrgState {
   currentOrg: OrganizationRead | null;
-  membership: MembershipRead | null;
-  organizations: MembershipRead[];
+  currentRole: MembershipRole | null;
+  organizations: OrganizationRead[];
   switchOrg: (orgId: string) => void;
   setCurrentOrg: (org: OrganizationRead) => void;
-  setOrganizations: (memberships: MembershipRead[]) => void;
+  setCurrentRole: (role: MembershipRole) => void;
+  setOrganizations: (orgs: OrganizationRead[]) => void;
   clearOrgContext: () => void;
 }
 
@@ -16,27 +17,30 @@ export const useOrgStore = create<OrgState>()(
   persist(
     (set, get) => ({
       currentOrg: null,
-      membership: null,
+      currentRole: null,
       organizations: [],
 
       switchOrg: (orgId: string) => {
-        const membership =
-          get().organizations.find((m) => m.organization_id === orgId) ?? null;
-        set({ membership });
+        const org =
+          get().organizations.find((o) => o.id === orgId) ?? null;
+        set({ currentOrg: org, currentRole: null });
       },
 
       setCurrentOrg: (org: OrganizationRead) => set({ currentOrg: org }),
 
-      setOrganizations: (memberships: MembershipRead[]) =>
-        set({ organizations: memberships }),
+      setCurrentRole: (role: MembershipRole) => set({ currentRole: role }),
+
+      setOrganizations: (orgs: OrganizationRead[]) =>
+        set({ organizations: orgs }),
 
       clearOrgContext: () =>
-        set({ currentOrg: null, membership: null, organizations: [] }),
+        set({ currentOrg: null, currentRole: null, organizations: [] }),
     }),
     {
       name: "equip-me-org",
       partialize: (state) => ({
-        membership: state.membership,
+        currentOrg: state.currentOrg,
+        currentRole: state.currentRole,
         organizations: state.organizations,
       }),
     }

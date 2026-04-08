@@ -18,8 +18,6 @@ export function OrgSwitcher() {
 
   if (organizations.length <= 1) return null;
 
-  const currentOrgId = currentOrg?.id ?? null;
-
   return (
     <div className="border-t border-zinc-200 p-3">
       <DropdownMenu>
@@ -28,20 +26,15 @@ export function OrgSwitcher() {
           <ChevronsUpDown className="size-4 shrink-0 text-zinc-400" />
         </DropdownMenuTrigger>
         <DropdownMenuContent side="top" align="start" className="w-52">
-          {organizations.map((membership) => {
-            const isActive = membership.organization_id === currentOrgId;
-            const label =
-              isActive && currentOrg?.short_name
-                ? currentOrg.short_name
-                : membership.organization_id.slice(0, 8) + "…";
-
+          {organizations.map((org) => {
+            const isActive = org.id === currentOrg?.id;
             return (
               <DropdownMenuItem
-                key={membership.organization_id}
+                key={org.id}
                 className={isActive ? "bg-zinc-100" : undefined}
-                onClick={() => switchOrg(membership.organization_id)}
+                onClick={() => switchOrg(org.id)}
               >
-                {label}
+                {org.short_name || org.full_name || org.inn}
               </DropdownMenuItem>
             );
           })}

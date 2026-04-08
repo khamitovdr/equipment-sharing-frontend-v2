@@ -17,38 +17,38 @@ export default function DashboardLayout({
   const locale = useLocale();
   const router = useRouter();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const { membership, organizations } = useOrgStore();
-  const { fetchOrganizations, fetchCurrentOrg } = useOrg();
+  const currentOrg = useOrgStore((s) => s.currentOrg);
+  const { fetchOrganizations, fetchCurrentOrg, fetchCurrentRole } = useOrg();
 
   const [hydrated, setHydrated] = useState(false);
   const [orgReady, setOrgReady] = useState(false);
 
-  // Step 1: mark client hydration complete
   useEffect(() => {
     setHydrated(true);
   }, []);
 
-  // Step 2: auth guard
   useEffect(() => {
     if (hydrated && !isAuthenticated) {
       router.replace(`/${locale}/login`);
     }
   }, [hydrated, isAuthenticated, locale, router]);
 
-  // Step 3: org context guard
   useEffect(() => {
     if (!hydrated || !isAuthenticated) return;
 
     async function initOrg() {
-      const memberships = await fetchOrganizations();
-      if (!memberships || memberships.length === 0) {
+      const orgs = await fetchOrganizations();
+      if (!orgs || orgs.length === 0) {
         router.replace(`/${locale}/organizations/new`);
         return;
       }
 
       // Use already-selected org or fall back to first
-      const currentOrgId = membership?.organization_id ?? memberships[0].organization_id;
-      await fetchCurrentOrg(currentOrgId);
+      const orgId = currentOrg?.id ?? orgs[0].id;
+      await Promise.all([
+        fetchCurrentOrg(orgId),
+        fetchCurrentRole(orgId),
+      ]);
       setOrgReady(true);
     }
 

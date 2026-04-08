@@ -16,7 +16,7 @@ export default function CreateListingPage() {
   const locale = useLocale();
   const router = useRouter();
   const token = useAuthStore((s) => s.token);
-  const orgId = useOrgStore((s) => s.membership?.organization_id);
+  const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "editor" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 

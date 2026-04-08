@@ -142,8 +142,8 @@ export default function OrgCreatePage() {
         await organizationsApi.updatePhoto(token, org.id, { photo_id: photoMediaId });
       }
 
-      const memberships = await usersApi.myOrganizations(token);
-      setOrganizations(memberships);
+      const res = await usersApi.myOrganizations(token);
+      setOrganizations(res.items);
       switchOrg(org.id);
 
       toast.success(t("success"));
