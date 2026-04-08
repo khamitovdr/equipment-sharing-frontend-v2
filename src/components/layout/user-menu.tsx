@@ -3,8 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { LogOut, ShoppingBag, Settings, Building2, UserPlus } from "lucide-react";
+import { LogOut, ShoppingBag, Settings, Building2, UserPlus, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/hooks/use-auth";
+import { useOrgStore } from "@/lib/stores/org-store";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -22,6 +23,7 @@ export function UserMenu() {
   const t = useTranslations();
   const { user, logout } = useAuth();
   const [joinOpen, setJoinOpen] = React.useState(false);
+  const hasOrgs = useOrgStore((s) => s.organizations.length > 0);
 
   const initials = user
     ? [user.name, user.surname]
@@ -57,6 +59,12 @@ export function UserMenu() {
             {t("nav.settings")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          {hasOrgs && (
+            <DropdownMenuItem render={<Link href="/org/listings" />}>
+              <LayoutDashboard />
+              {t("nav.dashboard")}
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem render={<Link href="/organizations/new" />}>
             <Building2 />
             {t("nav.createOrg")}

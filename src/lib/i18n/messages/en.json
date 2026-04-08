@@ -25,6 +25,7 @@
     "catalog": "Catalog",
     "myOrders": "My Orders",
     "settings": "Settings",
+    "dashboard": "Dashboard",
     "createOrg": "Create organization",
     "joinOrg": "Join organization",
     "logout": "Log out"
