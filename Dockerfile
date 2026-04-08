@@ -11,9 +11,11 @@ WORKDIR /app
 
 ARG API_URL=http://app:8000/api/v1
 ARG APP_VERSION=dev
+ARG DADATA_API_KEY=
 
 ENV API_URL=${API_URL}
 ENV NEXT_PUBLIC_API_URL=/api/v1
+ENV DADATA_API_KEY=${DADATA_API_KEY}
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .

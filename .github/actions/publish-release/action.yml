@@ -15,6 +15,10 @@ inputs:
     description: Backend API URL for SSR
     required: false
     default: "http://app:8000/api/v1"
+  dadata_api_key:
+    description: DaData API key for organization autocomplete
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -38,6 +42,7 @@ runs:
         build-args: |
           APP_VERSION=${{ inputs.version }}
           API_URL=${{ inputs.api_url }}
+          DADATA_API_KEY=${{ inputs.dadata_api_key }}
 
     - name: Create GitHub Release
       shell: bash
