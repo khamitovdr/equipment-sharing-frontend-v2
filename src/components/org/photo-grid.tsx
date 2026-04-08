@@ -108,6 +108,12 @@ export function PhotoGrid({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<UploadingItem[]>([]);
 
+  // Ref to latest photos so concurrent uploads don't use stale closures
+  const photosRef = useRef(photos);
+  photosRef.current = photos;
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
@@ -177,7 +183,7 @@ export function PhotoGrid({
           if (statusRes.status === "ready") {
             // variants contains relative S3 paths (not signed URLs),
             // so use the local blob preview — real URLs come when listing is fetched after save
-            onChange([...photos, { id: media_id, url: localPreviewUrl }]);
+            onChangeRef.current([...photosRef.current, { id: media_id, url: localPreviewUrl }]);
             break;
           }
           if (statusRes.status === "failed") {
@@ -192,7 +198,7 @@ export function PhotoGrid({
         setUploading((prev) => prev.filter((item) => item.tempId !== tempId));
       }
     },
-    [token, photos, onChange, t]
+    [token, t]
   );
 
   const handleFilesSelected = useCallback(
