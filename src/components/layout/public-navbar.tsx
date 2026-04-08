@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
-import { Menu, X } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import {
+  Menu, X, Home, Search, ShoppingBag, Settings, LayoutDashboard,
+  Building2, UserPlus, Bell, LogOut,
+} from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { useAuth } from "@/lib/hooks/use-auth";
+import { useQuery } from "@tanstack/react-query";
+import { usersApi } from "@/lib/api/users";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import {
@@ -16,6 +22,7 @@ import {
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { NotificationBell } from "@/components/layout/notification-bell";
 import { UserMenu } from "@/components/layout/user-menu";
+import { JoinOrgDialog } from "@/components/org/join-org-dialog";
 
 function Logo() {
   return (
@@ -81,63 +88,157 @@ export function PublicNavbar() {
 
         {/* Mobile hamburger */}
         <div className="flex md:hidden">
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger
-              className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted transition-colors"
-              aria-label="Open menu"
-            >
-              <Menu className="size-5" />
-            </SheetTrigger>
-            <SheetContent side="right" showCloseButton={false} className="w-72 p-0">
-              <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
-                <Logo />
-                <SheetClose className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted transition-colors">
-                  <X className="size-4" />
-                  <span className="sr-only">Close</span>
-                </SheetClose>
+          <MobileDrawer />
+        </div>
+      </div>
+    </header>
+  );
+}
+
+const navItemClass =
+  "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100 hover:text-black transition-colors";
+
+function MobileDrawer() {
+  const t = useTranslations();
+  const locale = useLocale();
+  const [open, setOpen] = useState(false);
+  const [joinOpen, setJoinOpen] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const token = useAuthStore((s) => s.token);
+  const { user, logout } = useAuth();
+  const { data: orgsData } = useQuery({
+    queryKey: ["user-organizations"],
+    queryFn: () => usersApi.myOrganizations(token!),
+    enabled: !!token,
+    staleTime: 60_000,
+  });
+  const hasOrgs = (orgsData?.items?.length ?? 0) > 0;
+
+  const close = () => setOpen(false);
+
+  return (
+    <>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger
+          className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu className="size-5" />
+        </SheetTrigger>
+        <SheetContent side="right" showCloseButton={false} className="w-72 p-0">
+          <div className="flex h-full flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
+              <Logo />
+              <SheetClose className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted transition-colors">
+                <X className="size-4" />
+                <span className="sr-only">Close</span>
+              </SheetClose>
+            </div>
+
+            {/* User info */}
+            {isAuthenticated && user && (
+              <div className="border-b border-zinc-200 px-5 py-3">
+                <p className="text-sm font-medium truncate">
+                  {[user.name, user.surname].filter(Boolean).join(" ")}
+                </p>
+                <p className="text-xs text-zinc-500 truncate">{user.email}</p>
               </div>
-              <nav className="flex flex-col px-4 py-4 gap-1">
-                {navLinks.map(({ href, labelKey }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setMobileOpen(false)}
-                    className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-muted hover:text-black transition-colors"
-                  >
-                    {t(labelKey)}
+            )}
+
+            {/* Nav items */}
+            <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-0.5">
+              {/* Main nav */}
+              <Link href={`/${locale}`} onClick={close} className={navItemClass}>
+                <Home className="size-4 shrink-0" />
+                {t("nav.home")}
+              </Link>
+              <Link href={`/${locale}/listings`} onClick={close} className={navItemClass}>
+                <Search className="size-4 shrink-0" />
+                {t("nav.catalog")}
+              </Link>
+
+              {isAuthenticated && (
+                <>
+                  <div className="my-2 border-t border-zinc-100" />
+                  <Link href={`/${locale}/orders`} onClick={close} className={navItemClass}>
+                    <ShoppingBag className="size-4 shrink-0" />
+                    {t("nav.myOrders")}
                   </Link>
-                ))}
-              </nav>
-              <div className="border-t border-zinc-200 px-4 py-4 flex flex-col gap-3">
-                <LocaleSwitcher />
-                {isAuthenticated ? (
-                  <div className="flex items-center gap-2">
-                    <NotificationBell />
-                    <UserMenu />
+                  <Link href={`/${locale}/settings`} onClick={close} className={navItemClass}>
+                    <Settings className="size-4 shrink-0" />
+                    {t("nav.settings")}
+                  </Link>
+
+                  <div className="my-2 border-t border-zinc-100" />
+                  {hasOrgs && (
+                    <Link href={`/${locale}/org/listings`} onClick={close} className={navItemClass}>
+                      <LayoutDashboard className="size-4 shrink-0" />
+                      {t("nav.dashboard")}
+                    </Link>
+                  )}
+                  <Link href={`/${locale}/organizations/new`} onClick={close} className={navItemClass}>
+                    <Building2 className="size-4 shrink-0" />
+                    {t("nav.createOrg")}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => { close(); setJoinOpen(true); }}
+                    className={cn(navItemClass, "w-full text-left")}
+                  >
+                    <UserPlus className="size-4 shrink-0" />
+                    {t("nav.joinOrg")}
+                  </button>
+
+                  <div className="my-2 border-t border-zinc-100" />
+                  <div className={cn(navItemClass, "text-zinc-400 cursor-default")}>
+                    <Bell className="size-4 shrink-0" />
+                    {t("common.comingSoon")}
                   </div>
-                ) : (
-                  <div className="flex flex-col gap-2">
+
+                  <div className="my-2 border-t border-zinc-100" />
+                  <button
+                    type="button"
+                    onClick={() => { close(); logout(); }}
+                    className={cn(navItemClass, "w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700")}
+                  >
+                    <LogOut className="size-4 shrink-0" />
+                    {t("nav.logout")}
+                  </button>
+                </>
+              )}
+
+              {!isAuthenticated && (
+                <>
+                  <div className="my-2 border-t border-zinc-100" />
+                  <div className="flex flex-col gap-2 px-1">
                     <Link
-                      href="/login"
-                      onClick={() => setMobileOpen(false)}
+                      href={`/${locale}/login`}
+                      onClick={close}
                       className={cn(buttonVariants({ variant: "outline", size: "sm" }), "w-full")}
                     >
                       {t("auth.login")}
                     </Link>
                     <Link
-                      href="/register"
-                      onClick={() => setMobileOpen(false)}
+                      href={`/${locale}/register`}
+                      onClick={close}
                       className={cn(buttonVariants({ size: "sm" }), "w-full bg-black text-white hover:bg-zinc-800")}
                     >
                       {t("auth.register")}
                     </Link>
                   </div>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
-    </header>
+                </>
+              )}
+            </nav>
+
+            {/* Bottom: locale switcher */}
+            <div className="border-t border-zinc-200 px-5 py-3">
+              <LocaleSwitcher />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+      <JoinOrgDialog open={joinOpen} onOpenChange={setJoinOpen} />
+    </>
   );
 }
