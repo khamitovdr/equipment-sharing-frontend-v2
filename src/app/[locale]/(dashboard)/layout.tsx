@@ -8,8 +8,6 @@ import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrg } from "@/lib/hooks/use-org";
 import { OrgSidebar } from "@/components/layout/org-sidebar";
-import { PublicNavbar } from "@/components/layout/public-navbar";
-import { Footer } from "@/components/layout/footer";
 
 export default function DashboardLayout({
   children,
@@ -69,13 +67,9 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <PublicNavbar />
-      <div className="flex flex-1">
-        <OrgSidebar />
-        <main className="flex-1 overflow-auto">{children}</main>
-      </div>
-      <Footer />
+    <div className="flex min-h-screen">
+      <OrgSidebar />
+      <main className="flex-1 overflow-auto">{children}</main>
     </div>
   );
 }
