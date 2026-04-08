@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button-variants";
 import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { cn } from "@/lib/utils";
 import { ListingCard } from "@/components/catalog/listing-card";
+import { ListingRow } from "@/components/catalog/listing-row";
 import { ScrollHero } from "@/components/layout/scroll-hero";
 import type { ListingRead } from "@/types/listing";
 import type { OrganizationListRead } from "@/types/organization";
@@ -45,7 +46,14 @@ export default async function HomePage() {
 
           {listings.length > 0 ? (
             <div className="relative pb-12">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {/* Mobile: compact rows */}
+              <div className="flex flex-col gap-2 sm:hidden">
+                {listings.map((listing) => (
+                  <ListingRow key={listing.id} listing={listing} />
+                ))}
+              </div>
+              {/* Tablet+: card grid */}
+              <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {listings.map((listing) => (
                   <ListingCard key={listing.id} listing={listing} />
                 ))}
