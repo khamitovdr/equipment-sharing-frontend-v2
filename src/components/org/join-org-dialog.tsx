@@ -61,7 +61,7 @@ export function JoinOrgDialog({ open, onOpenChange }: JoinOrgDialogProps) {
     debounceRef.current = setTimeout(async () => {
       try {
         const data = await organizationsApi.list({ search: value.trim() });
-        setResults(data.results);
+        setResults(data.items);
       } catch {
         setResults([]);
       } finally {
