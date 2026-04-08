@@ -166,7 +166,7 @@
     "search": { "label": "Organization", "placeholder": "Enter organization name or INN", "noResults": "No organizations found" },
     "details": { "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager" },
     "photo": { "label": "Organization photo" },
-    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "phone": "Phone", "email": "Email", "minOne": "At least one contact is required" },
+    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "displayNameRequired": "Contact name is required", "phone": "Phone", "email": "Email", "minOne": "At least one contact is required" },
     "submit": "Create organization",
     "success": "Organization created",
     "error": { "innRequired": "Select an organization from the list", "alreadyExists": "Organization with this INN already exists" }
