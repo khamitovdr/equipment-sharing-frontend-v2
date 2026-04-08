@@ -21,7 +21,7 @@ import type { ListingRead } from "@/types/listing";
 
 function OrgProfileSkeleton() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <Skeleton className="h-5 w-16 mb-6" />
       <div className="flex flex-col lg:flex-row lg:items-start gap-8">
         {/* Sidebar skeleton */}
@@ -121,7 +121,7 @@ export default function OrgProfilePage() {
   const orgInitial = orgDisplayName.charAt(0).toUpperCase();
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
         <BackButton />
       </div>

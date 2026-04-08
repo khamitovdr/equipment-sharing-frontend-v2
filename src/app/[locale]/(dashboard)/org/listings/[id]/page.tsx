@@ -85,7 +85,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
 
   if (isLoading || !listing) {
     return (
-      <div className="container mx-auto max-w-5xl px-4 py-8 space-y-6">
+      <div className="p-6 space-y-6">
         <Skeleton className="h-8 w-48" />
         <Skeleton className="aspect-[4/3] w-full rounded-lg" />
         <Skeleton className="h-24 w-full" />
@@ -102,7 +102,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
   ].filter((f) => f.enabled);
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-8">
+    <div className="p-6">
       <div className="mb-6">
         <BackButton />
       </div>

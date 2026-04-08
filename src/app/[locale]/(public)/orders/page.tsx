@@ -77,7 +77,7 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-8 space-y-6">
+    <div className="container mx-auto px-4 py-8 space-y-6">
       <h1 className="text-2xl font-semibold tracking-tight">
         {t("orders.title")}
       </h1>

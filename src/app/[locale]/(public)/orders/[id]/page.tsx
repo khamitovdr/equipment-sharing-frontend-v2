@@ -79,7 +79,7 @@ export default function OrderDetailPage({ params }: PageProps) {
 
   if (isLoading || !order) {
     return (
-      <div className="container mx-auto max-w-6xl px-4 py-8 space-y-6">
+      <div className="container mx-auto px-4 py-8 space-y-6">
         <Skeleton className="h-5 w-32" />
         <Skeleton className="h-10 w-full" />
         <Skeleton className="h-64 w-full" />
@@ -90,7 +90,7 @@ export default function OrderDetailPage({ params }: PageProps) {
   const isPending = acceptMutation.isPending || cancelMutation.isPending;
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
         <BackButton />
       </div>
