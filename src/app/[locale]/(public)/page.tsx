@@ -51,7 +51,7 @@ export default async function HomePage() {
               </div>
 
               {/* Gradient fade over last row + CTA */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 flex h-80 items-end justify-center bg-gradient-to-t from-white from-30% via-white/90 via-60% to-transparent pb-2">
+              <div className="pointer-events-none absolute -inset-x-4 bottom-0 flex h-80 items-end justify-center bg-gradient-to-t from-white from-30% via-white/90 via-60% to-transparent pb-2">
                 <Link
                   href="/listings"
                   className={cn(

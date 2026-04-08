@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { PhoneInput } from "@/components/shared/phone-input";
 
 export default function RegisterPage() {
   const t = useTranslations();
@@ -32,6 +33,7 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     setError,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -204,16 +206,23 @@ export default function RegisterPage() {
           {/* Phone */}
           <div className="space-y-1.5">
             <Label htmlFor="phone">{t("auth.phone")}</Label>
-            <Input
-              id="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="+7"
-              aria-invalid={!!errors.phone}
-              {...register("phone")}
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <PhoneInput
+                  id="phone"
+                  autoComplete="tel"
+                  aria-invalid={!!errors.phone}
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                />
+              )}
             />
             {errors.phone && (
-              <p className="text-xs text-destructive">{errors.phone.message}</p>
+              <p className="text-xs text-destructive">
+                {t(`settings.validation.${errors.phone.message}`)}
+              </p>
             )}
           </div>
 
@@ -227,7 +236,25 @@ export default function RegisterPage() {
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-xs text-destructive">{errors.password.message}</p>
+              <p className="text-xs text-destructive">
+                {t(`settings.validation.${errors.password.message}`)}
+              </p>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div className="space-y-1.5">
+            <Label htmlFor="confirm_password">{t("auth.confirmPassword")}</Label>
+            <PasswordInput
+              id="confirm_password"
+              autoComplete="new-password"
+              aria-invalid={!!errors.confirm_password}
+              {...register("confirm_password")}
+            />
+            {errors.confirm_password && (
+              <p className="text-xs text-destructive">
+                {t(`settings.validation.${errors.confirm_password.message}`)}
+              </p>
             )}
           </div>
 

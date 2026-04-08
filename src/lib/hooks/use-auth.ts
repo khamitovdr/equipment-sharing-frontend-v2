@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { useOrgStore } from "@/lib/stores/org-store";
 import { usersApi } from "@/lib/api/users";
 import type { LoginRequest, UserCreate } from "@/types/user";
 
@@ -32,6 +33,7 @@ export function useAuth() {
 
   const logout = useCallback(() => {
     clearAuth();
+    useOrgStore.getState().clearOrgContext();
     router.push("/");
   }, [clearAuth, router]);
 

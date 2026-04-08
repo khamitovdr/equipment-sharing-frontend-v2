@@ -18,13 +18,15 @@
     "comingSoon": "Скоро",
     "notFound": "Страница не найдена",
     "notFoundDescription": "Запрашиваемая страница не существует",
-    "backHome": "На главную"
+    "backHome": "На главную",
+    "you": "вы"
   },
   "nav": {
     "home": "Главная",
     "catalog": "Каталог",
     "myOrders": "Мои заказы",
     "settings": "Настройки",
+    "dashboard": "Панель управления",
     "createOrg": "Создать организацию",
     "joinOrg": "Вступить в организацию",
     "logout": "Выйти"
@@ -38,12 +40,52 @@
     "surname": "Фамилия",
     "middleName": "Отчество",
     "phone": "Телефон",
+    "confirmPassword": "Подтвердите пароль",
     "profilePhoto": "Фото профиля",
     "noAccount": "Нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
     "loginError": "Неверный email или пароль",
     "registerError": "Ошибка регистрации",
     "emailTaken": "Email уже занят"
+  },
+  "settings": {
+    "title": "Настройки",
+    "profile": "Профиль",
+    "avatar": {
+      "change": "Изменить фото"
+    },
+    "name": "Имя",
+    "surname": "Фамилия",
+    "middleName": "Отчество",
+    "email": "Email",
+    "phone": "Телефон",
+    "save": "Сохранить",
+    "password": {
+      "title": "Изменить пароль",
+      "current": "Текущий пароль",
+      "new": "Новый пароль",
+      "confirm": "Подтвердите новый пароль",
+      "update": "Обновить пароль"
+    },
+    "success": {
+      "profile": "Профиль обновлён",
+      "password": "Пароль изменён"
+    },
+    "validation": {
+      "nameRequired": "Имя обязательно",
+      "surnameRequired": "Фамилия обязательна",
+      "emailInvalid": "Неверный email",
+      "emailTaken": "Email уже занят",
+      "phoneInvalid": "Телефон в формате +7 (XXX) XXX-XX-XX",
+      "currentPasswordRequired": "Введите текущий пароль",
+      "confirmPasswordRequired": "Подтвердите новый пароль",
+      "passwordMinLength": "Минимум 8 символов",
+      "passwordLowercase": "Минимум одна строчная буква (a-z или а-яё)",
+      "passwordUppercase": "Минимум одна заглавная буква (A-Z или А-ЯЁ)",
+      "passwordDigit": "Минимум одна цифра",
+      "passwordMismatch": "Пароли не совпадают",
+      "wrongPassword": "Неверный текущий пароль"
+    }
   },
   "home": {
     "hero": {
@@ -112,5 +154,86 @@
     "networkError": "Ошибка сети",
     "forbidden": "У вас нет доступа",
     "serverError": "Сервис временно недоступен, попробуйте позже"
+  },
+  "dashboard": {
+    "sidebar": { "listings": "Объявления", "members": "Участники", "settings": "Настройки", "switchOrg": "Сменить организацию" },
+    "noOrgs": "Сначала нужно создать организацию или вступить в существующую",
+    "permissionDenied": "У вас нет доступа к этой странице"
+  },
+  "orgCreate": {
+    "title": "Создать организацию",
+    "search": { "label": "Организация", "placeholder": "Введите название или ИНН", "noResults": "Организации не найдены" },
+    "details": { "fullName": "Полное название", "shortName": "Сокращённое название", "inn": "ИНН", "address": "Юридический адрес", "manager": "Руководитель" },
+    "photo": { "label": "Фото организации" },
+    "contacts": { "title": "Контакты", "add": "Добавить контакт", "remove": "Удалить", "displayName": "Имя контакта", "phone": "Телефон", "email": "Email", "minOne": "Необходимо указать хотя бы один контакт" },
+    "submit": "Создать организацию",
+    "success": "Организация создана",
+    "error": { "innRequired": "Выберите организацию из списка", "alreadyExists": "Организация с таким ИНН уже существует" }
+  },
+  "joinOrg": {
+    "title": "Вступить в организацию",
+    "search": { "placeholder": "Поиск по названию", "noResults": "Организации не найдены" },
+    "submit": "Отправить заявку",
+    "success": "Заявка отправлена, ожидайте одобрения администратора",
+    "error": { "alreadyMember": "Вы уже являетесь участником или имеете ожидающую заявку" }
+  },
+  "orgListings": {
+    "title": "Объявления",
+    "create": "Создать объявление",
+    "search": { "placeholder": "Поиск объявлений..." },
+    "filter": { "allStatuses": "Все статусы", "allCategories": "Все категории" },
+    "empty": "Объявлений пока нет",
+    "emptyFiltered": "Нет объявлений, соответствующих фильтрам",
+    "status": { "published": "Опубликовано", "hidden": "Скрыто", "archived": "В архиве" },
+    "actions": { "edit": "Редактировать", "delete": "Удалить", "changeStatus": "Изменить статус", "publish": "Опубликовать", "hide": "Скрыть", "archive": "В архив" },
+    "deleteConfirm": "Удалить объявление? Это действие нельзя отменить.",
+    "statusChanged": "Статус объявления обновлён",
+    "deleted": "Объявление удалено"
+  },
+  "listingForm": {
+    "createTitle": "Создать объявление",
+    "editTitle": "Редактировать объявление",
+    "name": "Название",
+    "category": "Категория",
+    "categoryCreate": "Создать категорию",
+    "categoryName": "Название категории",
+    "price": "Цена",
+    "pricePerDay": "в день",
+    "description": "Описание",
+    "descriptionHint": "Поддерживается Markdown",
+    "specs": { "title": "Характеристики", "key": "Название", "value": "Значение", "add": "Добавить характеристику" },
+    "flags": { "title": "Услуги", "withOperator": "С оператором", "onOwnerSite": "На площадке владельца", "delivery": "Доставка", "installation": "Монтаж", "setup": "Настройка" },
+    "photos": { "title": "Фото", "upload": "Загрузить фото", "limit": "{count} / {max} фото", "maxReached": "Достигнут максимум фото", "invalidType": "Допускаются только JPEG, PNG и WebP", "tooLarge": "Файл слишком большой (макс. 10 МБ)" },
+    "save": "Сохранить",
+    "delete": "Удалить объявление",
+    "created": "Объявление создано",
+    "updated": "Объявление обновлено",
+    "validation": { "nameRequired": "Название обязательно", "categoryRequired": "Категория обязательна", "priceRequired": "Цена обязательна", "pricePositive": "Цена должна быть больше 0" }
+  },
+  "members": {
+    "title": "Участники",
+    "tabs": { "members": "Участники", "pending": "Заявки", "invitations": "Приглашения" },
+    "role": { "admin": "Администратор", "editor": "Редактор", "viewer": "Наблюдатель" },
+    "actions": { "changeRole": "Изменить роль", "remove": "Удалить", "approve": "Одобрить", "reject": "Отклонить", "cancelInvite": "Отменить приглашение" },
+    "removeConfirm": "Удалить {name} из организации?",
+    "roleChanged": "Роль обновлена",
+    "removed": "Участник удалён",
+    "approved": "Участник одобрен",
+    "rejected": "Заявка отклонена",
+    "inviteCanceled": "Приглашение отменено",
+    "empty": { "members": "Участников пока нет", "pending": "Нет ожидающих заявок", "invitations": "Нет ожидающих приглашений" }
+  },
+  "invite": {
+    "title": "Пригласить участника",
+    "search": { "label": "Email пользователя", "placeholder": "Поиск по email", "noResults": "Пользователь не найден", "minChars": "Введите минимум 3 символа" },
+    "role": { "label": "Роль" },
+    "submit": "Отправить приглашение",
+    "success": "Приглашение отправлено",
+    "error": { "alreadyMember": "Пользователь уже является участником или имеет ожидающую заявку" }
+  },
+  "orgSettings": {
+    "title": "Настройки организации",
+    "profile": { "title": "Профиль организации", "photo": "Фото организации", "info": "Данные организации", "fullName": "Полное название", "shortName": "Сокращённое название", "inn": "ИНН", "address": "Юридический адрес", "manager": "Руководитель", "registrationDate": "Дата регистрации", "status": "Статус" },
+    "contacts": { "title": "Контакты", "save": "Сохранить контакты", "saved": "Контакты сохранены" }
   }
 }

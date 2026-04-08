@@ -66,7 +66,7 @@ Order management and real-time messaging between renters and equipment owners.
 
 ## Slice D: Org Dashboard
 
-**Status:** Not started
+**Status:** Complete (orders excluded — deferred to Slice C)
 
 Organization management interface for equipment owners.
 

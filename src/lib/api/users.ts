@@ -1,5 +1,7 @@
 import { apiClient } from "./client";
 import type { UserRead, UserCreate, UserUpdate, LoginRequest, TokenResponse } from "@/types/user";
+import type { OrganizationRead } from "@/types/organization";
+import type { PaginatedResponse } from "@/types/api";
 
 export const usersApi = {
   register(data: UserCreate) {
@@ -25,6 +27,21 @@ export const usersApi = {
       method: "PATCH",
       body: data,
       token,
+    });
+  },
+
+  getById(userId: string) {
+    return apiClient<UserRead>(`/users/${userId}`);
+  },
+
+  myOrganizations(token: string) {
+    return apiClient<PaginatedResponse<OrganizationRead>>("/users/me/organizations", { token });
+  },
+
+  search(token: string, params: { email: string; limit?: number }) {
+    return apiClient<UserRead[]>("/users/search", {
+      token,
+      params: params as Record<string, string | number | boolean | null | undefined>,
     });
   },
 };

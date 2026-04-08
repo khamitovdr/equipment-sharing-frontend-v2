@@ -26,13 +26,14 @@ interface RequestOptions {
   body?: unknown;
   token?: string | null;
   params?: Record<string, string | string[] | number | boolean | null | undefined>;
+  skipAuthRedirect?: boolean;
 }
 
 export async function apiClient<T>(
   path: string,
   options: RequestOptions = {}
 ): Promise<T> {
-  const { method = "GET", body, token, params } = options;
+  const { method = "GET", body, token, params, skipAuthRedirect } = options;
 
   const headers = new Headers({
     "Content-Type": "application/json",
@@ -73,12 +74,16 @@ export async function apiClient<T>(
       detail = response.statusText;
     }
 
-    if (response.status === 401 && typeof window !== "undefined" && token) {
+    if (response.status === 401 && typeof window !== "undefined" && token && !skipAuthRedirect) {
       useAuthStore.getState().clearAuth();
       window.location.href = "/login";
     }
 
     throw new ApiRequestError(response.status, detail);
+  }
+
+  if (response.status === 204 || response.headers?.get?.("content-length") === "0") {
+    return undefined as T;
   }
 
   return response.json() as Promise<T>;

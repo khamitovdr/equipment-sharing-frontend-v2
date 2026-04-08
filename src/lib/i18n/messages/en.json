@@ -18,13 +18,15 @@
     "comingSoon": "Coming soon",
     "notFound": "Page not found",
     "notFoundDescription": "The page you requested does not exist",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "you": "you"
   },
   "nav": {
     "home": "Home",
     "catalog": "Catalog",
     "myOrders": "My Orders",
     "settings": "Settings",
+    "dashboard": "Dashboard",
     "createOrg": "Create organization",
     "joinOrg": "Join organization",
     "logout": "Log out"
@@ -38,12 +40,52 @@
     "surname": "Last name",
     "middleName": "Middle name",
     "phone": "Phone",
+    "confirmPassword": "Confirm password",
     "profilePhoto": "Profile photo",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "loginError": "Incorrect email or password",
     "registerError": "Registration error",
     "emailTaken": "Email already taken"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "avatar": {
+      "change": "Change photo"
+    },
+    "name": "First name",
+    "surname": "Last name",
+    "middleName": "Middle name",
+    "email": "Email",
+    "phone": "Phone",
+    "save": "Save",
+    "password": {
+      "title": "Change Password",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "update": "Update Password"
+    },
+    "success": {
+      "profile": "Profile updated",
+      "password": "Password changed"
+    },
+    "validation": {
+      "nameRequired": "First name is required",
+      "surnameRequired": "Last name is required",
+      "emailInvalid": "Invalid email address",
+      "emailTaken": "Email already taken",
+      "phoneInvalid": "Phone must be in format +7 (XXX) XXX-XX-XX",
+      "currentPasswordRequired": "Current password is required",
+      "confirmPasswordRequired": "Confirm your new password",
+      "passwordMinLength": "At least 8 characters",
+      "passwordLowercase": "At least one lowercase letter (a-z or а-яё)",
+      "passwordUppercase": "At least one uppercase letter (A-Z or А-ЯЁ)",
+      "passwordDigit": "At least one digit",
+      "passwordMismatch": "Passwords do not match",
+      "wrongPassword": "Current password is incorrect"
+    }
   },
   "home": {
     "hero": {
@@ -112,5 +154,86 @@
     "networkError": "Connection lost",
     "forbidden": "You don't have permission",
     "serverError": "Service temporarily unavailable, try again"
+  },
+  "dashboard": {
+    "sidebar": { "listings": "Listings", "members": "Members", "settings": "Settings", "switchOrg": "Switch organization" },
+    "noOrgs": "You need to create or join an organization first",
+    "permissionDenied": "You don't have permission to access this page"
+  },
+  "orgCreate": {
+    "title": "Create Organization",
+    "search": { "label": "Organization", "placeholder": "Enter organization name or INN", "noResults": "No organizations found" },
+    "details": { "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager" },
+    "photo": { "label": "Organization photo" },
+    "contacts": { "title": "Contacts", "add": "Add contact", "remove": "Remove", "displayName": "Contact name", "phone": "Phone", "email": "Email", "minOne": "At least one contact is required" },
+    "submit": "Create organization",
+    "success": "Organization created",
+    "error": { "innRequired": "Select an organization from the list", "alreadyExists": "Organization with this INN already exists" }
+  },
+  "joinOrg": {
+    "title": "Join Organization",
+    "search": { "placeholder": "Search by name", "noResults": "No organizations found" },
+    "submit": "Send request",
+    "success": "Request sent, waiting for admin approval",
+    "error": { "alreadyMember": "You are already a member or have a pending request" }
+  },
+  "orgListings": {
+    "title": "Listings",
+    "create": "Create listing",
+    "search": { "placeholder": "Search listings..." },
+    "filter": { "allStatuses": "All statuses", "allCategories": "All categories" },
+    "empty": "No listings yet",
+    "emptyFiltered": "No listings match your filters",
+    "status": { "published": "Published", "hidden": "Hidden", "archived": "Archived" },
+    "actions": { "edit": "Edit", "delete": "Delete", "changeStatus": "Change status", "publish": "Publish", "hide": "Hide", "archive": "Archive" },
+    "deleteConfirm": "Delete this listing? This cannot be undone.",
+    "statusChanged": "Listing status updated",
+    "deleted": "Listing deleted"
+  },
+  "listingForm": {
+    "createTitle": "Create Listing",
+    "editTitle": "Edit Listing",
+    "name": "Name",
+    "category": "Category",
+    "categoryCreate": "Create new category",
+    "categoryName": "Category name",
+    "price": "Price",
+    "pricePerDay": "per day",
+    "description": "Description",
+    "descriptionHint": "Supports Markdown",
+    "specs": { "title": "Specifications", "key": "Name", "value": "Value", "add": "Add specification" },
+    "flags": { "title": "Service options", "withOperator": "With operator", "onOwnerSite": "On owner's site", "delivery": "Delivery", "installation": "Installation", "setup": "Setup" },
+    "photos": { "title": "Photos", "upload": "Upload photos", "limit": "{count} / {max} photos", "maxReached": "Maximum photos reached", "invalidType": "Only JPEG, PNG, and WebP images are allowed", "tooLarge": "File is too large (max 10 MB)" },
+    "save": "Save",
+    "delete": "Delete listing",
+    "created": "Listing created",
+    "updated": "Listing updated",
+    "validation": { "nameRequired": "Name is required", "categoryRequired": "Category is required", "priceRequired": "Price is required", "pricePositive": "Price must be greater than 0" }
+  },
+  "members": {
+    "title": "Members",
+    "tabs": { "members": "Members", "pending": "Pending Requests", "invitations": "Invitations" },
+    "role": { "admin": "Admin", "editor": "Editor", "viewer": "Viewer" },
+    "actions": { "changeRole": "Change role", "remove": "Remove", "approve": "Approve", "reject": "Reject", "cancelInvite": "Cancel invitation" },
+    "removeConfirm": "Remove {name} from the organization?",
+    "roleChanged": "Role updated",
+    "removed": "Member removed",
+    "approved": "Member approved",
+    "rejected": "Request rejected",
+    "inviteCanceled": "Invitation canceled",
+    "empty": { "members": "No members yet", "pending": "No pending requests", "invitations": "No pending invitations" }
+  },
+  "invite": {
+    "title": "Invite Member",
+    "search": { "label": "User email", "placeholder": "Search by email", "noResults": "No users found for this email", "minChars": "Type at least 3 characters" },
+    "role": { "label": "Role" },
+    "submit": "Send invitation",
+    "success": "Invitation sent",
+    "error": { "alreadyMember": "User is already a member or has a pending invitation" }
+  },
+  "orgSettings": {
+    "title": "Organization Settings",
+    "profile": { "title": "Organization Profile", "photo": "Organization photo", "info": "Organization details", "fullName": "Full name", "shortName": "Short name", "inn": "INN", "address": "Legal address", "manager": "Manager", "registrationDate": "Registration date", "status": "Status" },
+    "contacts": { "title": "Contacts", "save": "Save contacts", "saved": "Contacts saved" }
   }
 }
