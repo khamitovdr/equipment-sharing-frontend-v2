@@ -97,7 +97,7 @@ export default function OrderDetailPage({ params }: PageProps) {
   const isPending = acceptMutation.isPending || cancelMutation.isPending;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 lg:flex lg:flex-col lg:flex-1">
       <div className="flex items-start gap-16 mb-6">
         <div className="shrink-0 -mt-0.5">
           <BackButton />
@@ -105,7 +105,7 @@ export default function OrderDetailPage({ params }: PageProps) {
         <OrderStatusStepper status={order.status} />
       </div>
 
-      <div className="lg:relative lg:overflow-clip">
+      <div className="lg:relative lg:overflow-clip lg:flex-1">
         {/* Left column — order info */}
         <div className="lg:w-1/2 space-y-6">
 

@@ -123,7 +123,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
     offerMutation.isPending || approveMutation.isPending || cancelMutation.isPending;
 
   return (
-    <div className="p-6">
+    <div className="p-6 lg:flex lg:flex-col lg:flex-1">
       <div className="flex items-start gap-16 mb-6">
         <div className="shrink-0 -mt-0.5">
           <BackButton />
@@ -131,7 +131,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
         <OrderStatusStepper status={order.status} />
       </div>
 
-      <div className="lg:relative lg:overflow-clip">
+      <div className="lg:relative lg:overflow-clip lg:flex-1">
         {/* Left column — order info */}
         <div className="lg:w-1/2 space-y-6">
 
