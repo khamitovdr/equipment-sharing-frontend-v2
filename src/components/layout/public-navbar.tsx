@@ -41,6 +41,7 @@ function Logo() {
 const navLinks = [
   { href: "/", labelKey: "nav.home" as const },
   { href: "/listings", labelKey: "nav.catalog" as const },
+  { href: "/organizations", labelKey: "nav.organizations" as const },
   { href: "/orders", labelKey: "nav.orders" as const, authRequired: true },
 ] as const;
 
@@ -159,6 +160,10 @@ function MobileDrawer() {
               <Link href={`/${locale}/listings`} onClick={close} className={navItemClass}>
                 <Search className="size-4 shrink-0" />
                 {t("nav.catalog")}
+              </Link>
+              <Link href={`/${locale}/organizations`} onClick={close} className={navItemClass}>
+                <Building2 className="size-4 shrink-0" />
+                {t("nav.organizations")}
               </Link>
               <Link href={isAuthenticated ? `/${locale}/orders` : `/${locale}/login`} onClick={close} className={navItemClass}>
                 <ShoppingBag className="size-4 shrink-0" />

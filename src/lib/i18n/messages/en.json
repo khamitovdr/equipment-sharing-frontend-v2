@@ -27,6 +27,7 @@
     "catalog": "Catalog",
     "myOrders": "My Orders",
     "orders": "Orders",
+    "organizations": "Organizations",
     "settings": "Settings",
     "dashboard": "Dashboard",
     "createOrg": "Create organization",
@@ -143,6 +144,11 @@
     "reserved": "Reserved",
     "loginToOrder": "Log in to request rental",
     "orderSuccess": "Order created successfully"
+  },
+  "organizations": {
+    "title": "Organizations",
+    "noResults": "No organizations found",
+    "noResultsSearch": "No organizations found for \"{query}\""
   },
   "org": {
     "listings": "Equipment",

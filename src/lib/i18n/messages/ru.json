@@ -27,6 +27,7 @@
     "catalog": "Каталог",
     "myOrders": "Мои заказы",
     "orders": "Заказы",
+    "organizations": "Организации",
     "settings": "Настройки",
     "dashboard": "Панель управления",
     "createOrg": "Создать организацию",
@@ -143,6 +144,11 @@
     "reserved": "Занято",
     "loginToOrder": "Войдите, чтобы оставить заявку",
     "orderSuccess": "Заявка успешно создана"
+  },
+  "organizations": {
+    "title": "Организации",
+    "noResults": "Организации не найдены",
+    "noResultsSearch": "Организации не найдены по запросу «{query}»"
   },
   "org": {
     "listings": "Оборудование",
