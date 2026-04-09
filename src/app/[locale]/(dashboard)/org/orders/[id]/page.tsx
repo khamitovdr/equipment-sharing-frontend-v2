@@ -131,7 +131,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
         <OrderStatusStepper status={order.status} />
       </div>
 
-      <div className="lg:relative">
+      <div className="lg:relative lg:overflow-clip">
         {/* Left column — order info */}
         <div className="lg:w-1/2 space-y-6">
 
