@@ -1,4 +1,5 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium, type BrowserContext, type Page } from "@playwright/test";
 import config from "../playwright.config.js";
 import { SyncCoordinator } from "./sync.js";
@@ -14,7 +15,8 @@ import {
   isPauseStep,
 } from "./types.js";
 
-const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const RECORDINGS_DIR = path.resolve(__dirname, "../recordings");
 
 function pause(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));

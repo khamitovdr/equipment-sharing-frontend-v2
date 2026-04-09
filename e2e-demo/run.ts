@@ -1,4 +1,5 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { readdir } from "node:fs/promises";
 import { FlowEngine } from "./runner/engine.js";
 import type { FlowDefinition, ActionHandler } from "./runner/types.js";
@@ -21,7 +22,8 @@ async function main() {
   }
 
   // Discover flow files
-  const flowsDir = path.resolve(import.meta.dirname, "flows");
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const flowsDir = path.resolve(__dirname, "flows");
   const files = await readdir(flowsDir);
   const flowFiles = files
     .filter((f) => f.endsWith(".flow.ts"))

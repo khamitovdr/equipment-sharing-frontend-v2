@@ -1,8 +1,10 @@
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Page } from "@playwright/test";
 
-const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const RECORDINGS_DIR = path.resolve(__dirname, "../recordings");
 
 export interface RecordingResult {
   role: string;

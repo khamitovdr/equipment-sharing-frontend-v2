@@ -1,8 +1,10 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Page } from "@playwright/test";
 import type { ActionHandler, ActionContext } from "./types.js";
 
-const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const RECORDINGS_DIR = path.resolve(__dirname, "../recordings");
 
 /** Default human-pacing delay: 300ms center +/-150ms jitter */
 function humanDelay(): number {
