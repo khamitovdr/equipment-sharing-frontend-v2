@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { OrderStatusBadge } from "./order-status-badge";
+import { UnreadBadge } from "./unread-badge";
 import { listingsApi } from "@/lib/api/listings";
 import { usersApi } from "@/lib/api/users";
 import { formatCost, formatDate } from "@/lib/utils";
@@ -44,6 +45,7 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
               <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.dates`)}</th>
               <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.cost`)}</th>
               <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.id`)}</th>
+              <th className="p-3 text-left font-medium w-10"></th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -75,6 +77,9 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
                 <td className="p-3 text-zinc-400 text-xs font-mono">
                   #{order.id.slice(0, 8)}
                 </td>
+                <td className="p-3">
+                  <UnreadBadge orderId={order.id} variant={variant} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -94,7 +99,10 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
                 {showListing && <ListingCell listingId={order.listing_id} />}
                 {showRequester && <RequesterCell requesterId={order.requester_id} />}
               </div>
-              <OrderStatusBadge status={order.status} />
+              <div className="flex items-center gap-1.5">
+                  <UnreadBadge orderId={order.id} variant={variant} />
+                  <OrderStatusBadge status={order.status} />
+                </div>
             </div>
             <div className="flex items-center justify-between text-sm text-zinc-500">
               <span>{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</span>
