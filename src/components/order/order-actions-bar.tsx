@@ -52,7 +52,10 @@ export function OrderActionsBar({
   isPending = false,
 }: OrderActionsBarProps) {
   const t = useTranslations();
-  const [showOfferForm, setShowOfferForm] = useState(false);
+
+  const orgActions = side === "org" ? (ORG_ACTIONS[order.status] ?? []) : [];
+  const isFirstOffer = orgActions.includes("offer");
+  const [showOfferForm, setShowOfferForm] = useState(isFirstOffer);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const actions = side === "renter"
