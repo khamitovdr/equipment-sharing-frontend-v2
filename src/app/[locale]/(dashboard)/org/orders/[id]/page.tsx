@@ -131,9 +131,9 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
         <OrderStatusStepper status={order.status} />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="lg:relative">
         {/* Left column — order info */}
-        <div className="flex-1 space-y-6 min-w-0">
+        <div className="lg:w-1/2 space-y-6">
 
           {/* Actions — mobile: top, desktop: bottom */}
           <div className="lg:hidden">
@@ -223,8 +223,8 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Right column — chat */}
-        <div className="hidden lg:block w-full lg:w-1/2 shrink-0 self-start">
+        {/* Right column — chat, absolute so it doesn't affect page height */}
+        <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:w-[calc(50%-1rem)]">
           <ChatPanel orderId={orderId} side="organization" orgId={orgId} translationPrefix="orgOrders" />
         </div>
       </div>
