@@ -56,7 +56,7 @@ export function useChat(orderId: string, side: ChatSide, orgId?: string) {
   );
 
   // Use a ref for connect to avoid circular useCallback dependency
-  const connectRef = useRef<() => void>();
+  const connectRef = useRef<() => void>(undefined);
 
   connectRef.current = () => {
     if (!token || !mountedRef.current) return;
