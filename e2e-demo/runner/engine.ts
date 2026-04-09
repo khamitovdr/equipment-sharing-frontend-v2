@@ -6,6 +6,7 @@ import { SyncCoordinator } from "./sync.js";
 import { ActionRegistry } from "./actions.js";
 import { saveRecording, type RecordingResult } from "./recorder.js";
 import { login } from "../helpers/auth.js";
+import { injectCursor } from "../helpers/cursor.js";
 import {
   type FlowDefinition,
   type Step,
@@ -68,6 +69,7 @@ export class FlowEngine {
         baseURL,
       });
       const page = await context.newPage();
+      await injectCursor(page);
 
       // Login if role has auth
       const roleConfig = flow.roles[role];
