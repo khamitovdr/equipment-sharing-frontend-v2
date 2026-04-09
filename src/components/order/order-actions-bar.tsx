@@ -69,7 +69,7 @@ export function OrderActionsBar({
     : t("orgOrders.cancelConfirm");
 
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col lg:flex-col-reverse gap-3">
       <div className="flex flex-wrap gap-2">
         {side === "renter" && (actions as RenterAction[]).map((action) => {
           if (action === "accept") {
