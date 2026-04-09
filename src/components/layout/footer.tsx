@@ -79,7 +79,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+        <div className="mt-6 border-t border-border pt-4 text-center text-xs text-muted-foreground">
           &copy; {year} Equip Me. Все права защищены.
         </div>
       </div>
