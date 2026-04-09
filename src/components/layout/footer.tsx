@@ -7,7 +7,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-muted/50">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 pt-12 pb-4 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Brand + FASIE */}
           <div className="flex flex-col gap-4">
