@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -15,7 +15,8 @@ import { useOrgStore } from "@/lib/stores/org-store";
 import { OrderStatusStepper } from "@/components/order/order-status-stepper";
 import { OrderActionsBar } from "@/components/order/order-actions-bar";
 import { OfferDetails } from "@/components/order/offer-details";
-import { ChatPlaceholder } from "@/components/order/chat-placeholder";
+import { ChatPanel } from "@/components/chat/chat-panel";
+import { MobileChatButton } from "@/components/chat/mobile-chat-button";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiRequestError } from "@/lib/api/client";
@@ -33,6 +34,12 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
   const token = useAuthStore((s) => s.token);
   const orgId = useOrgStore((s) => s.currentOrg?.id) ?? "";
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries({ queryKey: ["chat-status", orderId] });
+    };
+  }, [queryClient, orderId]);
 
   const { data: order, isLoading } = useQuery({
     queryKey: ["org-order", orgId, orderId],
@@ -117,26 +124,32 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <BackButton />
+      <div className="flex items-start gap-16 mb-6">
+        <div className="shrink-0 -mt-0.5">
+          <BackButton />
+        </div>
+        <OrderStatusStepper status={order.status} />
       </div>
 
-      <OrderStatusStepper status={order.status} />
-
-      <div className="flex flex-col lg:flex-row gap-8 mt-6">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Left column — order info */}
         <div className="flex-1 space-y-6 min-w-0">
 
-          <OrderActionsBar
-            order={order}
-            side="org"
-            onOffer={(data) => offerMutation.mutate(data)}
-            onApprove={() => approveMutation.mutate()}
-            onCancel={() => cancelMutation.mutate()}
-            isPending={isPending}
-          />
+          {/* Actions — mobile: top, desktop: bottom */}
+          <div className="lg:hidden">
+            <OrderActionsBar
+              order={order}
+              side="org"
+              onOffer={(data) => offerMutation.mutate(data)}
+              onApprove={() => approveMutation.mutate()}
+              onCancel={() => cancelMutation.mutate()}
+              isPending={isPending}
+            />
+          </div>
 
-          <OfferDetails order={order} />
+          <div className="lg:hidden">
+            <OfferDetails order={order} />
+          </div>
 
           {/* Order info card */}
           <div className="rounded-lg border p-5 space-y-4">
@@ -193,13 +206,29 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
               </div>
             </div>
           </div>
+
+          <div className="hidden lg:block">
+            <OfferDetails order={order} />
+          </div>
+
+          <div className="hidden lg:block">
+            <OrderActionsBar
+              order={order}
+              side="org"
+              onOffer={(data) => offerMutation.mutate(data)}
+              onApprove={() => approveMutation.mutate()}
+              onCancel={() => cancelMutation.mutate()}
+              isPending={isPending}
+            />
+          </div>
         </div>
 
-        {/* Right column — chat placeholder */}
-        <div className="w-full lg:w-1/2 shrink-0">
-          <ChatPlaceholder translationPrefix="orgOrders" />
+        {/* Right column — chat */}
+        <div className="hidden lg:block w-full lg:w-1/2 shrink-0">
+          <ChatPanel orderId={orderId} side="organization" orgId={orgId} translationPrefix="orgOrders" />
         </div>
       </div>
+      <MobileChatButton orderId={orderId} side="organization" orgId={orgId} translationPrefix="orgOrders" />
     </div>
   );
 }

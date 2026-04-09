@@ -89,7 +89,7 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
       </div>
 
       {/* Mobile — compact */}
-      <div className="sm:hidden flex items-center gap-3">
+      <div className="sm:hidden flex items-center gap-3 justify-end">
         <div
           className={cn(
             "flex size-8 items-center justify-center rounded-full border-2 text-xs font-bold",

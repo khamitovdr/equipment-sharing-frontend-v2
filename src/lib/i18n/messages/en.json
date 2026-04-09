@@ -275,7 +275,41 @@
     "cancelConfirm": "Are you sure you want to cancel this order?",
     "accepted": "Offer accepted",
     "canceled": "Order canceled",
-    "chat": { "comingSoon": "Chat coming soon", "comingSoonDescription": "You'll be able to message the organization here" }
+    "chat": {
+      "title": "Chat",
+      "placeholder": "Type a message...",
+      "send": "Send",
+      "attach": "Attach file",
+      "closed": "This conversation is closed",
+      "connecting": "Connecting...",
+      "reconnecting": "Reconnecting...",
+      "connectionError": "Connection failed",
+      "noAccess": "You don't have access to this chat",
+      "sending": "Sending...",
+      "sendFailed": "Failed to send",
+      "retry": "Retry",
+      "loadMore": "Load earlier messages",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "typing": "typing...",
+      "read": "Read",
+      "unreadCount": "{count} unread",
+      "slowDown": "Too many messages, slow down",
+      "uploadFailed": "Upload failed",
+      "uploadTimeout": "Upload timed out",
+      "sendFirst": "Send the first message",
+      "notification": {
+        "pending": "Order created",
+        "offered": "Organization sent an offer",
+        "accepted": "Offer accepted",
+        "confirmed": "Order confirmed",
+        "active": "Rental started",
+        "finished": "Rental completed",
+        "canceled_by_user": "Order canceled by requester",
+        "canceled_by_organization": "Order canceled by organization",
+        "expired": "Order expired"
+      }
+    }
   },
   "orgOrders": {
     "title": "Orders",
@@ -320,6 +354,40 @@
       "title": "Orders",
       "empty": "No orders for this listing yet"
     },
-    "chat": { "comingSoon": "Chat coming soon", "comingSoonDescription": "You'll be able to message the renter here" }
+    "chat": {
+      "title": "Chat",
+      "placeholder": "Type a message...",
+      "send": "Send",
+      "attach": "Attach file",
+      "closed": "This conversation is closed",
+      "connecting": "Connecting...",
+      "reconnecting": "Reconnecting...",
+      "connectionError": "Connection failed",
+      "noAccess": "You don't have access to this chat",
+      "sending": "Sending...",
+      "sendFailed": "Failed to send",
+      "retry": "Retry",
+      "loadMore": "Load earlier messages",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "typing": "typing...",
+      "read": "Read",
+      "unreadCount": "{count} unread",
+      "slowDown": "Too many messages, slow down",
+      "uploadFailed": "Upload failed",
+      "uploadTimeout": "Upload timed out",
+      "sendFirst": "Send the first message",
+      "notification": {
+        "pending": "Order created",
+        "offered": "Organization sent an offer",
+        "accepted": "Offer accepted",
+        "confirmed": "Order confirmed",
+        "active": "Rental started",
+        "finished": "Rental completed",
+        "canceled_by_user": "Order canceled by requester",
+        "canceled_by_organization": "Order canceled by organization",
+        "expired": "Order expired"
+      }
+    }
   }
 }
