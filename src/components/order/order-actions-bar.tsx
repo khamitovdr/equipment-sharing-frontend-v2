@@ -139,6 +139,7 @@ export function OrderActionsBar({
           order={order}
           onSubmit={(data) => {
             onOffer?.(data);
+            setShowOfferForm(false);
           }}
           onCancel={() => setShowOfferForm(false)}
           isPending={isPending}
