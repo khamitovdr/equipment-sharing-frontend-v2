@@ -32,7 +32,7 @@ export function ChatPanel({ orderId, side, orgId, translationPrefix }: ChatPanel
   );
 
   return (
-    <div className="flex flex-col rounded-lg border bg-white h-[600px] lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)]">
+    <div className="flex flex-col rounded-lg border bg-white h-[600px] lg:h-full lg:min-h-[400px] lg:max-h-[calc(100vh-2rem)] lg:sticky lg:top-4">
       <ChatHeader
         connectionStatus={connectionStatus}
         translationPrefix={translationPrefix}
