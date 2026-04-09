@@ -23,14 +23,14 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
 
   const navLinks = [
     {
-      href: `/${locale}/org/listings`,
-      label: t("dashboard.sidebar.listings"),
-      icon: LayoutGrid,
-    },
-    {
       href: `/${locale}/org/orders`,
       label: t("dashboard.sidebar.orders"),
       icon: ShoppingBag,
+    },
+    {
+      href: `/${locale}/org/listings`,
+      label: t("dashboard.sidebar.listings"),
+      icon: LayoutGrid,
     },
     {
       href: `/${locale}/org/members`,
