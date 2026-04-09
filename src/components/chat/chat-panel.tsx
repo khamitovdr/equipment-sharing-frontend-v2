@@ -5,6 +5,7 @@ import { useChat } from "@/lib/hooks/use-chat";
 import { ChatHeader } from "./chat-header";
 import { MessageList } from "./message-list";
 import { ChatInput } from "./chat-input";
+import { cn } from "@/lib/utils";
 import type { ChatSide } from "@/types/chat";
 
 interface ChatPanelProps {
@@ -12,9 +13,10 @@ interface ChatPanelProps {
   side: ChatSide;
   orgId?: string;
   translationPrefix: "orders" | "orgOrders";
+  className?: string;
 }
 
-export function ChatPanel({ orderId, side, orgId, translationPrefix }: ChatPanelProps) {
+export function ChatPanel({ orderId, side, orgId, translationPrefix, className }: ChatPanelProps) {
   const {
     sendMessage,
     sendTyping,
@@ -32,7 +34,7 @@ export function ChatPanel({ orderId, side, orgId, translationPrefix }: ChatPanel
   );
 
   return (
-    <div className="flex flex-col rounded-lg border bg-white h-[600px] lg:h-[calc(100vh-8rem)] lg:sticky lg:top-4">
+    <div className={cn("flex flex-col rounded-lg border bg-white h-[600px] lg:h-[calc(100vh-8rem)] lg:sticky lg:top-4", className)}>
       <ChatHeader
         connectionStatus={connectionStatus}
         translationPrefix={translationPrefix}

@@ -206,7 +206,7 @@ export default function OrderDetailPage({ params }: PageProps) {
 
         {/* Right column — chat */}
         <div className="hidden lg:block w-full lg:w-1/2 shrink-0">
-          <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" />
+          <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" className="lg:h-[calc(100vh-12rem)] lg:top-[4.5rem]" />
         </div>
       </div>
       <MobileChatButton orderId={orderId} side="requester" translationPrefix="orders" />
