@@ -71,7 +71,7 @@ export function OrderActionsBar({
         {side === "renter" && (actions as RenterAction[]).map((action) => {
           if (action === "accept") {
             return (
-              <Button key={action} onClick={onAccept} disabled={isPending}>
+              <Button key={action} className="bg-blue-600 hover:bg-blue-700 text-white" onClick={onAccept} disabled={isPending}>
                 {isPending && <Loader2 className="size-4 mr-2 animate-spin" />}
                 {t("orders.actions.accept")}
               </Button>
@@ -82,6 +82,7 @@ export function OrderActionsBar({
               <Button
                 key={action}
                 variant="outline"
+                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                 onClick={() => setShowCancelConfirm(true)}
                 disabled={isPending}
               >
@@ -97,6 +98,7 @@ export function OrderActionsBar({
             return (
               <Button
                 key={action}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={() => setShowOfferForm(!showOfferForm)}
                 disabled={isPending}
               >
@@ -106,7 +108,7 @@ export function OrderActionsBar({
           }
           if (action === "approve") {
             return (
-              <Button key={action} onClick={onApprove} disabled={isPending}>
+              <Button key={action} className="bg-blue-600 hover:bg-blue-700 text-white" onClick={onApprove} disabled={isPending}>
                 {isPending && <Loader2 className="size-4 mr-2 animate-spin" />}
                 {t("orgOrders.actions.approve")}
               </Button>
@@ -117,6 +119,7 @@ export function OrderActionsBar({
               <Button
                 key={action}
                 variant="outline"
+                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
                 onClick={() => setShowCancelConfirm(true)}
                 disabled={isPending}
               >

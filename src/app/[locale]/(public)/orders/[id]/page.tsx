@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -14,7 +14,8 @@ import { useAuthStore } from "@/lib/stores/auth-store";
 import { OrderStatusStepper } from "@/components/order/order-status-stepper";
 import { OrderActionsBar } from "@/components/order/order-actions-bar";
 import { OfferDetails } from "@/components/order/offer-details";
-import { ChatPlaceholder } from "@/components/order/chat-placeholder";
+import { ChatPanel } from "@/components/chat/chat-panel";
+import { MobileChatButton } from "@/components/chat/mobile-chat-button";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -31,6 +32,12 @@ export default function OrderDetailPage({ params }: PageProps) {
   const locale = useLocale();
   const token = useAuthStore((s) => s.token);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries({ queryKey: ["chat-status", orderId] });
+    };
+  }, [queryClient, orderId]);
 
   const { data: order, isLoading } = useQuery({
     queryKey: ["order", orderId],
@@ -91,25 +98,31 @@ export default function OrderDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6">
-        <BackButton />
+      <div className="flex items-start gap-16 mb-6">
+        <div className="shrink-0 -mt-0.5">
+          <BackButton />
+        </div>
+        <OrderStatusStepper status={order.status} />
       </div>
 
-      <OrderStatusStepper status={order.status} />
-
-      <div className="flex flex-col lg:flex-row gap-8 mt-6">
+      <div className="flex flex-col lg:flex-row gap-8">
         {/* Left column — order info */}
         <div className="flex-1 space-y-6 min-w-0">
 
-          <OrderActionsBar
-            order={order}
-            side="renter"
-            onAccept={() => acceptMutation.mutate()}
-            onCancel={() => cancelMutation.mutate()}
-            isPending={isPending}
-          />
+          {/* Actions + offer — mobile: top, desktop: bottom */}
+          <div className="lg:hidden">
+            <OrderActionsBar
+              order={order}
+              side="renter"
+              onAccept={() => acceptMutation.mutate()}
+              onCancel={() => cancelMutation.mutate()}
+              isPending={isPending}
+            />
+          </div>
 
-          <OfferDetails order={order} />
+          <div className="lg:hidden">
+            <OfferDetails order={order} />
+          </div>
 
           {/* Order info card */}
           <div className="rounded-lg border p-5 space-y-4">
@@ -175,13 +188,28 @@ export default function OrderDetailPage({ params }: PageProps) {
               </div>
             </div>
           </div>
+
+          <div className="hidden lg:block">
+            <OfferDetails order={order} />
+          </div>
+
+          <div className="hidden lg:block">
+            <OrderActionsBar
+              order={order}
+              side="renter"
+              onAccept={() => acceptMutation.mutate()}
+              onCancel={() => cancelMutation.mutate()}
+              isPending={isPending}
+            />
+          </div>
         </div>
 
-        {/* Right column — chat placeholder */}
-        <div className="w-full lg:w-1/2 shrink-0">
-          <ChatPlaceholder translationPrefix="orders" />
+        {/* Right column — chat */}
+        <div className="hidden lg:block w-full lg:w-1/2 shrink-0">
+          <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" />
         </div>
       </div>
+      <MobileChatButton orderId={orderId} side="requester" translationPrefix="orders" />
     </div>
   );
 }
