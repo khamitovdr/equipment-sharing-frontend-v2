@@ -205,7 +205,7 @@ export default function OrderDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right column — chat */}
-        <div className="hidden lg:block w-full lg:w-1/2 shrink-0">
+        <div className="hidden lg:block w-full lg:w-1/2 shrink-0 self-start">
           <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" className="lg:h-[calc(100vh-12rem)] lg:top-[4.5rem]" />
         </div>
       </div>
