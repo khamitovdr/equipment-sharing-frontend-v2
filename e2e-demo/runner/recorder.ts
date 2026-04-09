@@ -1,6 +1,6 @@
-import { mkdir, rename } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import type { BrowserContext } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
 
@@ -10,30 +10,22 @@ export interface RecordingResult {
 }
 
 /**
- * After a context is closed, move its auto-named video to
- * `recordings/<flowName>/<role>.webm`.
+ * Save a page's video recording to `recordings/<flowName>/<role>.webm`.
+ * Must be called AFTER the context is closed (to finalize the video).
  */
 export async function saveRecording(
-  context: BrowserContext,
+  page: Page,
   flowName: string,
   role: string,
 ): Promise<RecordingResult> {
-  const pages = context.pages();
-  const page = pages[0];
-  if (!page) throw new Error(`No pages in context for role "${role}"`);
-
-  // Close context to finalize the video file
   const video = page.video();
   if (!video) throw new Error(`No video for role "${role}" — is video recording enabled?`);
-
-  const srcPath = await video.path();
-  if (!srcPath) throw new Error(`Video path is null for role "${role}"`);
 
   const destDir = path.join(RECORDINGS_DIR, flowName);
   await mkdir(destDir, { recursive: true });
   const destPath = path.join(destDir, `${role}.webm`);
 
-  await rename(srcPath, destPath);
+  await video.saveAs(destPath);
 
   return { role, path: destPath };
 }

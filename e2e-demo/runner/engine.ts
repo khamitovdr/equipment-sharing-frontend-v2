@@ -1,4 +1,5 @@
-import { chromium, type Browser, type BrowserContext, type Page } from "@playwright/test";
+import path from "node:path";
+import { chromium, type BrowserContext, type Page } from "@playwright/test";
 import config from "../playwright.config.js";
 import { SyncCoordinator } from "./sync.js";
 import { ActionRegistry } from "./actions.js";
@@ -12,6 +13,8 @@ import {
   isSyncPoint,
   isPauseStep,
 } from "./types.js";
+
+const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
 
 function pause(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -57,7 +60,7 @@ export class FlowEngine {
       const context = await browser.newContext({
         viewport,
         recordVideo: {
-          dir: `e2e-demo/recordings/.tmp-${flow.name}`,
+          dir: path.join(RECORDINGS_DIR, `.tmp-${flow.name}`),
           size: viewport,
         },
         baseURL,
@@ -131,7 +134,7 @@ export class FlowEngine {
             console.error(`  [${role}] ❌ ${error.message}`);
             // Take error screenshot
             const name = `error-${flow.name}-${role}`;
-            await page.screenshot({ path: `e2e-demo/recordings/${name}.png` }).catch(() => {});
+            await page.screenshot({ path: path.join(RECORDINGS_DIR, `${name}.png`) }).catch(() => {});
             errors.push(error);
             break; // Stop this role's track
           }
@@ -139,18 +142,18 @@ export class FlowEngine {
       }),
     );
 
-    // Save recordings
+    // Save recordings — close contexts first to finalize videos, then rename
     const results: RecordingResult[] = [];
     for (const role of activeRoles) {
-      const { context } = contexts.get(role)!;
+      const { context, page } = contexts.get(role)!;
+      await context.close();
       try {
-        const result = await saveRecording(context, flow.name, role);
+        const result = await saveRecording(page, flow.name, role);
         results.push(result);
         console.log(`  [${role}] 🎬 saved → ${result.path}`);
       } catch (err) {
         console.error(`  [${role}] ⚠️  failed to save recording: ${err}`);
       }
-      await context.close();
     }
 
     await browser.close();

@@ -30,18 +30,13 @@ const searchAndInviteUser: ActionHandler = async (page, { data }) => {
 };
 
 const acceptInvitation: ActionHandler = async (page) => {
-  // The invitee navigates to the org page and joins
-  // Look for the "Join" or accept invitation button
-  // This depends on how invitations surface — check org listing or notifications
   await page.reload();
   await page.waitForTimeout(1000);
 
-  // Look for invitation acceptance UI
   const acceptBtn = page.locator("text=Accept").or(page.locator("text=Join"));
-  if (await acceptBtn.isVisible()) {
-    await acceptBtn.click();
-    await page.waitForTimeout(1000);
-  }
+  await acceptBtn.waitFor({ state: "visible", timeout: 10_000 });
+  await acceptBtn.click();
+  await page.waitForTimeout(1000);
 };
 
 const flow: FlowDefinition = {

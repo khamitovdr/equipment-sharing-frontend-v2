@@ -1,5 +1,8 @@
+import path from "node:path";
 import type { Page } from "@playwright/test";
 import type { ActionHandler, ActionContext } from "./types.js";
+
+const RECORDINGS_DIR = path.resolve(import.meta.dirname, "../recordings");
 
 /** Default human-pacing delay: 300ms center +/-150ms jitter */
 function humanDelay(): number {
@@ -50,6 +53,8 @@ const upload: ActionHandler = async (page, { target, data }) => {
 const scroll: ActionHandler = async (page, { target }) => {
   if (target === "bottom") {
     await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }));
+  } else if (target === "top" || target === "body") {
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "smooth" }));
   } else if (target) {
     await page.locator(target).scrollIntoViewIfNeeded();
   }
@@ -64,7 +69,7 @@ const waitFor: ActionHandler = async (page, { target, data }) => {
 
 const screenshot: ActionHandler = async (page, { data }) => {
   const name = String(data?.name ?? "screenshot");
-  await page.screenshot({ path: `e2e-demo/recordings/${name}.png` });
+  await page.screenshot({ path: path.join(RECORDINGS_DIR, `${name}.png`) });
 };
 
 // --- Registry ---

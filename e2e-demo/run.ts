@@ -35,12 +35,13 @@ async function main() {
 
   console.log(`\n🎬 Demo Recorder — ${flowFiles.length} flow(s) to record\n`);
 
-  const engine = new FlowEngine();
-
   for (const file of flowFiles) {
     const modulePath = path.join(flowsDir, file);
     const mod = (await import(modulePath)) as FlowModule;
     const flow = mod.default;
+
+    // Fresh engine per flow to avoid action name collisions
+    const engine = new FlowEngine();
 
     // Register any custom actions exported by the flow
     if (mod.actions) {

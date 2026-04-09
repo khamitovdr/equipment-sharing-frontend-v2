@@ -29,8 +29,9 @@ export class SyncCoordinator {
     }
 
     // Wait with timeout
+    let timerId: ReturnType<typeof setTimeout>;
     const timeout = new Promise<never>((_, reject) => {
-      setTimeout(
+      timerId = setTimeout(
         () =>
           reject(
             new Error(
@@ -41,7 +42,11 @@ export class SyncCoordinator {
       );
     });
 
-    await Promise.race([barrier.promise, timeout]);
+    try {
+      await Promise.race([barrier.promise, timeout]);
+    } finally {
+      clearTimeout(timerId!);
+    }
   }
 
   private getOrCreateBarrier(name: string): Barrier {
