@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { LogOut, ShoppingBag, Settings, Building2, UserPlus, LayoutDashboard } from "lucide-react";
+import { LogOut, Settings, Building2, UserPlus, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/lib/hooks/use-auth";
 import { useQuery } from "@tanstack/react-query";
 import { usersApi } from "@/lib/api/users";
@@ -60,17 +60,13 @@ export function UserMenu() {
             </span>
           </div>
           <DropdownMenuSeparator />
-          <DropdownMenuItem render={<Link href={`/${locale}/orders`} />}>
-            <ShoppingBag />
-            {t("nav.myOrders")}
-          </DropdownMenuItem>
           <DropdownMenuItem render={<Link href={`/${locale}/settings`} />}>
             <Settings />
             {t("nav.settings")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {hasOrgs && (
-            <DropdownMenuItem render={<Link href={`/${locale}/org/listings`} />}>
+            <DropdownMenuItem render={<Link href={`/${locale}/org`} />}>
               <LayoutDashboard />
               {t("nav.dashboard")}
             </DropdownMenuItem>

@@ -41,6 +41,7 @@ function Logo() {
 const navLinks = [
   { href: "/", labelKey: "nav.home" as const },
   { href: "/listings", labelKey: "nav.catalog" as const },
+  { href: "/orders", labelKey: "nav.orders" as const, authRequired: true },
 ] as const;
 
 export function PublicNavbar() {
@@ -56,10 +57,10 @@ export function PublicNavbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map(({ href, labelKey }) => (
+          {navLinks.map(({ href, labelKey, ...rest }) => (
             <Link
               key={href}
-              href={href}
+              href={"authRequired" in rest && !isAuthenticated ? "/login" : href}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {t(labelKey)}
@@ -159,14 +160,13 @@ function MobileDrawer() {
                 <Search className="size-4 shrink-0" />
                 {t("nav.catalog")}
               </Link>
+              <Link href={isAuthenticated ? `/${locale}/orders` : `/${locale}/login`} onClick={close} className={navItemClass}>
+                <ShoppingBag className="size-4 shrink-0" />
+                {t("nav.orders")}
+              </Link>
 
               {isAuthenticated && (
                 <>
-                  <div className="my-2 border-t border-border" />
-                  <Link href={`/${locale}/orders`} onClick={close} className={navItemClass}>
-                    <ShoppingBag className="size-4 shrink-0" />
-                    {t("nav.myOrders")}
-                  </Link>
                   <Link href={`/${locale}/settings`} onClick={close} className={navItemClass}>
                     <Settings className="size-4 shrink-0" />
                     {t("nav.settings")}
@@ -174,7 +174,7 @@ function MobileDrawer() {
 
                   <div className="my-2 border-t border-border" />
                   {hasOrgs && (
-                    <Link href={`/${locale}/org/listings`} onClick={close} className={navItemClass}>
+                    <Link href={`/${locale}/org`} onClick={close} className={navItemClass}>
                       <LayoutDashboard className="size-4 shrink-0" />
                       {t("nav.dashboard")}
                     </Link>
