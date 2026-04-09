@@ -18,7 +18,7 @@ export async function ListingSpecs({ specifications }: ListingSpecsProps) {
         <tbody>
           {Object.entries(specifications).map(([key, value]) => (
             <tr key={key} className="border-b last:border-0">
-              <td className="py-2 pr-4 text-zinc-500">{key}</td>
+              <td className="py-2 pr-4 text-muted-foreground">{key}</td>
               <td className="py-2 font-medium">{value}</td>
             </tr>
           ))}

@@ -148,7 +148,7 @@ export default function OrgProfilePage() {
               </div>
             )}
             {org.legal_address && (
-              <p className="mt-2 text-sm text-zinc-500">
+              <p className="mt-2 text-sm text-muted-foreground">
                 {org.legal_address}
               </p>
             )}
@@ -157,18 +157,18 @@ export default function OrgProfilePage() {
           {/* Contacts */}
           {org.contacts.length > 0 && (
             <div className="space-y-3">
-              <h2 className="text-sm font-semibold text-zinc-500 uppercase">{t("org.contacts")}</h2>
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase">{t("org.contacts")}</h2>
               {org.contacts.map((contact) => (
                 <div key={contact.id} className="rounded-lg border p-3">
                   <p className="mb-1.5 text-sm font-medium">{contact.display_name}</p>
                   {contact.phone && (
-                    <div className="flex items-center gap-1.5 text-sm text-zinc-600">
+                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
                       <Phone className="h-3.5 w-3.5 shrink-0" />
                       <span>{contact.phone}</span>
                     </div>
                   )}
                   {contact.email && (
-                    <div className="mt-1 flex items-center gap-1.5 text-sm text-zinc-600">
+                    <div className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
                       <Mail className="h-3.5 w-3.5 shrink-0" />
                       <span>{contact.email}</span>
                     </div>

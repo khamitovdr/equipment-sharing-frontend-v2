@@ -70,7 +70,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
 
   if (mediaItems.length === 0) {
     return (
-      <div className="flex aspect-[16/10] w-full items-center justify-center rounded-xl bg-zinc-100 text-sm text-zinc-400">
+      <div className="flex aspect-[16/10] w-full items-center justify-center rounded-xl bg-muted text-sm text-muted-foreground">
         {t("common.noMedia")}
       </div>
     );
@@ -108,7 +108,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
           variant="ghost"
           size="icon"
           onClick={scrollPrev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
           aria-label="Previous"
         >
           <ChevronLeft className="h-4 w-4" />
@@ -119,7 +119,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
           variant="ghost"
           size="icon"
           onClick={scrollNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
           aria-label="Next"
         >
           <ChevronRight className="h-4 w-4" />
@@ -136,7 +136,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
               className={cn(
                 "relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-md",
                 i === selectedIndex
-                  ? "border-2 border-black"
+                  ? "border-2 border-foreground"
                   : "border-2 border-transparent"
               )}
               aria-label={`Go to media ${i + 1}`}
@@ -148,7 +148,7 @@ export function MediaCarousel({ photos, videos }: MediaCarouselProps) {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-zinc-100">
+                <div className="flex h-full w-full items-center justify-center bg-muted">
                   <video
                     src={item.thumbnailUrl}
                     className="h-full w-full object-cover"

@@ -60,12 +60,12 @@ export default async function HomePage() {
               </div>
 
               {/* Gradient fade over last row + CTA */}
-              <div className="pointer-events-none absolute -inset-x-4 bottom-0 flex h-80 items-end justify-center bg-gradient-to-t from-white from-30% via-white/90 via-60% to-transparent pb-2">
+              <div className="pointer-events-none absolute -inset-x-4 bottom-0 flex h-80 items-end justify-center bg-gradient-to-t from-background from-30% via-background/90 via-60% to-transparent pb-2">
                 <Link
                   href="/listings"
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
-                    "pointer-events-auto gap-2 border-zinc-300 bg-white shadow-sm"
+                    "pointer-events-auto gap-2 border-border bg-background shadow-sm"
                   )}
                 >
                   {t("home.exploreCatalog")}
@@ -80,7 +80,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 3. Top organizations ─────────────────────────────── */}
-      <section className="bg-zinc-50 py-14">
+      <section className="bg-muted/50 py-14">
         <div className="container mx-auto px-4">
           <h2 className="mb-6 text-2xl font-bold tracking-tight">
             {t("home.topOrganizations")}
@@ -96,9 +96,9 @@ export default async function HomePage() {
                   <Link
                     key={org.id}
                     href={`/organizations/${org.id}`}
-                    className="flex items-center gap-4 rounded-xl border bg-white p-4 transition-all hover:shadow-md"
+                    className="flex items-center gap-4 rounded-xl border bg-background p-4 transition-all hover:shadow-md"
                   >
-                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-zinc-100">
+                    <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-muted">
                       {org.photo?.small_url ? (
                         <Image
                           src={org.photo.small_url}
@@ -114,12 +114,12 @@ export default async function HomePage() {
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{displayName}</p>
                       {org.published_listing_count > 0 && (
-                        <p className="mt-0.5 text-xs text-zinc-500">
+                        <p className="mt-0.5 text-xs text-muted-foreground">
                           {t("org.listingCount", { count: org.published_listing_count })}
                         </p>
                       )}
                     </div>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-zinc-300" />
+                    <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
                   </Link>
                 );
               })}
@@ -147,14 +147,14 @@ export default async function HomePage() {
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100"
+                className="grayscale opacity-60 transition-all duration-300 hover:grayscale-0 hover:opacity-100 dark:grayscale-0 dark:opacity-100"
               >
                 <Image
                   src={partner.src}
                   alt={partner.alt}
                   width={240}
                   height={80}
-                  className="h-16 w-auto object-contain sm:h-20"
+                  className="h-16 w-auto object-contain sm:h-20 dark:[filter:drop-shadow(1px_0_0_white)_drop-shadow(-1px_0_0_white)_drop-shadow(0_1px_0_white)_drop-shadow(0_-1px_0_white)]"
                 />
               </a>
             ))}
@@ -163,7 +163,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 5. CTA banners ───────────────────────────────────── */}
-      <section className="bg-zinc-50 py-14">
+      <section className="bg-muted/50 py-14">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {/* Rent CTA */}

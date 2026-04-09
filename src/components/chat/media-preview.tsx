@@ -37,7 +37,7 @@ function PreviewItem({ entry, onRemove }: { entry: UploadEntry; onRemove: (id: s
 
   return (
         <div className="relative shrink-0">
-          <div className="size-16 rounded-lg border bg-zinc-50 overflow-hidden flex items-center justify-center">
+          <div className="size-16 rounded-lg border bg-muted/50 overflow-hidden flex items-center justify-center">
             {objectUrl ? (
               <img
                 src={objectUrl}
@@ -45,7 +45,7 @@ function PreviewItem({ entry, onRemove }: { entry: UploadEntry; onRemove: (id: s
                 className="size-full object-cover"
               />
             ) : (
-              <span className="text-[10px] text-zinc-400 text-center px-1 truncate">
+              <span className="text-[10px] text-muted-foreground text-center px-1 truncate">
                 {entry.file.name}
               </span>
             )}
@@ -79,8 +79,8 @@ function PreviewItem({ entry, onRemove }: { entry: UploadEntry; onRemove: (id: s
             )}
 
             {entry.status === "failed" && (
-              <div className="absolute inset-0 flex items-center justify-center bg-red-500/20 rounded-lg">
-                <X className="size-5 text-red-600" />
+              <div className="absolute inset-0 flex items-center justify-center bg-red-500/20 dark:bg-red-500/10 rounded-lg">
+                <X className="size-5 text-red-600 dark:text-red-400" />
               </div>
             )}
           </div>
@@ -88,7 +88,7 @@ function PreviewItem({ entry, onRemove }: { entry: UploadEntry; onRemove: (id: s
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-zinc-700 text-white hover:bg-zinc-600"
+            className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-foreground/70 text-background hover:bg-foreground/60"
             onClick={() => onRemove(entry.tempId)}
           >
             <X className="size-3" />

@@ -72,7 +72,7 @@ export function OrderForm({ listingId, pricePerDay }: OrderFormProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-sm text-zinc-500">{t("listing.selectDates")}</p>
+      <p className="text-sm text-muted-foreground">{t("listing.selectDates")}</p>
 
       <ReservationCalendar
         reservations={reservations}
@@ -81,8 +81,8 @@ export function OrderForm({ listingId, pricePerDay }: OrderFormProps) {
       />
 
       {dateRange?.from && dateRange?.to && (
-        <div className="flex items-center justify-between rounded-lg bg-zinc-50 px-4 py-3 text-sm">
-          <span className="text-zinc-500">
+        <div className="flex items-center justify-between rounded-lg bg-muted/50 px-4 py-3 text-sm">
+          <span className="text-muted-foreground">
             {t("listing.estimatedCost")} ({days} {t("listing.days")})
           </span>
           <span className="font-semibold">

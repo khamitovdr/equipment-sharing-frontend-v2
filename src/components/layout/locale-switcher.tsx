@@ -22,19 +22,19 @@ export function LocaleSwitcher() {
         onClick={() => switchLocale("ru")}
         className={
           locale === "ru"
-            ? "font-bold text-black"
-            : "text-zinc-500 hover:text-zinc-700 transition-colors"
+            ? "font-bold text-foreground"
+            : "text-muted-foreground hover:text-foreground transition-colors"
         }
       >
         RU
       </button>
-      <span className="text-zinc-300">/</span>
+      <span className="text-muted-foreground">/</span>
       <button
         onClick={() => switchLocale("en")}
         className={
           locale === "en"
-            ? "font-bold text-black"
-            : "text-zinc-500 hover:text-zinc-700 transition-colors"
+            ? "font-bold text-foreground"
+            : "text-muted-foreground hover:text-foreground transition-colors"
         }
       >
         EN

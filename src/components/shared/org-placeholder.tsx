@@ -8,7 +8,7 @@ export function OrgPlaceholder({ className }: OrgPlaceholderProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center rounded-full bg-zinc-100 text-zinc-300",
+        "flex items-center justify-center rounded-full bg-muted text-muted-foreground",
         className
       )}
     >

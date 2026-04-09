@@ -31,20 +31,20 @@ export function ScrollHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden border-b bg-zinc-50 py-24 sm:py-32 lg:py-40"
+      className="relative overflow-hidden border-b bg-muted/50 py-24 sm:py-32 lg:py-40"
     >
       {/* Scrolling typography */}
       <div className="flex flex-col items-center gap-2 sm:gap-4">
         <div
           ref={line1Ref}
-          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-black sm:text-7xl lg:text-8xl xl:text-9xl"
+          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-foreground sm:text-7xl lg:text-8xl xl:text-9xl"
           style={{ willChange: "transform" }}
         >
           {t("home.hero.line1")}
         </div>
         <div
           ref={line2Ref}
-          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-zinc-300 sm:text-7xl lg:text-8xl xl:text-9xl"
+          className="whitespace-nowrap gap-x-[0.1em] text-5xl font-black uppercase tracking-tighter text-muted-foreground sm:text-7xl lg:text-8xl xl:text-9xl"
           style={{ willChange: "transform" }}
         >
           {t("home.hero.line2")}

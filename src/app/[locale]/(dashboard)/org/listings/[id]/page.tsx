@@ -132,7 +132,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
                 <tbody>
                   {Object.entries(listing.specifications).map(([key, value]) => (
                     <tr key={key} className="border-b last:border-0">
-                      <td className="py-2 pr-4 text-zinc-500">{key}</td>
+                      <td className="py-2 pr-4 text-muted-foreground">{key}</td>
                       <td className="py-2 font-medium">{value}</td>
                     </tr>
                   ))}
@@ -164,11 +164,11 @@ export default function OrgListingDetailPage({ params }: PageProps) {
 
           {/* Price & name */}
           <div>
-            <span className="text-xs text-zinc-500">{listing.category.name}</span>
+            <span className="text-xs text-muted-foreground">{listing.category.name}</span>
             <h1 className="mt-1 text-xl font-bold leading-tight">{listing.name}</h1>
             <p className="mt-2 text-2xl font-bold">
               {formatCost(listing.price)}{" "}
-              <span className="text-base font-normal text-zinc-500">
+              <span className="text-base font-normal text-muted-foreground">
                 {t("catalog.perDay")}
               </span>
             </p>
@@ -193,7 +193,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
         <h2 className="text-lg font-semibold mb-4">
           {t("orgOrders.listingOrders.title")}
           {orders.length > 0 && (
-            <span className="ml-2 text-sm font-normal text-zinc-400">
+            <span className="ml-2 text-sm font-normal text-muted-foreground">
               ({orders.length})
             </span>
           )}

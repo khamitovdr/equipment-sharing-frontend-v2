@@ -47,29 +47,29 @@ export function OrgSwitcher() {
         <OrgPlaceholder className="size-8 shrink-0" />
       )}
       <div className="min-w-0 flex-1 text-left">
-        <p className="truncate text-sm font-medium text-zinc-900">{orgName}</p>
+        <p className="truncate text-sm font-medium text-foreground">{orgName}</p>
         {roleLabel && (
-          <p className="text-xs text-zinc-500">{roleLabel}</p>
+          <p className="text-xs text-muted-foreground">{roleLabel}</p>
         )}
       </div>
       {hasMultipleOrgs && (
-        <ChevronsUpDown className="size-4 shrink-0 text-zinc-400" />
+        <ChevronsUpDown className="size-4 shrink-0 text-muted-foreground" />
       )}
     </div>
   );
 
   if (!hasMultipleOrgs) {
     return (
-      <div className="border-t border-zinc-200 p-3">
+      <div className="border-t border-border p-3">
         <div className="rounded-md px-2 py-1.5">{content}</div>
       </div>
     );
   }
 
   return (
-    <div className="border-t border-zinc-200 p-3">
+    <div className="border-t border-border p-3">
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex w-full rounded-md px-2 py-1.5 hover:bg-zinc-50 outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors">
+        <DropdownMenuTrigger className="flex w-full rounded-md px-2 py-1.5 hover:bg-muted/50 outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors">
           {content}
         </DropdownMenuTrigger>
         <DropdownMenuContent side="top" align="start" className="w-52">
@@ -78,7 +78,7 @@ export function OrgSwitcher() {
             return (
               <DropdownMenuItem
                 key={org.id}
-                className={isActive ? "bg-zinc-100" : undefined}
+                className={isActive ? "bg-muted" : undefined}
                 onClick={() => switchOrg(org.id)}
               >
                 {org.short_name || org.full_name || org.inn}

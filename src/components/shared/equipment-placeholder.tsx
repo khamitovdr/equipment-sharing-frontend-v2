@@ -8,7 +8,7 @@ export function EquipmentPlaceholder({ className }: EquipmentPlaceholderProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center bg-zinc-100 text-zinc-300",
+        "flex items-center justify-center bg-muted text-muted-foreground",
         className
       )}
     >

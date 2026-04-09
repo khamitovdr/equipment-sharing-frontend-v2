@@ -12,6 +12,7 @@ import {
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { OrgSwitcher } from "./org-switcher";
 
 function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
@@ -50,11 +51,11 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       {/* Logo — link to home */}
-      <Link href={`/${locale}`} onClick={onNavClick} className="flex items-center gap-2 border-b border-zinc-200 px-4 py-4">
-        <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
+      <Link href={`/${locale}`} onClick={onNavClick} className="flex items-center gap-2 border-b border-border px-4 py-4">
+        <span className="flex size-7 items-center justify-center rounded bg-primary text-primary-foreground text-sm font-bold leading-none">
           E
         </span>
-        <span className="text-sm font-semibold tracking-tight text-black">
+        <span className="text-sm font-semibold tracking-tight text-foreground">
           equip me
         </span>
       </Link>
@@ -71,8 +72,8 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
               className={[
                 "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                 isActive
-                  ? "bg-zinc-100 font-medium text-black"
-                  : "text-zinc-600 hover:bg-zinc-50",
+                  ? "bg-muted font-medium text-foreground"
+                  : "text-muted-foreground hover:bg-muted/50",
               ].join(" ")}
             >
               <Icon className="size-4 shrink-0" />
@@ -81,6 +82,11 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
           );
         })}
       </nav>
+
+      {/* Theme toggle */}
+      <div className="px-3 pb-1">
+        <ThemeToggle />
+      </div>
 
       {/* Org switcher */}
       <OrgSwitcher />
@@ -95,16 +101,16 @@ export function OrgSidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden w-60 shrink-0 border-r border-zinc-200 bg-white lg:block h-screen sticky top-0 overflow-y-auto">
+      <aside className="hidden w-60 shrink-0 border-r border-border bg-background lg:block h-screen sticky top-0 overflow-y-auto">
         <SidebarContent />
       </aside>
 
       {/* Mobile fixed header */}
-      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-zinc-200 bg-white px-4 lg:hidden">
+      <div className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-border bg-background px-4 lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             aria-label="Open menu"
-            className="rounded-md p-1.5 text-zinc-600 hover:bg-zinc-50 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted/50 outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Menu className="size-5" />
           </SheetTrigger>
@@ -113,10 +119,10 @@ export function OrgSidebar() {
           </SheetContent>
         </Sheet>
         <Link href={`/${locale}`} className="flex items-center gap-2">
-          <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
+          <span className="flex size-7 items-center justify-center rounded bg-primary text-primary-foreground text-sm font-bold leading-none">
             E
           </span>
-          <span className="text-sm font-semibold tracking-tight text-black">
+          <span className="text-sm font-semibold tracking-tight text-foreground">
             equip me
           </span>
         </Link>

@@ -49,7 +49,7 @@ export function MediaAttachment({ media }: MediaAttachmentProps) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger
           render={
-            <button className="relative flex items-center justify-center rounded-lg bg-zinc-900 size-32 cursor-pointer" />
+            <button className="relative flex items-center justify-center rounded-lg bg-foreground size-32 cursor-pointer" />
           }
         >
           <Play className="size-8 text-white" />
@@ -73,9 +73,9 @@ export function MediaAttachment({ media }: MediaAttachmentProps) {
     <a
       href={media.urls.large}
       download={media.original_filename}
-      className="flex items-center gap-2 rounded-lg border bg-white/50 px-3 py-2 text-sm hover:bg-zinc-50 transition-colors cursor-pointer"
+      className="flex items-center gap-2 rounded-lg border bg-background/50 px-3 py-2 text-sm hover:bg-muted/50 transition-colors cursor-pointer"
     >
-      <Download className="size-4 text-zinc-500 shrink-0" />
+      <Download className="size-4 text-muted-foreground shrink-0" />
       <span className="truncate">{media.original_filename}</span>
     </a>
   );

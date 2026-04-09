@@ -67,11 +67,11 @@ export default async function ListingDetailPage({ params }: PageProps) {
         <div className="flex flex-col gap-6 lg:sticky lg:top-8 lg:w-[40%]">
           {/* Price */}
           <div>
-            <span className="text-xs text-zinc-500">{listing.category.name}</span>
+            <span className="text-xs text-muted-foreground">{listing.category.name}</span>
             <h1 className="mt-1 text-xl font-bold leading-tight">{listing.name}</h1>
             <p className="mt-2 text-2xl font-bold">
               {formatCost(listing.price)}{" "}
-              <span className="text-base font-normal text-zinc-500">
+              <span className="text-base font-normal text-muted-foreground">
                 {t("catalog.perDay")}
               </span>
             </p>
@@ -90,7 +90,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
           )}
 
           {/* Order form */}
-          <div className="rounded-xl border bg-white p-4 shadow-sm">
+          <div className="rounded-xl border bg-background p-4 shadow-sm">
             <OrderForm listingId={listing.id} pricePerDay={listing.price} />
           </div>
 
@@ -98,7 +98,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
           {organization && orgDisplayName && (
             <Link
               href={`/organizations/${organization.id}`}
-              className="flex items-center gap-3 rounded-xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+              className="flex items-center gap-3 rounded-xl border bg-background p-4 shadow-sm transition-shadow hover:shadow-md"
             >
               {organization.photo ? (
                 <img
@@ -112,7 +112,7 @@ export default async function ListingDetailPage({ params }: PageProps) {
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">{orgDisplayName}</p>
                 {organization.status === "verified" && (
-                  <p className="text-xs text-zinc-500">{t("org.verified")}</p>
+                  <p className="text-xs text-muted-foreground">{t("org.verified")}</p>
                 )}
               </div>
             </Link>

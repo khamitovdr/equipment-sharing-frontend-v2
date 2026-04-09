@@ -186,7 +186,7 @@ export default function OrgCreatePage() {
             )}
 
             {selectedSuggestion && d && (
-              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 space-y-2 text-sm">
+              <div className="rounded-lg border border-border bg-muted/50 p-4 space-y-2 text-sm">
                 <div className="flex items-start justify-between gap-2">
                   <div className="space-y-1 min-w-0">
                     <p>

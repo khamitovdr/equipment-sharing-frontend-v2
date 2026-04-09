@@ -20,6 +20,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { NotificationBell } from "@/components/layout/notification-bell";
 import { UserMenu } from "@/components/layout/user-menu";
 import { JoinOrgDialog } from "@/components/org/join-org-dialog";
@@ -27,10 +28,10 @@ import { JoinOrgDialog } from "@/components/org/join-org-dialog";
 function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2">
-      <span className="flex size-7 items-center justify-center rounded bg-black text-white text-sm font-bold leading-none">
+      <span className="flex size-7 items-center justify-center rounded bg-primary text-primary-foreground text-sm font-bold leading-none">
         E
       </span>
-      <span className="text-sm font-semibold tracking-tight text-black">
+      <span className="text-sm font-semibold tracking-tight text-foreground">
         equip me
       </span>
     </Link>
@@ -48,7 +49,7 @@ export function PublicNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
         <Logo />
@@ -59,7 +60,7 @@ export function PublicNavbar() {
             <Link
               key={href}
               href={href}
-              className="text-sm text-zinc-600 hover:text-black transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {t(labelKey)}
             </Link>
@@ -69,6 +70,7 @@ export function PublicNavbar() {
         {/* Desktop right */}
         <div className="hidden md:flex items-center gap-3">
           <LocaleSwitcher />
+          <ThemeToggle />
           {isAuthenticated ? (
             <>
               <NotificationBell />
@@ -79,7 +81,7 @@ export function PublicNavbar() {
               <Link href="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
                 {t("auth.login")}
               </Link>
-              <Link href="/register" className={cn(buttonVariants({ size: "sm" }), "bg-black text-white hover:bg-zinc-800")}>
+              <Link href="/register" className={cn(buttonVariants({ size: "sm" }), "bg-primary text-primary-foreground hover:bg-primary/90")}>
                 {t("auth.register")}
               </Link>
             </>
@@ -96,7 +98,7 @@ export function PublicNavbar() {
 }
 
 const navItemClass =
-  "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-100 hover:text-black transition-colors";
+  "flex items-center gap-3 rounded-md px-3 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors";
 
 function MobileDrawer() {
   const t = useTranslations();
@@ -128,7 +130,7 @@ function MobileDrawer() {
         <SheetContent side="right" showCloseButton={false} className="w-72 p-0">
           <div className="flex h-full flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-3">
+            <div className="flex items-center justify-between border-b border-border px-4 py-3">
               <Logo />
               <SheetClose className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted transition-colors">
                 <X className="size-4" />
@@ -138,11 +140,11 @@ function MobileDrawer() {
 
             {/* User info */}
             {isAuthenticated && user && (
-              <div className="border-b border-zinc-200 px-5 py-3">
+              <div className="border-b border-border px-5 py-3">
                 <p className="text-sm font-medium truncate">
                   {[user.name, user.surname].filter(Boolean).join(" ")}
                 </p>
-                <p className="text-xs text-zinc-500 truncate">{user.email}</p>
+                <p className="text-xs text-muted-foreground truncate">{user.email}</p>
               </div>
             )}
 
@@ -160,7 +162,7 @@ function MobileDrawer() {
 
               {isAuthenticated && (
                 <>
-                  <div className="my-2 border-t border-zinc-100" />
+                  <div className="my-2 border-t border-border" />
                   <Link href={`/${locale}/orders`} onClick={close} className={navItemClass}>
                     <ShoppingBag className="size-4 shrink-0" />
                     {t("nav.myOrders")}
@@ -170,7 +172,7 @@ function MobileDrawer() {
                     {t("nav.settings")}
                   </Link>
 
-                  <div className="my-2 border-t border-zinc-100" />
+                  <div className="my-2 border-t border-border" />
                   {hasOrgs && (
                     <Link href={`/${locale}/org/listings`} onClick={close} className={navItemClass}>
                       <LayoutDashboard className="size-4 shrink-0" />
@@ -190,17 +192,17 @@ function MobileDrawer() {
                     {t("nav.joinOrg")}
                   </button>
 
-                  <div className="my-2 border-t border-zinc-100" />
-                  <div className={cn(navItemClass, "text-zinc-400 cursor-default")}>
+                  <div className="my-2 border-t border-border" />
+                  <div className={cn(navItemClass, "text-muted-foreground cursor-default")}>
                     <Bell className="size-4 shrink-0" />
                     {t("common.comingSoon")}
                   </div>
 
-                  <div className="my-2 border-t border-zinc-100" />
+                  <div className="my-2 border-t border-border" />
                   <button
                     type="button"
                     onClick={() => { close(); logout(); }}
-                    className={cn(navItemClass, "w-full text-left text-red-600 hover:bg-red-50 hover:text-red-700")}
+                    className={cn(navItemClass, "w-full text-left text-destructive hover:bg-destructive/10 hover:text-destructive")}
                   >
                     <LogOut className="size-4 shrink-0" />
                     {t("nav.logout")}
@@ -210,7 +212,7 @@ function MobileDrawer() {
 
               {!isAuthenticated && (
                 <>
-                  <div className="my-2 border-t border-zinc-100" />
+                  <div className="my-2 border-t border-border" />
                   <div className="flex flex-col gap-2 px-1">
                     <Link
                       href={`/${locale}/login`}
@@ -222,7 +224,7 @@ function MobileDrawer() {
                     <Link
                       href={`/${locale}/register`}
                       onClick={close}
-                      className={cn(buttonVariants({ size: "sm" }), "w-full bg-black text-white hover:bg-zinc-800")}
+                      className={cn(buttonVariants({ size: "sm" }), "w-full bg-primary text-primary-foreground hover:bg-primary/90")}
                     >
                       {t("auth.register")}
                     </Link>
@@ -231,9 +233,10 @@ function MobileDrawer() {
               )}
             </nav>
 
-            {/* Bottom: locale switcher */}
-            <div className="border-t border-zinc-200 px-5 py-3">
+            {/* Bottom: locale switcher + theme */}
+            <div className="border-t border-border px-5 py-3 flex items-center justify-between">
               <LocaleSwitcher />
+              <ThemeToggle />
             </div>
           </div>
         </SheetContent>

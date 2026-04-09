@@ -44,9 +44,9 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
                 <div
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border-2 text-xs font-medium transition-colors",
-                    (isCompleted || isCurrent) && !isTerminal && "border-black bg-black text-white",
-                    !isCompleted && !isCurrent && "border-zinc-300 text-zinc-400",
-                    isTerminal && "border-zinc-200 text-zinc-400"
+                    (isCompleted || isCurrent) && !isTerminal && "border-foreground bg-foreground text-background",
+                    !isCompleted && !isCurrent && "border-border text-muted-foreground",
+                    isTerminal && "border-border text-muted-foreground"
                   )}
                 >
                   {isCompleted ? <Check className="size-3.5" /> : i + 1}
@@ -55,8 +55,8 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
                   className={cn(
                     "text-[11px] whitespace-nowrap",
                     (isCompleted || isCurrent) && !isTerminal
-                      ? "font-medium text-black"
-                      : "text-zinc-400"
+                      ? "font-medium text-foreground"
+                      : "text-muted-foreground"
                   )}
                 >
                   {t(step)}
@@ -66,7 +66,7 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
                 <div
                   className={cn(
                     "h-0.5 flex-1 mx-2 mt-3.5",
-                    !isTerminal && currentIndex > i ? "bg-black" : "bg-zinc-200"
+                    !isTerminal && currentIndex > i ? "bg-foreground" : "bg-border"
                   )}
                 />
               )}
@@ -75,12 +75,12 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
         })}
         {isTerminal && (
           <>
-            <div className="h-0.5 flex-1 mx-2 mt-3.5 bg-red-300" />
+            <div className="h-0.5 flex-1 mx-2 mt-3.5 bg-red-300 dark:bg-red-800" />
             <div className="flex flex-col items-center gap-1.5">
-              <div className="flex size-7 items-center justify-center rounded-full border-2 border-red-500 bg-red-50 text-xs font-medium text-red-600">
+              <div className="flex size-7 items-center justify-center rounded-full border-2 border-red-500 dark:border-red-400 bg-red-50 dark:bg-red-900/20 text-xs font-medium text-red-600 dark:text-red-400">
                 ✕
               </div>
-              <span className="text-[11px] whitespace-nowrap font-medium text-red-600">
+              <span className="text-[11px] whitespace-nowrap font-medium text-red-600 dark:text-red-400">
                 {t(status)}
               </span>
             </div>
@@ -94,18 +94,18 @@ export function OrderStatusStepper({ status }: OrderStatusStepperProps) {
           className={cn(
             "flex size-8 items-center justify-center rounded-full border-2 text-xs font-bold",
             isTerminal
-              ? "border-red-500 bg-red-50 text-red-600"
-              : "border-black bg-black text-white"
+              ? "border-red-500 dark:border-red-400 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
+              : "border-foreground bg-foreground text-background"
           )}
         >
           {isTerminal ? "✕" : currentIndex + 1}
         </div>
         <div className="flex flex-col">
-          <span className={cn("text-sm font-medium", isTerminal ? "text-red-600" : "text-black")}>
+          <span className={cn("text-sm font-medium", isTerminal ? "text-red-600 dark:text-red-400" : "text-foreground")}>
             {t(status)}
           </span>
           {!isTerminal && (
-            <span className="text-xs text-zinc-400">
+            <span className="text-xs text-muted-foreground">
               {currentIndex + 1} / {FLOW_STEPS.length}
             </span>
           )}

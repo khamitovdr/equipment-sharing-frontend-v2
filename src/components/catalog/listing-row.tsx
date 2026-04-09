@@ -17,7 +17,7 @@ export function ListingRow({ listing }: ListingRowProps) {
   return (
     <Link
       href={`/listings/${listing.id}`}
-      className="flex items-center gap-3 rounded-lg border bg-white p-3 hover:bg-zinc-50 transition-colors"
+      className="flex items-center gap-3 rounded-lg border bg-background p-3 hover:bg-muted/50 transition-colors"
     >
       {photo ? (
         <img
@@ -29,7 +29,7 @@ export function ListingRow({ listing }: ListingRowProps) {
         <EquipmentPlaceholder className="size-16 rounded-md shrink-0" />
       )}
       <div className="min-w-0 flex-1">
-        <span className="text-xs text-zinc-500">{listing.category.name}</span>
+        <span className="text-xs text-muted-foreground">{listing.category.name}</span>
         <h3 className="text-sm font-medium line-clamp-1">{listing.name}</h3>
         <p className="text-sm font-bold mt-0.5">
           {formatCost(listing.price)} {t("catalog.perDay")}

@@ -29,7 +29,7 @@ export function ContactsEditor({ control, errors }: ContactsEditorProps) {
         return (
           <div
             key={field.id}
-            className="rounded-lg border border-zinc-200 p-4 space-y-4"
+            className="rounded-lg border border-border p-4 space-y-4"
           >
             {/* Header — remove button only */}
             {fields.length > 1 && (

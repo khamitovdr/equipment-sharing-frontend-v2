@@ -24,9 +24,9 @@ export function UploadProgress({ state, progress, className }: UploadProgressPro
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-100">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
         <div
-          className="h-2 rounded-full bg-black transition-all duration-200"
+          className="h-2 rounded-full bg-foreground transition-all duration-200"
           style={{ width: `${progress}%` }}
         />
       </div>

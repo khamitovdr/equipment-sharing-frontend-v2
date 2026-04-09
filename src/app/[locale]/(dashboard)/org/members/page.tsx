@@ -128,15 +128,15 @@ export default function MembersPage() {
       </div>
 
       {/* Tab group */}
-      <div className="flex items-center gap-1 rounded-lg bg-zinc-50 border p-1 w-fit">
+      <div className="flex items-center gap-1 rounded-lg bg-muted/50 border p-1 w-fit">
         {tabs.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setActiveTab(key)}
             className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
               activeTab === key
-                ? "bg-zinc-100 text-zinc-900 shadow-sm"
-                : "text-zinc-500 hover:text-zinc-700"
+                ? "bg-muted text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {label}

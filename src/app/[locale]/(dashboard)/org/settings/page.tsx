@@ -250,7 +250,7 @@ export default function OrgSettingsPage() {
                     }
                     className={
                       currentOrg.status === "verified"
-                        ? "bg-green-100 text-green-800 hover:bg-green-100"
+                        ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30"
                         : undefined
                     }
                   >

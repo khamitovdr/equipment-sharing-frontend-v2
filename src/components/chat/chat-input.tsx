@@ -193,7 +193,7 @@ export function ChatInput({
   if (isReadOnly) {
     return (
       <div className="border-t px-4 py-3 text-center">
-        <p className="text-sm text-zinc-400">{t("chat.closed")}</p>
+        <p className="text-sm text-muted-foreground">{t("chat.closed")}</p>
       </div>
     );
   }
@@ -205,7 +205,7 @@ export function ChatInput({
         <Button
           variant="ghost"
           size="icon"
-          className="size-9 shrink-0 text-zinc-400 hover:text-zinc-600"
+          className="size-9 shrink-0 text-muted-foreground hover:text-foreground"
           onClick={handleFileSelect}
           title={t("chat.attach")}
         >
@@ -219,13 +219,13 @@ export function ChatInput({
           onKeyDown={handleKeyDown}
           placeholder={t("chat.placeholder")}
           rows={1}
-          className="flex-1 resize-none bg-transparent text-sm outline-none placeholder:text-zinc-400 max-h-[120px]"
+          className="flex-1 resize-none bg-transparent text-sm outline-none placeholder:text-muted-foreground max-h-[120px]"
         />
 
         <Button
           variant="ghost"
           size="icon"
-          className="size-9 shrink-0 text-zinc-400 hover:text-zinc-900 disabled:opacity-30"
+          className="size-9 shrink-0 text-muted-foreground hover:text-foreground disabled:opacity-30"
           onClick={handleSend}
           disabled={!canSend}
           title={t("chat.send")}

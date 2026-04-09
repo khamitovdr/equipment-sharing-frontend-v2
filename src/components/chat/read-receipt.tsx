@@ -13,14 +13,14 @@ export function ReadReceipt({ isRead, translationPrefix }: ReadReceiptProps) {
 
   if (isRead) {
     return (
-      <span className="inline-flex items-center gap-0.5 text-blue-500" title={t("chat.read")}>
+      <span className="inline-flex items-center gap-0.5 text-blue-500 dark:text-blue-400" title={t("chat.read")}>
         <CheckCheck className="size-3.5" />
       </span>
     );
   }
 
   return (
-    <span className="inline-flex items-center gap-0.5 text-zinc-400">
+    <span className="inline-flex items-center gap-0.5 text-muted-foreground">
       <Check className="size-3.5" />
     </span>
   );

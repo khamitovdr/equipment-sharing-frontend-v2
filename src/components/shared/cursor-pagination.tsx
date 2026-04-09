@@ -37,7 +37,7 @@ export function CursorPagination({
 
   return (
     <div ref={sentinelRef} className="flex justify-center py-8">
-      {isLoading && <Loader2 className="h-5 w-5 animate-spin text-zinc-400" />}
+      {isLoading && <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />}
     </div>
   );
 }

@@ -142,7 +142,7 @@ export default function OrderDetailPage({ params }: PageProps) {
                 )}
                 <div>
                   <p className="font-semibold">{listing.name}</p>
-                  <p className="text-sm text-zinc-500">{listing.category.name}</p>
+                  <p className="text-sm text-muted-foreground">{listing.category.name}</p>
                 </div>
               </Link>
             )}
@@ -169,22 +169,22 @@ export default function OrderDetailPage({ params }: PageProps) {
 
             <div className="grid grid-cols-2 gap-4 text-sm pt-3 border-t">
               <div>
-                <p className="text-xs text-zinc-400">{t("orders.detail.requestedDates")}</p>
+                <p className="text-xs text-muted-foreground">{t("orders.detail.requestedDates")}</p>
                 <p className="font-medium">{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">{t("orders.detail.estimatedCost")}</p>
+                <p className="text-xs text-muted-foreground">{t("orders.detail.estimatedCost")}</p>
                 <p className="font-medium">
                   {order.estimated_cost ? `${formatCost(order.estimated_cost)} ₽` : "—"}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">{t("orders.detail.orderId")}</p>
-                <p className="font-mono text-xs text-zinc-500">#{order.id.slice(0, 8)}</p>
+                <p className="text-xs text-muted-foreground">{t("orders.detail.orderId")}</p>
+                <p className="font-mono text-xs text-muted-foreground">#{order.id.slice(0, 8)}</p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">{t("orders.detail.created")}</p>
-                <p className="text-zinc-600">{formatDate(order.created_at, locale)}</p>
+                <p className="text-xs text-muted-foreground">{t("orders.detail.created")}</p>
+                <p className="text-muted-foreground">{formatDate(order.created_at, locale)}</p>
               </div>
             </div>
           </div>

@@ -39,7 +39,7 @@ export function MobileChatButton({
             <Button size="icon" className="size-14 rounded-full shadow-lg relative">
               <MessageCircle className="size-6" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex items-center justify-center size-5 rounded-full bg-red-500 text-[10px] text-white font-medium">
+                <span className="absolute -top-1 -right-1 flex items-center justify-center size-5 rounded-full bg-red-500 dark:bg-red-400 text-[10px] text-white font-medium">
                   {unreadCount > 99 ? "99+" : unreadCount}
                 </span>
               )}

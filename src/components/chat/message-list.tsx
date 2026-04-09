@@ -95,8 +95,8 @@ export function MessageList({
       )}
 
       {messages.length === 0 && pendingMessages.length === 0 && !hasMore && (
-        <div className="flex flex-1 flex-col items-center justify-center gap-2 text-zinc-400">
-          <MessageCircle className="size-10 text-zinc-300" />
+        <div className="flex flex-1 flex-col items-center justify-center gap-2 text-muted-foreground">
+          <MessageCircle className="size-10 text-muted-foreground" />
           <p className="text-sm">{t("chat.sendFirst")}</p>
         </div>
       )}

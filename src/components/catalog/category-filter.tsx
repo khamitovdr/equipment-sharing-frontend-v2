@@ -30,7 +30,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
             }}
             className={`rounded-full border px-3 py-1 text-xs transition-colors ${
               isActive
-                ? "border-black bg-black text-white"
+                ? "border-foreground bg-foreground text-background"
                 : "border-input bg-transparent text-foreground hover:bg-muted"
             }`}
           >
@@ -42,7 +42,7 @@ export function CategoryFilter({ categories, selected, onChange }: CategoryFilte
         <button
           type="button"
           onClick={() => onChange([])}
-          className="inline-flex items-center gap-1 rounded-full border border-zinc-300 px-2 py-1 text-xs text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
+          className="inline-flex items-center gap-1 rounded-full border border-border px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <X className="h-3 w-3" />
         </button>

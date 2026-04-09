@@ -19,15 +19,15 @@ export function PendingBubble({ message, translationPrefix, onRetry }: PendingBu
       </div>
       <div className="flex items-center gap-1 px-1">
         {message.status === "sending" && (
-          <span className="text-[10px] text-zinc-400">{t("chat.sending")}</span>
+          <span className="text-[10px] text-muted-foreground">{t("chat.sending")}</span>
         )}
         {message.status === "failed" && (
           <span className="flex items-center gap-1">
-            <span className="text-[10px] text-red-500">{t("chat.sendFailed")}</span>
+            <span className="text-[10px] text-red-500 dark:text-red-400">{t("chat.sendFailed")}</span>
             {onRetry && (
               <button
                 onClick={() => onRetry(message)}
-                className="text-[10px] text-blue-500 hover:underline"
+                className="text-[10px] text-blue-500 dark:text-blue-400 hover:underline"
               >
                 {t("chat.retry")}
               </button>

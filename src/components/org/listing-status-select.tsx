@@ -18,9 +18,9 @@ interface ListingStatusSelectProps {
 }
 
 const STATUS_STYLES: Record<ListingStatus, string> = {
-  published: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  hidden: "bg-zinc-100 text-zinc-600 border-zinc-200",
-  archived: "bg-amber-50 text-amber-700 border-amber-200",
+  published: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800",
+  hidden: "bg-muted text-muted-foreground border-border",
+  archived: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800",
 };
 
 const ALL_STATUSES: ListingStatus[] = ["published", "hidden", "archived"];

@@ -38,7 +38,7 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
       <div className="hidden md:block rounded-lg border overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b bg-zinc-50/50 text-xs text-zinc-500 uppercase">
+            <tr className="border-b bg-muted/30 text-xs text-muted-foreground uppercase">
               {showListing && <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.listing`)}</th>}
               {showRequester && <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.requester`)}</th>}
               <th className="p-3 text-left font-medium">{t(`${tPrefix}.columns.status`)}</th>
@@ -68,13 +68,13 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
                 <td className="p-3">
                   <OrderStatusBadge status={order.status} />
                 </td>
-                <td className="p-3 text-zinc-600 whitespace-nowrap">
+                <td className="p-3 text-muted-foreground whitespace-nowrap">
                   {formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}
                 </td>
                 <td className="p-3 whitespace-nowrap font-medium">
                   <OrderCost order={order} />
                 </td>
-                <td className="p-3 text-zinc-400 text-xs font-mono">
+                <td className="p-3 text-muted-foreground text-xs font-mono">
                   #{order.id.slice(0, 8)}
                 </td>
                 <td className="p-3">
@@ -104,9 +104,9 @@ export function OrderTable({ orders, variant, isLoading, detailPath }: OrderTabl
                   <OrderStatusBadge status={order.status} />
                 </div>
             </div>
-            <div className="flex items-center justify-between text-sm text-zinc-500">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
               <span>{formatDate(order.requested_start_date, locale)} — {formatDate(order.requested_end_date, locale)}</span>
-              <span className="font-medium text-black"><OrderCost order={order} /></span>
+              <span className="font-medium text-foreground"><OrderCost order={order} /></span>
             </div>
           </div>
         ))}

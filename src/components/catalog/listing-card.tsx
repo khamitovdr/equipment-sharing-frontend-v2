@@ -42,7 +42,7 @@ export function ListingCard({ listing }: ListingCardProps) {
       <Card className="hover:shadow-md transition-shadow">
         <div
           ref={containerRef}
-          className="relative aspect-[4/3] bg-zinc-100 overflow-hidden"
+          className="relative aspect-[4/3] bg-muted overflow-hidden"
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
         >
@@ -73,7 +73,7 @@ export function ListingCard({ listing }: ListingCardProps) {
           )}
         </div>
         <CardContent className="flex flex-col gap-1">
-          <span className="text-xs text-zinc-500">{listing.category.name}</span>
+          <span className="text-xs text-muted-foreground">{listing.category.name}</span>
           <h3 className="text-sm font-medium line-clamp-1">{listing.name}</h3>
           <p className="text-sm font-bold">
             {formatCost(listing.price)} {t("catalog.perDay")}

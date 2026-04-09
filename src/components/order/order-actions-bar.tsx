@@ -74,7 +74,7 @@ export function OrderActionsBar({
         {side === "renter" && (actions as RenterAction[]).map((action) => {
           if (action === "accept") {
             return (
-              <Button key={action} className="bg-blue-600 hover:bg-blue-700 text-white" onClick={onAccept} disabled={isPending}>
+              <Button key={action} className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white" onClick={onAccept} disabled={isPending}>
                 {isPending && <Loader2 className="size-4 mr-2 animate-spin" />}
                 {t("orders.actions.accept")}
               </Button>
@@ -85,7 +85,7 @@ export function OrderActionsBar({
               <Button
                 key={action}
                 variant="outline"
-                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                className="border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700"
                 onClick={() => setShowCancelConfirm(true)}
                 disabled={isPending}
               >
@@ -101,7 +101,7 @@ export function OrderActionsBar({
             return (
               <Button
                 key={action}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white"
                 onClick={() => setShowOfferForm(!showOfferForm)}
                 disabled={isPending}
               >
@@ -111,7 +111,7 @@ export function OrderActionsBar({
           }
           if (action === "approve") {
             return (
-              <Button key={action} className="bg-blue-600 hover:bg-blue-700 text-white" onClick={onApprove} disabled={isPending}>
+              <Button key={action} className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white" onClick={onApprove} disabled={isPending}>
                 {isPending && <Loader2 className="size-4 mr-2 animate-spin" />}
                 {t("orgOrders.actions.approve")}
               </Button>
@@ -122,7 +122,7 @@ export function OrderActionsBar({
               <Button
                 key={action}
                 variant="outline"
-                className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                className="border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700"
                 onClick={() => setShowCancelConfirm(true)}
                 disabled={isPending}
               >
@@ -193,7 +193,7 @@ function OfferFormInline({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="rounded-lg border bg-zinc-50 p-4 space-y-4"
+      className="rounded-lg border bg-muted/50 p-4 space-y-4"
     >
       <p className="text-sm font-medium">{t("title")}</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -206,7 +206,7 @@ function OfferFormInline({
             {...register("offered_cost")}
           />
           {errors.offered_cost && (
-            <p className="text-xs text-red-500">{errors.offered_cost.message}</p>
+            <p className="text-xs text-red-500 dark:text-red-400">{errors.offered_cost.message}</p>
           )}
         </div>
         <div className="space-y-1.5">
@@ -217,7 +217,7 @@ function OfferFormInline({
             {...register("offered_start_date")}
           />
           {errors.offered_start_date && (
-            <p className="text-xs text-red-500">{errors.offered_start_date.message}</p>
+            <p className="text-xs text-red-500 dark:text-red-400">{errors.offered_start_date.message}</p>
           )}
         </div>
         <div className="space-y-1.5">
@@ -228,7 +228,7 @@ function OfferFormInline({
             {...register("offered_end_date")}
           />
           {errors.offered_end_date && (
-            <p className="text-xs text-red-500">{errors.offered_end_date.message}</p>
+            <p className="text-xs text-red-500 dark:text-red-400">{errors.offered_end_date.message}</p>
           )}
         </div>
       </div>

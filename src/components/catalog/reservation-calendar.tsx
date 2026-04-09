@@ -40,7 +40,7 @@ export function ReservationCalendar({
       disabled={isDisabled}
       modifiers={{ reserved: isReservedDate }}
       modifiersClassNames={{
-        reserved: cn("bg-zinc-200 text-zinc-400"),
+        reserved: cn("bg-muted text-muted-foreground"),
       }}
     />
   );
