@@ -205,8 +205,8 @@ export default function OrderDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right column — chat, absolute so it doesn't affect page height */}
-        <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:w-[calc(50%-1rem)]">
-          <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" className="lg:h-[calc(100vh-12rem)] lg:top-[4.5rem]" />
+        <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:bottom-0 lg:w-[calc(50%-1rem)]">
+          <ChatPanel orderId={orderId} side="requester" translationPrefix="orders" />
         </div>
       </div>
       <MobileChatButton orderId={orderId} side="requester" translationPrefix="orders" />

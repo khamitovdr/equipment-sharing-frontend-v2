@@ -224,7 +224,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
         </div>
 
         {/* Right column — chat, absolute so it doesn't affect page height */}
-        <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:w-[calc(50%-1rem)]">
+        <div className="hidden lg:block lg:absolute lg:top-0 lg:right-0 lg:bottom-0 lg:w-[calc(50%-1rem)]">
           <ChatPanel orderId={orderId} side="organization" orgId={orgId} translationPrefix="orgOrders" />
         </div>
       </div>
