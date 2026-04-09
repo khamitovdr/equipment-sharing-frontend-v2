@@ -101,7 +101,7 @@ interface PauseStep {
 | `waitFor`  | CSS selector                | `{ state?: "visible" \| "attached" }` | Wait for element to appear               |
 | `screenshot` | —                         | `{ name: string }`                | Named screenshot for debugging                |
 
-Every built-in action adds a random 200-500ms delay after execution to mimic human interaction. Configurable globally.
+Every built-in action adds a random delay (centered around the global pacing setting, default 300ms, with +/-150ms jitter) after execution to mimic human interaction.
 
 ### Custom Action Registration
 
