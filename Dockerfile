@@ -27,10 +27,12 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 ARG APP_VERSION=dev
+ARG DADATA_API_KEY=
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV APP_VERSION=${APP_VERSION}
+ENV DADATA_API_KEY=${DADATA_API_KEY}
 
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
