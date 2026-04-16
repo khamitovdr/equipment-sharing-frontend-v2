@@ -64,7 +64,7 @@ export default function CatalogPage() {
     if (searchParams.get("on_owner_site") === "true") raw.on_owner_site = true;
     if (searchParams.get("installation") === "true") raw.installation = true;
     if (searchParams.get("setup") === "true") raw.setup = true;
-    if (searchParams.get("sort")) raw.sort = searchParams.get("sort");
+    if (searchParams.get("order_by")) raw.order_by = searchParams.get("order_by");
 
     const result = catalogFiltersSchema.safeParse(raw);
     return result.success ? result.data : {};
@@ -87,7 +87,7 @@ export default function CatalogPage() {
       if (next.on_owner_site) params.set("on_owner_site", "true");
       if (next.installation) params.set("installation", "true");
       if (next.setup) params.set("setup", "true");
-      if (next.sort) params.set("sort", next.sort);
+      if (next.order_by) params.set("order_by", next.order_by);
       const qs = params.toString();
       router.replace(pathname + (qs ? "?" + qs : ""));
     },
@@ -119,7 +119,7 @@ export default function CatalogPage() {
     if (parsedFilters.on_owner_site) params.on_owner_site = true;
     if (parsedFilters.installation) params.installation = true;
     if (parsedFilters.setup) params.setup = true;
-    if (parsedFilters.sort) params.sort = parsedFilters.sort;
+    if (parsedFilters.order_by) params.order_by = parsedFilters.order_by;
     return params;
   }, [parsedFilters]);
 

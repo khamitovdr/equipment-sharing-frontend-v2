@@ -66,6 +66,7 @@ export interface ListingsQueryParams {
   search?: string | null;
   category_id?: string | string[] | null;
   organization_id?: string | null;
+  order_by?: string | null;
 }
 
 export interface ListingCreate {
@@ -98,4 +99,5 @@ export interface OrgListingsQueryParams {
   search?: string | null;
   status?: ListingStatus | null;
   category_id?: string | null;
+  order_by?: string | null;
 }

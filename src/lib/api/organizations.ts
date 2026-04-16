@@ -17,6 +17,7 @@ interface OrganizationsQueryParams {
   cursor?: string | null;
   limit?: number;
   search?: string | null;
+  order_by?: string | null;
 }
 
 export const organizationsApi = {
@@ -60,7 +61,7 @@ export const organizationsApi = {
     });
   },
 
-  listMembers(token: string, orgId: string, params?: { cursor?: string | null; limit?: number }) {
+  listMembers(token: string, orgId: string, params?: { cursor?: string | null; limit?: number; order_by?: string | null }) {
     return apiClient<PaginatedResponse<MembershipRead>>(
       `/organizations/${orgId}/members/`,
       {

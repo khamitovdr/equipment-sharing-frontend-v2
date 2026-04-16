@@ -110,17 +110,17 @@ export function CatalogFilters({
         <p className="mb-2 text-sm font-medium">{t("catalog.sort.label")}</p>
         {(() => {
           const sortOptions = [
-            { value: "newest", label: t("catalog.sort.newest") },
-            { value: "price_asc", label: t("catalog.sort.priceAsc") },
-            { value: "price_desc", label: t("catalog.sort.priceDesc") },
+            { value: "-updated_at", label: t("catalog.sort.newest") },
+            { value: "price", label: t("catalog.sort.priceAsc") },
+            { value: "-price", label: t("catalog.sort.priceDesc") },
           ] as const;
-          const currentSort = filters.sort ?? "newest";
+          const currentSort = filters.order_by ?? "-updated_at";
           const currentLabel = sortOptions.find((o) => o.value === currentSort)?.label ?? currentSort;
           return (
             <Select
               value={currentSort}
               onValueChange={(value) =>
-                onChange({ sort: value as CatalogFilters["sort"] })
+                onChange({ order_by: value as CatalogFilters["order_by"] })
               }
             >
               <SelectTrigger className="w-full">

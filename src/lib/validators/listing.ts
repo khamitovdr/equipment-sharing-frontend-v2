@@ -10,7 +10,7 @@ export const catalogFiltersSchema = z.object({
   on_owner_site: z.boolean().optional(),
   installation: z.boolean().optional(),
   setup: z.boolean().optional(),
-  sort: z.enum(["newest", "price_asc", "price_desc"]).optional(),
+  order_by: z.enum(["-updated_at", "price", "-price"]).optional(),
 });
 
 export type CatalogFilters = z.infer<typeof catalogFiltersSchema>;

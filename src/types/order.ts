@@ -45,4 +45,5 @@ export interface OrderListParams {
   date_from?: string;
   date_to?: string;
   search?: string;
+  order_by?: string | null;
 }
