@@ -49,7 +49,17 @@
     "hasAccount": "Уже есть аккаунт?",
     "loginError": "Неверный email или пароль",
     "registerError": "Ошибка регистрации",
-    "emailTaken": "Email уже занят"
+    "emailTaken": "Email уже занят",
+    "acceptAgreement": "Я принимаю <link>пользовательское соглашение</link>",
+    "agreementRequired": "Необходимо принять пользовательское соглашение"
+  },
+  "footer": {
+    "userAgreement": "Пользовательское соглашение"
+  },
+  "userAgreement": {
+    "title": "Пользовательское соглашение",
+    "download": "Скачать PDF",
+    "fallback": "Ваш браузер не поддерживает просмотр PDF."
   },
   "settings": {
     "title": "Настройки",

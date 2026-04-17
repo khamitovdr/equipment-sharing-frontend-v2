@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { PhoneInput } from "@/components/shared/phone-input";
 
 export default function RegisterPage() {
@@ -254,6 +255,44 @@ export default function RegisterPage() {
             {errors.confirm_password && (
               <p className="text-xs text-destructive">
                 {t(`settings.validation.${errors.confirm_password.message}`)}
+              </p>
+            )}
+          </div>
+
+          {/* User agreement */}
+          <div className="space-y-1.5">
+            <div className="flex items-start gap-2">
+              <Controller
+                name="accept_agreement"
+                control={control}
+                render={({ field }) => (
+                  <Checkbox
+                    id="accept_agreement"
+                    checked={field.value === true}
+                    onCheckedChange={(checked) => field.onChange(checked === true)}
+                    aria-invalid={!!errors.accept_agreement}
+                    className="mt-0.5"
+                  />
+                )}
+              />
+              <Label htmlFor="accept_agreement" className="cursor-pointer font-normal text-sm leading-snug">
+                {t.rich("auth.acceptAgreement", {
+                  link: (chunks) => (
+                    <Link
+                      href="/user-agreement"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-foreground underline-offset-4 hover:underline"
+                    >
+                      {chunks}
+                    </Link>
+                  ),
+                })}
+              </Label>
+            </div>
+            {errors.accept_agreement && (
+              <p className="text-xs text-destructive">
+                {t("auth.agreementRequired")}
               </p>
             )}
           </div>

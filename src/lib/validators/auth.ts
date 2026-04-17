@@ -19,6 +19,7 @@ export const registerSchema = z
       .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, "phoneInvalid"),
     password: passwordSchema,
     confirm_password: z.string().min(1, "confirmPasswordRequired"),
+    accept_agreement: z.literal(true, { error: "agreementRequired" }),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: "passwordMismatch",

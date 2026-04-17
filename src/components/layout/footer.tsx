@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const t = useTranslations("footer");
 
   return (
     <footer className="border-t border-border bg-muted/50">
@@ -81,6 +83,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-6 border-t border-border pt-4 text-center text-xs text-muted-foreground">
           &copy; {year} Equip Me. Все права защищены.
+          {" · "}
+          <Link href="/user-agreement" className="hover:text-foreground transition-colors">
+            {t("userAgreement")}
+          </Link>
         </div>
       </div>
     </footer>

@@ -49,7 +49,17 @@
     "hasAccount": "Already have an account?",
     "loginError": "Incorrect email or password",
     "registerError": "Registration error",
-    "emailTaken": "Email already taken"
+    "emailTaken": "Email already taken",
+    "acceptAgreement": "I accept the <link>user agreement</link>",
+    "agreementRequired": "You must accept the user agreement"
+  },
+  "footer": {
+    "userAgreement": "User Agreement"
+  },
+  "userAgreement": {
+    "title": "User Agreement",
+    "download": "Download PDF",
+    "fallback": "Your browser does not support inline PDF viewing."
   },
   "settings": {
     "title": "Settings",
