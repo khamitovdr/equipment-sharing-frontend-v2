@@ -19,6 +19,10 @@ inputs:
     description: DaData API key for organization autocomplete
     required: false
     default: ""
+  openreplay_project_key:
+    description: OpenReplay project key for session tracking
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -43,6 +47,7 @@ runs:
           APP_VERSION=${{ inputs.version }}
           API_URL=${{ inputs.api_url }}
           DADATA_API_KEY=${{ inputs.dadata_api_key }}
+          OPENREPLAY_PROJECT_KEY=${{ inputs.openreplay_project_key }}
 
     - name: Create GitHub Release
       shell: bash

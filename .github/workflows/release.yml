@@ -50,3 +50,4 @@ jobs:
           image_name: ghcr.io/${{ github.repository_owner }}/equip-me-frontend
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dadata_api_key: ${{ secrets.DADATA_API_KEY }}
+          openreplay_project_key: ${{ secrets.OPENREPLAY_PROJECT_KEY }}
