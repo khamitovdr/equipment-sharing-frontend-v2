@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Equip Me — frontend
 
-## Getting Started
+Web frontend for **Equip Me**, an equipment rental platform. Renters browse and book gear; owners run their inventory and orders through an organization-scoped dashboard; operators keep an eye on things from the admin area. Backend lives at `api.equip-me.ru`.
 
-First, run the development server:
+## Highlights
+
+- **Typed from the UI down to the schema.** Backend OpenAPI spec → generated TypeScript types → Zod validators → `react-hook-form`. The same schema validates what the user types and what hits the wire.
+- **Custom multi-role demo recorder.** `e2e-demo/` is a homemade Flow DSL on top of Playwright — barrier-synchronized browsers, an action registry, and a CLI that stitches side-by-side recordings of, say, a renter and an owner going through the same scenario at the same time. Fake cursor, click ripples, six flows from registration through member management.
+- **Every API error carries its trace ID.** Requests ship a W3C `traceparent`; failures surface the backend's `X-Trace-Id` in the user-facing toast *and* in an OpenReplay `api_error` event. Support can jump straight from a user's screenshot to the matching backend trace.
+- **Order chat between renter and owner,** scoped to a specific order, with cursor-paginated history.
+
+## Stack
+
+Next.js 16 on React 19, TypeScript strict. Tailwind v4 with shadcn components on top of `@base-ui/react` (not Radix). TanStack Query for server state, Zustand for client state. `next-intl` for ru/en. Vitest + Testing Library for units, Playwright for the `e2e-demo/` walkthrough recordings. See `package.json` for the full list.
+
+Notable bits of the codebase:
+
+- `src/app/api/v1/[...path]/` — the CORS-killing backend proxy
+- `src/app/api/dadata/suggest/` — server-side DaData autocomplete bridge
+- `src/components/openreplay.tsx` + `src/lib/observability/` — session replay wiring
+- `src/lib/api/client.ts` — the fetch wrapper with tracing and 401 handling
+- `src/proxy.ts` — next-intl middleware (Next 16 renamed `middleware.ts` → `proxy.ts`)
+- `e2e-demo/` — Playwright flow DSL that records multi-role demos side-by-side
+
+## Observability
+
+`@openreplay/tracker` is mounted from `src/components/openreplay.tsx` and only starts in production builds when `NEXT_PUBLIC_OPENREPLAY_PROJECT_KEY` is set. The tracker is dynamic-imported, so the bundle stays out of builds that won't ship it.
+
+Sessions are tagged with the current user (id, email, phone, full name, role) and organization (id, short name, role) by subscribing to the Zustand auth and org stores — so a session can be filtered by either. The API client at `src/lib/api/client.ts` injects a W3C `traceparent` on every request and prefers the backend's `X-Trace-Id` on the response; failing requests fire a `tracker.event("api_error", …)` with that trace ID, which is also what surfaces in the user's error toast.
+
+## Running locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local   # fill in what you need
+npm ci
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Env vars (all in `.env.example`): `NEXT_PUBLIC_API_URL` and `API_URL` point at the proxy and the real backend; `DADATA_API_KEY` is optional (address autocomplete); `NEXT_PUBLIC_OPENREPLAY_PROJECT_KEY` is optional and only activates in production builds.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other commands you'll probably want: `npm run lint`, `npm test`, `npm run test:run`, `npm run demo:record`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Releasing
 
-## Learn More
+One workflow, `.github/workflows/release.yml`, triggered manually from `main`:
 
-To learn more about Next.js, take a look at the following resources:
+1. Bumps the minor version in `package.json`, commits, tags `vX.Y.Z`, pushes.
+2. Builds the Docker image and pushes it to `ghcr.io/<owner>/equip-me-frontend:<version>`.
+3. Creates a GitHub Release with notes auto-generated from commits since the previous tag.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To cut a release: **Actions → release → Run workflow**. Keep commit messages in `feat: / fix: / chore:` form — that's what makes the generated release notes readable. Repo needs `DADATA_API_KEY` and `OPENREPLAY_PROJECT_KEY` as secrets (plus the default `GITHUB_TOKEN`).
