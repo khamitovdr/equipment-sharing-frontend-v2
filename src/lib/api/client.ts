@@ -1,4 +1,6 @@
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { generateTraceparent } from "@/lib/observability/trace";
+import { trackApiError } from "@/lib/observability/openreplay-events";
 
 // Client-side requests go through Next.js proxy (/api/v1 -> api.equip-me.ru/api/v1)
 // Server-side requests go directly to the API
@@ -61,11 +63,21 @@ export async function apiClient<T>(
     if (qs) url += `?${qs}`;
   }
 
-  const response = await fetch(url, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  const { traceId: localTraceId, traceparent } = generateTraceparent();
+  headers.set("traceparent", traceparent);
+
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } catch {
+    throw new ApiRequestError(0, "network", null);
+  }
+
+  const serverTraceId = response.headers.get("X-Trace-Id") ?? localTraceId;
 
   if (!response.ok) {
     let detail: unknown;
@@ -81,7 +93,14 @@ export async function apiClient<T>(
       window.location.href = "/login";
     }
 
-    throw new ApiRequestError(response.status, detail);
+    trackApiError({
+      traceId: serverTraceId,
+      status: response.status,
+      path,
+      method,
+    });
+
+    throw new ApiRequestError(response.status, detail, serverTraceId);
   }
 
   if (response.status === 204 || response.headers?.get?.("content-length") === "0") {
