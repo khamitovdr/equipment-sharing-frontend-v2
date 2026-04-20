@@ -13,11 +13,13 @@ function getApiBaseUrl(): string {
 export class ApiRequestError extends Error {
   status: number;
   detail: string | unknown;
+  traceId: string | null;
 
-  constructor(status: number, detail: string | unknown) {
+  constructor(status: number, detail: string | unknown, traceId: string | null = null) {
     super(typeof detail === "string" ? detail : "API Error");
     this.status = status;
     this.detail = detail;
+    this.traceId = traceId;
   }
 }
 
