@@ -17,9 +17,15 @@ describe("toastApiError", () => {
     vi.clearAllMocks();
   });
 
+  const labels = {
+    traceIdLabel: "ID",
+    copyTraceId: "Copy",
+    traceIdCopied: "Trace ID copied",
+  };
+
   it("shows title + description + copy action when traceId is present", () => {
     const err = new ApiRequestError(500, "boom", "4bf92f3577b34da6a3ce929d0e0e4736");
-    toastApiError(err, "fallback");
+    toastApiError(err, "fallback", labels);
 
     expect(errorMock).toHaveBeenCalledTimes(1);
     const [title, opts] = errorMock.mock.calls[0] as [string, { description: string; action: { label: string; onClick: () => void } }];
@@ -66,11 +72,19 @@ describe("toastApiError", () => {
 
     const traceId = "4bf92f3577b34da6a3ce929d0e0e4736";
     const err = new ApiRequestError(500, "boom", traceId);
-    toastApiError(err, "fallback");
+    toastApiError(err, "fallback", labels);
 
     const [, opts] = errorMock.mock.calls[0] as [string, { action: { onClick: () => void } }];
     opts.action.onClick();
 
     expect(writeText).toHaveBeenCalledWith(traceId);
+  });
+
+  it("omits description when labels are not provided even if traceId is present", () => {
+    const err = new ApiRequestError(500, "boom", "a".repeat(32));
+    toastApiError(err, "fallback");
+    const [title, opts] = errorMock.mock.calls[0];
+    expect(title).toBe("boom");
+    expect(opts).toBeUndefined();
   });
 });

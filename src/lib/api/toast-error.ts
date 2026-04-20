@@ -1,7 +1,17 @@
 import { toast } from "sonner";
 import { ApiRequestError } from "./client";
 
-export function toastApiError(err: unknown, fallback: string): void {
+export interface ToastApiErrorLabels {
+  traceIdLabel: string;
+  copyTraceId: string;
+  traceIdCopied: string;
+}
+
+export function toastApiError(
+  err: unknown,
+  fallback: string,
+  labels?: ToastApiErrorLabels
+): void {
   if (!(err instanceof ApiRequestError)) {
     toast.error(fallback);
     return;
@@ -9,7 +19,7 @@ export function toastApiError(err: unknown, fallback: string): void {
 
   const title = typeof err.detail === "string" ? err.detail : fallback;
 
-  if (!err.traceId) {
+  if (!err.traceId || !labels) {
     toast.error(title);
     return;
   }
@@ -18,13 +28,18 @@ export function toastApiError(err: unknown, fallback: string): void {
   const shortTraceId = fullTraceId.slice(0, 8);
 
   toast.error(title, {
-    description: `ID: ${shortTraceId}…`,
+    description: `${labels.traceIdLabel}: ${shortTraceId}…`,
     action: {
-      label: "Copy",
+      label: labels.copyTraceId,
       onClick: () => {
-        void navigator.clipboard.writeText(fullTraceId).then(() => {
-          toast.success("Trace ID copied");
-        });
+        void (async () => {
+          try {
+            await navigator.clipboard.writeText(fullTraceId);
+            toast.success(labels.traceIdCopied);
+          } catch {
+            // clipboard unavailable — silent
+          }
+        })();
       },
     },
   });

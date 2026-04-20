@@ -171,7 +171,10 @@
   "errors": {
     "networkError": "Connection lost",
     "forbidden": "You don't have permission",
-    "serverError": "Service temporarily unavailable, try again"
+    "serverError": "Service temporarily unavailable, try again",
+    "traceIdLabel": "ID",
+    "copyTraceId": "Copy",
+    "traceIdCopied": "Trace ID copied"
   },
   "dashboard": {
     "sidebar": { "listings": "Listings", "orders": "Orders", "members": "Members", "settings": "Settings", "switchOrg": "Switch organization" },
