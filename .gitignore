@@ -49,3 +49,7 @@ next-env.d.ts
 
 # Demo recordings
 e2e-demo/recordings/
+
+# local tooling
+.claude/
+.playwright-mcp/
