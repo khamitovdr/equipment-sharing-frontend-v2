@@ -27,10 +27,11 @@ export function UserMenu() {
   const { user, logout } = useAuth();
   const [joinOpen, setJoinOpen] = React.useState(false);
   const token = useAuthStore((s) => s.token);
+  const userId = user?.id;
   const { data: orgsData } = useQuery({
-    queryKey: ["user-organizations"],
+    queryKey: ["user-organizations", userId],
     queryFn: () => usersApi.myOrganizations(token!),
-    enabled: !!token,
+    enabled: !!token && !!userId,
     staleTime: 60_000,
   });
   const hasOrgs = (orgsData?.items?.length ?? 0) > 0;
