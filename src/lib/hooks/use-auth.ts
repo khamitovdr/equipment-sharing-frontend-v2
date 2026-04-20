@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { usersApi } from "@/lib/api/users";
@@ -10,32 +11,36 @@ import type { LoginRequest, UserCreate } from "@/types/user";
 export function useAuth() {
   const { user, token, isAuthenticated, setAuth, clearAuth } = useAuthStore();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const login = useCallback(
     async (data: LoginRequest) => {
+      queryClient.clear();
       const { access_token } = await usersApi.login(data);
       const me = await usersApi.me(access_token);
       setAuth(me, access_token);
       return me;
     },
-    [setAuth]
+    [setAuth, queryClient]
   );
 
   const register = useCallback(
     async (data: UserCreate) => {
+      queryClient.clear();
       const { access_token } = await usersApi.register(data);
       const me = await usersApi.me(access_token);
       setAuth(me, access_token);
       return { user: me, access_token };
     },
-    [setAuth]
+    [setAuth, queryClient]
   );
 
   const logout = useCallback(() => {
+    queryClient.clear();
     clearAuth();
     useOrgStore.getState().clearOrgContext();
     router.push("/");
-  }, [clearAuth, router]);
+  }, [clearAuth, router, queryClient]);
 
   const hydrate = useCallback(async () => {
     if (!token) return;
