@@ -204,3 +204,4 @@ Listed to prevent scope creep, not committed:
 - Sampling coordination with backend (head-based sampling ratios).
 - Propagating `traceparent` from the browser through SSR to the backend to unify the full page-render chain under a single trace.
 - Adding trace IDs to non-toast error surfaces (500 error boundary page, chunked-load failures).
+- Trace IDs in the auth-flow inline error banners (`src/app/[locale]/(auth)/login/page.tsx`, `register/page.tsx`). These use `setGlobalError(t("common.error"))` to render a persistent banner, not a toast, so the `useApiErrorToast` hook does not fit. Auth errors have well-known causes (401 wrong credentials, 409 email exists) and the marginal value of a trace ID is low, so the deviation was accepted in the Task 7 migration.
