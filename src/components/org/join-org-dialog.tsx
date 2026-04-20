@@ -16,6 +16,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ApiRequestError } from "@/lib/api/client";
 import type { OrganizationListRead } from "@/types/organization";
 
@@ -27,6 +28,7 @@ interface JoinOrgDialogProps {
 export function JoinOrgDialog({ open, onOpenChange }: JoinOrgDialogProps) {
   const t = useTranslations("joinOrg");
   const token = useAuthStore((s) => s.token);
+  const toastError = useApiErrorToast();
 
   const [query, setQuery] = React.useState("");
   const [results, setResults] = React.useState<OrganizationListRead[]>([]);
@@ -82,7 +84,7 @@ export function JoinOrgDialog({ open, onOpenChange }: JoinOrgDialogProps) {
       if (err instanceof ApiRequestError && err.status === 409) {
         toast.error(t("error.alreadyMember"));
       } else {
-        toast.error(t("error.alreadyMember"));
+        toastError(err);
       }
     } finally {
       setJoining(null);

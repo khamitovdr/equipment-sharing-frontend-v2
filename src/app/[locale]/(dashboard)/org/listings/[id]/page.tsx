@@ -10,6 +10,7 @@ import { listingsApi } from "@/lib/api/listings";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button-variants";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,6 +41,7 @@ export default function OrgListingDetailPage({ params }: PageProps) {
   const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole: canEdit } = useOrgGuard({ minRole: "editor" });
   const queryClient = useQueryClient();
+  const toastError = useApiErrorToast();
 
   const { data: listing, isLoading } = useQuery({
     queryKey: ["org-listing", orgId, listingId],
@@ -53,8 +55,8 @@ export default function OrgListingDetailPage({ params }: PageProps) {
       await listingsApi.orgUpdateStatus(token, orgId, listingId, { status });
       await queryClient.invalidateQueries({ queryKey: ["org-listing", orgId, listingId] });
       toast.success(t("orgListings.statusChanged"));
-    } catch {
-      toast.error(t("common.error"));
+    } catch (err) {
+      toastError(err);
     }
   }
 

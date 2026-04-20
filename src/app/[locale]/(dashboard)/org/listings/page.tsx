@@ -13,6 +13,7 @@ import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -48,6 +49,7 @@ export default function OrgListingsPage() {
   const orgId = currentOrg?.id ?? "";
 
   const { hasRole: canEdit } = useOrgGuard({ minRole: "editor" });
+  const toastError = useApiErrorToast();
 
   // Filter state
   const [searchInput, setSearchInput] = useState("");
@@ -121,11 +123,11 @@ export default function OrgListingsPage() {
         await listingsApi.orgUpdateStatus(token, orgId, listingId, { status: newStatus });
         await queryClient.invalidateQueries({ queryKey: ["org-listings", orgId] });
         toast.success(t("orgListings.statusChanged"));
-      } catch {
-        toast.error(t("errors.serverError"));
+      } catch (err) {
+        toastError(err, t("errors.serverError"));
       }
     },
-    [token, orgId, queryClient, t]
+    [token, orgId, queryClient, t, toastError]
   );
 
   // Delete handler
@@ -136,13 +138,13 @@ export default function OrgListingsPage() {
       await listingsApi.orgDelete(token, orgId, deleteTargetId);
       await queryClient.invalidateQueries({ queryKey: ["org-listings", orgId] });
       toast.success(t("orgListings.deleted"));
-    } catch {
-      toast.error(t("errors.serverError"));
+    } catch (err) {
+      toastError(err, t("errors.serverError"));
     } finally {
       setIsDeleting(false);
       setDeleteTargetId(null);
     }
-  }, [token, orgId, deleteTargetId, queryClient, t]);
+  }, [token, orgId, deleteTargetId, queryClient, t, toastError]);
 
   const clearFilters = useCallback(() => {
     setSearchInput("");

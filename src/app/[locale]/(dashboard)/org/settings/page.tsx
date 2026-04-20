@@ -10,6 +10,7 @@ import { format } from "date-fns";
 
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
 import { useOrg } from "@/lib/hooks/use-org";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { organizationsApi } from "@/lib/api/organizations";
@@ -36,6 +37,7 @@ export default function OrgSettingsPage() {
   const token = useAuthStore((s) => s.token);
   const currentOrg = useOrgStore((s) => s.currentOrg);
   const { fetchCurrentOrg } = useOrg();
+  const toastError = useApiErrorToast();
 
   // Photo upload state
   const [uploadState, setUploadState] = useState<UploadState>("idle");
@@ -141,8 +143,8 @@ export default function OrgSettingsPage() {
       await fetchCurrentOrg(currentOrg.id);
       reset(data);
       toast.success(t("contacts.saved"));
-    } catch {
-      toast.error(tCommon("error"));
+    } catch (err) {
+      toastError(err);
     }
   };
 

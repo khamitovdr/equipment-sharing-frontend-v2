@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useChangePassword } from "@/lib/hooks/use-change-password";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ApiRequestError } from "@/lib/api/client";
 import {
   passwordChangeSchema,
@@ -19,6 +20,7 @@ import { Button } from "@/components/ui/button";
 export function PasswordForm() {
   const t = useTranslations();
   const changePassword = useChangePassword();
+  const toastError = useApiErrorToast();
 
   const {
     register,
@@ -50,7 +52,7 @@ export function PasswordForm() {
       ) {
         setError("password", { message: "wrongPassword" });
       } else {
-        toast.error(t("common.error"));
+        toastError(err);
       }
     }
   };

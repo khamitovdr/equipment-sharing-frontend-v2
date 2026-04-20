@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { listingsApi } from "@/lib/api/listings";
 import { BackButton } from "@/components/shared/back-button";
 import { ListingForm } from "@/components/org/listing-form";
@@ -20,6 +21,7 @@ export default function CreateListingPage() {
   const token = useAuthStore((s) => s.token);
   const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "editor" });
+  const toastError = useApiErrorToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!hasRole || !orgId) return null;
@@ -43,8 +45,8 @@ export default function CreateListingPage() {
       });
       toast.success(t("listingForm.created"));
       router.push(`/${locale}/org/listings/${listing.id}/edit`);
-    } catch {
-      toast.error(t("common.error"));
+    } catch (err) {
+      toastError(err);
     } finally {
       setIsSubmitting(false);
     }

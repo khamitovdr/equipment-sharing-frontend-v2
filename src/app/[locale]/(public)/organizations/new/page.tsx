@@ -13,6 +13,7 @@ import { organizationsApi } from "@/lib/api/organizations";
 import { usersApi } from "@/lib/api/users";
 import { mediaApi } from "@/lib/api/media";
 import { ApiRequestError } from "@/lib/api/client";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { DadataSuggest } from "@/components/org/dadata-suggest";
@@ -31,6 +32,7 @@ export default function OrgCreatePage() {
   const { token } = useAuthStore();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const { setOrganizations, switchOrg } = useOrgStore();
+  const toastError = useApiErrorToast();
 
   const [hydrated, setHydrated] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] = useState<DadataSuggestion | null>(null);
@@ -152,7 +154,7 @@ export default function OrgCreatePage() {
       if (err instanceof ApiRequestError && err.status === 409) {
         toast.error(t("error.alreadyExists"));
       } else {
-        toast.error(t("error.innRequired"));
+        toastError(err);
       }
     } finally {
       setIsSubmitting(false);

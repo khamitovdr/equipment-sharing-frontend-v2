@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useUpdateProfile } from "@/lib/hooks/use-update-profile";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ApiRequestError } from "@/lib/api/client";
 import {
   profileSchema,
@@ -24,6 +25,7 @@ export function ProfileForm() {
   const t = useTranslations();
   const user = useAuthStore((s) => s.user);
   const updateProfile = useUpdateProfile();
+  const toastError = useApiErrorToast();
 
   const {
     register,
@@ -80,7 +82,7 @@ export function ProfileForm() {
       if (err instanceof ApiRequestError && err.status === 409) {
         setError("email", { message: "emailTaken" });
       } else {
-        toast.error(t("common.error"));
+        toastError(err);
       }
     }
   };

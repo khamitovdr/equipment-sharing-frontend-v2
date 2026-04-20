@@ -9,6 +9,7 @@ import { MoreHorizontal, Shield, Loader2 } from "lucide-react";
 import { organizationsApi } from "@/lib/api/organizations";
 import { formatDate } from "@/lib/utils";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -72,6 +73,7 @@ export function MemberTable({
   const locale = useLocale();
   const token = useAuthStore((s) => s.token);
   const queryClient = useQueryClient();
+  const toastError = useApiErrorToast();
 
   // Remove / reject / cancel state
   const [removeTarget, setRemoveTarget] = useState<MembershipRead | null>(null);
@@ -100,13 +102,13 @@ export function MemberTable({
         await organizationsApi.updateMemberRole(token, orgId, member.id, { role });
         invalidate();
         toast.success(t("members.roleChanged"));
-      } catch {
-        toast.error(t("errors.serverError"));
+      } catch (err) {
+        toastError(err, t("errors.serverError"));
       } finally {
         setUpdatingRoleId(null);
       }
     },
-    [token, orgId, invalidate, t]
+    [token, orgId, invalidate, t, toastError]
   );
 
   // ── Remove / Reject / Cancel ───────────────────────────────────────
@@ -119,13 +121,13 @@ export function MemberTable({
       if (tab === "members") toast.success(t("members.removed"));
       else if (tab === "pending") toast.success(t("members.rejected"));
       else toast.success(t("members.inviteCanceled"));
-    } catch {
-      toast.error(t("errors.serverError"));
+    } catch (err) {
+      toastError(err, t("errors.serverError"));
     } finally {
       setIsRemoving(false);
       setRemoveTarget(null);
     }
-  }, [token, orgId, removeTarget, tab, invalidate, t]);
+  }, [token, orgId, removeTarget, tab, invalidate, t, toastError]);
 
   // ── Approve (pending tab) ─────────────────────────────────────────
   const handleApprove = useCallback(async () => {
@@ -137,13 +139,13 @@ export function MemberTable({
       });
       invalidate();
       toast.success(t("members.approved"));
-    } catch {
-      toast.error(t("errors.serverError"));
+    } catch (err) {
+      toastError(err, t("errors.serverError"));
     } finally {
       setIsApproving(false);
       setApproveState(null);
     }
-  }, [token, orgId, approveState, invalidate, t]);
+  }, [token, orgId, approveState, invalidate, t, toastError]);
 
   // ── Resolve confirm dialog description ───────────────────────────
   const removeDescription = removeTarget

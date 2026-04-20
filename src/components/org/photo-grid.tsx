@@ -18,6 +18,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Upload, X, Loader2 } from "lucide-react";
 import { mediaApi } from "@/lib/api/media";
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { Button } from "@/components/ui/button";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -100,6 +101,7 @@ export function PhotoGrid({
 }: PhotoGridProps) {
   const t = useTranslations();
   const { token } = useAuthStore();
+  const toastError = useApiErrorToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<UploadingItem[]>([]);
 
@@ -193,13 +195,13 @@ export function PhotoGrid({
           }
           await new Promise((r) => setTimeout(r, 2000));
         }
-      } catch {
-        toast.error(t("common.error"));
+      } catch (err) {
+        toastError(err);
       } finally {
         setUploading((prev) => prev.filter((item) => item.tempId !== tempId));
       }
     },
-    [token, t]
+    [token, t, toastError]
   );
 
   const handleFilesSelected = useCallback(
