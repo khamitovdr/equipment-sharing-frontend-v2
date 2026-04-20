@@ -19,7 +19,7 @@ import { MobileChatButton } from "@/components/chat/mobile-chat-button";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { OrgPlaceholder } from "@/components/shared/org-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ApiRequestError } from "@/lib/api/client";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { formatCost, formatDate } from "@/lib/utils";
 
 interface PageProps {
@@ -32,6 +32,7 @@ export default function OrderDetailPage({ params }: PageProps) {
   const locale = useLocale();
   const token = useAuthStore((s) => s.token);
   const queryClient = useQueryClient();
+  const toastError = useApiErrorToast();
 
   useEffect(() => {
     return () => {
@@ -70,9 +71,7 @@ export default function OrderDetailPage({ params }: PageProps) {
       toast.success(t("orders.accepted"));
       invalidate();
     },
-    onError: (e) => {
-      toast.error(e instanceof ApiRequestError ? String(e.detail) : t("common.error"));
-    },
+    onError: (err) => toastError(err),
   });
 
   const cancelMutation = useMutation({
@@ -81,7 +80,7 @@ export default function OrderDetailPage({ params }: PageProps) {
       toast.success(t("orders.canceled"));
       invalidate();
     },
-    onError: () => toast.error(t("common.error")),
+    onError: (err) => toastError(err),
   });
 
   if (isLoading || !order) {

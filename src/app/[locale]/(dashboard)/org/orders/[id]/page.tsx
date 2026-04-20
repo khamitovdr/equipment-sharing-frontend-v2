@@ -20,6 +20,7 @@ import { MobileChatButton } from "@/components/chat/mobile-chat-button";
 import { EquipmentPlaceholder } from "@/components/shared/equipment-placeholder";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiRequestError } from "@/lib/api/client";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { formatCost, formatDate } from "@/lib/utils";
 import type { OrderOfferFormData } from "@/lib/validators/order";
 
@@ -34,6 +35,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
   const token = useAuthStore((s) => s.token);
   const orgId = useOrgStore((s) => s.currentOrg?.id) ?? "";
   const queryClient = useQueryClient();
+  const toastError = useApiErrorToast();
 
   useEffect(() => {
     return () => {
@@ -80,9 +82,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
       toast.success(t("orgOrders.offered"));
       invalidate();
     },
-    onError: (e) => {
-      toast.error(e instanceof ApiRequestError ? String(e.detail) : t("common.error"));
-    },
+    onError: (err) => toastError(err),
   });
 
   const approveMutation = useMutation({
@@ -91,11 +91,11 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
       toast.success(t("orgOrders.approved"));
       invalidate();
     },
-    onError: (e) => {
-      if (e instanceof ApiRequestError && e.status === 409) {
+    onError: (err) => {
+      if (err instanceof ApiRequestError && err.status === 409) {
         toast.error(t("orgOrders.approveError"));
       } else {
-        toast.error(e instanceof ApiRequestError ? String(e.detail) : t("common.error"));
+        toastError(err);
       }
     },
   });
@@ -106,7 +106,7 @@ export default function OrgOrderDetailPage({ params }: PageProps) {
       toast.success(t("orgOrders.canceled"));
       invalidate();
     },
-    onError: () => toast.error(t("common.error")),
+    onError: (err) => toastError(err),
   });
 
   if (isLoading || !order) {

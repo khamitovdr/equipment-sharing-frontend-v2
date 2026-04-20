@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { mediaApi } from "@/lib/api/media";
 import { usersApi } from "@/lib/api/users";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { AvatarUpload } from "@/components/media/avatar-upload";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -15,6 +16,7 @@ export function AvatarSection() {
   const t = useTranslations();
   const { user, token } = useAuthStore();
   const setUser = useAuthStore((s) => s.setUser);
+  const toastError = useApiErrorToast();
   const [uploadState, setUploadState] = useState<UploadState>("idle");
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -82,12 +84,12 @@ export function AvatarSection() {
           }
           await new Promise((r) => setTimeout(r, 2000));
         }
-      } catch {
+      } catch (err) {
         setUploadState("failed");
-        toast.error(t("common.error"));
+        toastError(err);
       }
     },
-    [token, setUser, t]
+    [token, setUser, t, toastError]
   );
 
   return (

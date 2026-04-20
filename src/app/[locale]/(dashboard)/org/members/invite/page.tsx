@@ -22,6 +22,7 @@ import { organizationsApi } from "@/lib/api/organizations";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { ApiRequestError } from "@/lib/api/client";
 import type { UserRead } from "@/types/user";
 import type { MembershipRole } from "@/types/organization";
@@ -33,6 +34,7 @@ export default function InviteMemberPage() {
   const token = useAuthStore((s) => s.token);
   const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "admin" });
+  const toastError = useApiErrorToast();
 
   const [selectedUser, setSelectedUser] = useState<UserRead | null>(null);
   const [role, setRole] = useState<MembershipRole>("viewer");
@@ -56,7 +58,7 @@ export default function InviteMemberPage() {
       if (err instanceof ApiRequestError && err.status === 409) {
         toast.error(t("invite.error.alreadyMember"));
       } else {
-        toast.error(t("common.error"));
+        toastError(err);
       }
     } finally {
       setIsSubmitting(false);

@@ -9,6 +9,7 @@ import { Loader2, Trash2 } from "lucide-react";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useOrgStore } from "@/lib/stores/org-store";
 import { useOrgGuard } from "@/lib/hooks/use-org-guard";
+import { useApiErrorToast } from "@/lib/hooks/use-api-error-toast";
 import { listingsApi } from "@/lib/api/listings";
 import { ListingForm } from "@/components/org/listing-form";
 import { ListingStatusSelect } from "@/components/org/listing-status-select";
@@ -32,6 +33,7 @@ export default function EditListingPage({
   const token = useAuthStore((s) => s.token);
   const orgId = useOrgStore((s) => s.currentOrg?.id);
   const { hasRole } = useOrgGuard({ minRole: "editor" });
+  const toastError = useApiErrorToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isChangingStatus, setIsChangingStatus] = useState(false);
@@ -66,8 +68,8 @@ export default function EditListingPage({
         queryKey: ["org-listing", orgId, listingId],
       });
       toast.success(t("listingForm.updated"));
-    } catch {
-      toast.error(t("common.error"));
+    } catch (err) {
+      toastError(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -82,8 +84,8 @@ export default function EditListingPage({
         queryKey: ["org-listing", orgId, listingId],
       });
       toast.success(t("orgListings.statusChanged"));
-    } catch {
-      toast.error(t("common.error"));
+    } catch (err) {
+      toastError(err);
     } finally {
       setIsChangingStatus(false);
     }
@@ -96,8 +98,8 @@ export default function EditListingPage({
       await listingsApi.orgDelete(token, orgId, listingId);
       toast.success(t("orgListings.deleted"));
       router.push(`/${locale}/org/listings`);
-    } catch {
-      toast.error(t("common.error"));
+    } catch (err) {
+      toastError(err);
     } finally {
       setIsDeleting(false);
     }

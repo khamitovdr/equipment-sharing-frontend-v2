@@ -171,7 +171,10 @@
   "errors": {
     "networkError": "Ошибка сети",
     "forbidden": "У вас нет доступа",
-    "serverError": "Сервис временно недоступен, попробуйте позже"
+    "serverError": "Сервис временно недоступен, попробуйте позже",
+    "traceIdLabel": "ID",
+    "copyTraceId": "Скопировать",
+    "traceIdCopied": "ID скопирован"
   },
   "dashboard": {
     "sidebar": { "listings": "Объявления", "orders": "Заказы", "members": "Участники", "settings": "Настройки", "switchOrg": "Сменить организацию" },
